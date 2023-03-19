@@ -48,7 +48,7 @@ jobs:
       - name: Checkout OpenWrt
         uses: actions/checkout@v3
 
-      - name: Clone Source Code
+      - name: Clone Source Codes
         run: |
           git clone --depth=1 --single-branch https://github.com/coolsnowwolf/lede.git
 
