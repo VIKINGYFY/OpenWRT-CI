@@ -52,16 +52,12 @@ jobs:
         run: |
           git clone --depth=1 --single-branch https://github.com/coolsnowwolf/lede.git
 
-      - name: Update Feeds
-        run: |
-          cd ./lede
-
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-
       - name: Update Plugins
         run: |
           cd ./lede/package
+
+          #Argon Theme
+          git clone --depth=1 --single-branch --branch '18.06' https://github.com/jerrykuku/luci-theme-argon.git
 
           #Design Theme
           git clone --depth=1 --single-branch https://github.com/gngpp/luci-theme-design.git
@@ -91,6 +87,13 @@ jobs:
           chmod +x ./clash*
           rm -rf ./*.gz
 
+      - name: Update Feeds
+        run: |
+          cd ./lede
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
       - name: Update Default Settings
         run: |
           cd ./lede
@@ -101,13 +104,6 @@ jobs:
           sed -i 's/192.168.1.1/192.168.2.1/g' ./package/base-files/files/bin/config_generate
           #默认主题
           sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
-
-      - name: Remove Incompatible Plugins
-        run: |
-          cd ./lede
-
-          #Design Theme
-          rm -rf $(find ./feeds -type d -name 'luci-theme-design')
 
       - name: Create Configuration File
         run: |
@@ -132,6 +128,7 @@ jobs:
           CONFIG_PACKAGE_ip6tables-extra=y
           CONFIG_PACKAGE_ip6tables-mod-nat=y
           #增加主题
+          CONFIG_PACKAGE_luci-theme-argon=y
           CONFIG_PACKAGE_luci-theme-design=y
           CONFIG_PACKAGE_luci-app-design-config=y
           #增加插件
