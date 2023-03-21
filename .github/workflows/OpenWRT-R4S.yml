@@ -10,7 +10,7 @@ name: OpenWRT-R4S
 
 on:
   schedule:
-    - cron: 0 6 */1 * *
+    - cron: 0 22 */1 * *
 
   push:
     branches: [main]
