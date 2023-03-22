@@ -12,9 +12,6 @@ on:
   schedule:
     - cron: 0 22 */1 * *
 
-  push:
-    branches: [main]
-
   workflow_dispatch:
 
 env:
