@@ -9,9 +9,6 @@
 name: OpenWRT-TEST
 
 on:
-  schedule:
-    - cron: 0 22 */1 * *
-
   workflow_dispatch:
 
 env:
@@ -26,7 +23,7 @@ jobs:
     steps:
       - name: Create Test File
         run: |
-        mkdir - p ./test/t1/t2
+        mkdir -p ./test/t1/t2
 
         cd ./test
         touch test.txt
