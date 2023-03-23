@@ -90,7 +90,7 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Update Default Settings
+      - name: Update Settings
         run: |
           cd ./lede
 
@@ -103,7 +103,7 @@ jobs:
           #默认时间格式
           sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name 'index.htm')
 
-      - name: Create Configuration File
+      - name: Custom Settings
         run: |
           cd ./lede
 
@@ -175,15 +175,15 @@ jobs:
           cd ./bin/targets
           zip -pmq R4S_Firmware_$BUILD_DATE.zip *.*
 
-          touch release.txt
-          echo "不要问，更就完事了！" >> release.txt
-
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: R4S_Firmware_${{env.BUILD_DATE}}
-          body_path: ./lede/bin/targets/release.txt
           files: ./lede/bin/targets/*.zip
+          body: |
+            不要问，更就完事了！
+            地址：192.168.2.1
+            密码：password
 
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
