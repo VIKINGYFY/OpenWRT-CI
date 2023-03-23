@@ -10,7 +10,7 @@ name: OpenWRT-R4S
 
 on:
   schedule:
-    - cron: 0 22 */1 * *
+    - cron: 0 22 */2 * *
 
   workflow_dispatch:
 
