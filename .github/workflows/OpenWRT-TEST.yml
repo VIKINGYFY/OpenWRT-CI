@@ -23,11 +23,11 @@ jobs:
     steps:
       - name: Create Test File
         run: |
-        mkdir -p ./test/t1/t2
+          mkdir -p ./test/t1/t2
 
-        cd ./test
-        touch test.txt
-        echo "testing" >> test.txt
+          cd ./test
+          touch test.txt
+          echo "testing" >> test.txt
 
       - name: Package Test File
         run: |
