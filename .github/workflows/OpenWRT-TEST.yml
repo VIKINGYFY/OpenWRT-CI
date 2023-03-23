@@ -1,0 +1,63 @@
+#
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+# Copyright (C) 2019 P3TERX
+#
+# Copyright (C) 2020 KFERMercer
+#
+
+name: OpenWRT-TEST
+
+on:
+  schedule:
+    - cron: 0 22 */1 * *
+
+  workflow_dispatch:
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+permissions: write-all
+
+jobs:
+  build_openwrt:
+    name: Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Test File
+        run: |
+        mkdir - p ./test/t1/t2
+
+        cd ./test
+        touch test.txt
+        echo "testing" >> test.txt
+
+      - name: Package Test File
+        run: |
+          export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
+
+          cd ./test
+          zip -pmq TEST_$BUILD_DATE.zip *.*
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: TEST_${{env.BUILD_DATE}}
+          files: ./test/*.zip
+          body: |
+            测试一下！
+            123
+            abc
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          keep_latest: 6
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
