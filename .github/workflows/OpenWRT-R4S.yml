@@ -169,7 +169,7 @@ jobs:
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
           cd ./lede
-          cp -rf $(find ./bin/targets/ -type f -name '*.img.gz') ./bin/targets/
+          cp -rf $(find ./bin/targets/ -type f -name '*r4s*.*') ./bin/targets/
           cp -rf ./.config ./bin/targets/config.txt
 
           cd ./bin/targets
