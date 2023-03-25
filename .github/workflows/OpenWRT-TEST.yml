@@ -32,7 +32,6 @@ jobs:
           mkdir -p ./test/t1/t2
 
           cd ./test
-          touch test.txt
           cat "$GITHUB_WORKSPACE/Config-$T1_NAME" "$GITHUB_WORKSPACE/Config-$T2_NAME" > test.txt
 
       - name: Package Test File
