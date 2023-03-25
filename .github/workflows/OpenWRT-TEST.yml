@@ -38,16 +38,17 @@ jobs:
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
+          echo "$DEVICE_NAME" >> $GITHUB_ENV
 
           cp -rf $(find ./test/ -type f -name "*$DEVICE_NAME*.*") ./test/
 
           cd ./test
-          zip -pmq $DEVICE_NAME_$BUILD_DATE.zip *.*
+          zip -pmq "$DEVICE_NAME"_"$BUILD_DATE".zip *.*
 
       - name: Release Test
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${DEVICE_NAME}_${{env.BUILD_DATE}}
+          tag_name: ${{env.DEVICE_NAME}}_${{env.BUILD_DATE}}
           files: ./test/*.zip
           body: |
             测试一下！
