@@ -12,6 +12,7 @@ on:
   workflow_dispatch:
 
 env:
+  DEVICE_NAME: TEST
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 permissions: write-all
@@ -21,23 +22,28 @@ jobs:
     name: Build Test
     runs-on: ubuntu-latest
     steps:
-      - name: Create Test File
+      - name: Create Test File $DEVICE_NAME
         run: |
           mkdir -p ./test/t1/t2
 
-          cd ./test
-          touch test.txt
-          echo "testing" >> test.txt
+          cd ./test/t1/t2
+          touch TEST.txt
 
-      - name: Package Test File
+          cat >> TEST.txt <<EOF
+          $DEVICE_NAME
+          ${{DEVICE_NAME}}
+          ${{env.DEVICE_NAME}}
+          EOF
+
+      - name: Package Test File ${{DEVICE_NAME}}
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
-          cd ./test
+          cp -rf $(find ./test/ -type f -name '*$DEVICE_NAME*.*') ./test/
           zip -pmq TEST_$BUILD_DATE.zip *.*
 
-      - name: Release Firmware
+      - name: Release Firmware ${{env.DEVICE_NAME}}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: TEST_${{env.BUILD_DATE}}
