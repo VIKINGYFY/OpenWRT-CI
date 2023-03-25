@@ -29,11 +29,12 @@ jobs:
           cd ./test/t1/t2
           touch TEST.txt
 
-          cat >> TEST.txt <<EOF
-          $DEVICE_NAME
-          ${{DEVICE_NAME}}
-          ${{env.DEVICE_NAME}}
-          EOF
+          echo $DEVICE_NAME
+          echo ${{DEVICE_NAME}}
+          echo ${{env.DEVICE_NAME}}
+
+          #cat >> TEST.txt <<EOF
+          #EOF
 
       - name: Package Test File
         run: |
