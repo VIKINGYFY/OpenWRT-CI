@@ -39,8 +39,8 @@ jobs:
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
-          cp -rf $(find ./test/ -type f -name '*$DEVICE_NAME*.*') ./test/
-          zip -pmq TEST_$BUILD_DATE.zip *.*
+          cp -rf $(find ./test/ -type f -name "*$DEVICE_NAME*.*") ./test/
+          zip -pmq $DEVICE_NAME_$BUILD_DATE.zip *.*
 
       - name: Release Test
         uses: softprops/action-gh-release@v1
