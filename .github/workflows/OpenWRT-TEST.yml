@@ -30,8 +30,6 @@ jobs:
           touch TEST.txt
 
           echo $DEVICE_NAME
-          echo ${{DEVICE_NAME}}
-          echo ${{env.DEVICE_NAME}}
 
           #cat >> TEST.txt <<EOF
           #EOF
@@ -44,24 +42,12 @@ jobs:
           cp -rf $(find ./test/ -type f -name '*$DEVICE_NAME*.*') ./test/
           zip -pmq TEST_$BUILD_DATE.zip *.*
 
-      - name: Release Firmware
+      - name: Release Test
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: TEST_${{env.BUILD_DATE}}
+          tag_name: $DEVICE_NAME_${{env.BUILD_DATE}}
           files: ./test/*.zip
           body: |
             测试一下！
             123
             abc
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.1
-        with:
-          keep_latest: 6
-          delete_tags: true
-
-      - name: Delete Old Workflows
-        uses: Mattraks/delete-workflow-runs@v2
-        with:
-          retain_days: 1
-          keep_minimum_runs: 3
