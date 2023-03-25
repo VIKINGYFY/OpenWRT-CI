@@ -43,7 +43,7 @@ jobs:
           cp -rf $(find ./test/ -type f -name '*$DEVICE_NAME*.*') ./test/
           zip -pmq TEST_$BUILD_DATE.zip *.*
 
-      - name: Release Firmware ${{env.DEVICE_NAME}}
+      - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: TEST_${{env.BUILD_DATE}}
