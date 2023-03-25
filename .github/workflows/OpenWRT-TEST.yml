@@ -35,7 +35,7 @@ jobs:
           ${{env.DEVICE_NAME}}
           EOF
 
-      - name: Package Test File ${{DEVICE_NAME}}
+      - name: Package Test File
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
