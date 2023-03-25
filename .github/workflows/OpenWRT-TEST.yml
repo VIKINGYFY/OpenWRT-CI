@@ -40,6 +40,8 @@ jobs:
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
 
           cp -rf $(find ./test/ -type f -name "*$DEVICE_NAME*.*") ./test/
+
+          cd ./test
           zip -pmq $DEVICE_NAME_$BUILD_DATE.zip *.*
 
       - name: Release Test
