@@ -22,7 +22,7 @@ jobs:
     name: Build Test
     runs-on: ubuntu-latest
     steps:
-      - name: Create Test File $DEVICE_NAME
+      - name: Create Test File
         run: |
           mkdir -p ./test/t1/t2
 
