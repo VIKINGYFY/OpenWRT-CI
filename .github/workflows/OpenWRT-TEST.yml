@@ -32,7 +32,7 @@ jobs:
           mkdir -p ./test/t1/t2
 
           cd ./test
-          cat "$GITHUB_WORKSPACE/Config-$T1_NAME" "$GITHUB_WORKSPACE/Config-$T2_NAME" > test.txt
+          cat "$GITHUB_WORKSPACE/Config-$T1_NAME" "$GITHUB_WORKSPACE/Config-$T2_NAME" > .config
 
       - name: Package Test File
         run: |
@@ -43,6 +43,7 @@ jobs:
           #cp -rf $(find ./test/ -type f -name "*$TEST_NAME*.*") ./test/
 
           cd ./test
+          mv .config config.txt
           zip -pmq "$TEST_NAME"_"$BUILD_DATE".zip *.*
 
       - name: Release Test
