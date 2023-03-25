@@ -47,7 +47,7 @@ jobs:
       - name: Release Test
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: $DEVICE_NAME_${{env.BUILD_DATE}}
+          tag_name: ${DEVICE_NAME}_${{env.BUILD_DATE}}
           files: ./test/*.zip
           body: |
             测试一下！
