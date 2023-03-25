@@ -38,7 +38,7 @@ jobs:
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          echo "$DEVICE_NAME" >> $GITHUB_ENV
+          echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
 
           cp -rf $(find ./test/ -type f -name "*$DEVICE_NAME*.*") ./test/
 
@@ -52,5 +52,6 @@ jobs:
           files: ./test/*.zip
           body: |
             测试一下！
-            123
-            abc
+            $DEVICE_NAME
+            "$DEVICE_NAME"
+            ${{env.DEVICE_NAME}}
