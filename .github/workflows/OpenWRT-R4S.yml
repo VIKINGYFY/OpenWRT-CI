@@ -6,7 +6,7 @@
 # Copyright (C) 2020 KFERMercer
 #
 
-name: OpenWRT-R4S  #设备名请写成大写字母
+name: OpenWRT-R4S  #设备名请用大写字母
 
 on:
   schedule:
@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 env:
-  DEVICE_NAME: R4S  #设备名请写成大写字母
+  DEVICE_NAME: R4S  #设备名请用大写字母
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   CORE_VER: https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
   CORE_TUN: https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux-arm64
