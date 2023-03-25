@@ -24,8 +24,8 @@ jobs:
     name: Build Test
     runs-on: ubuntu-latest
     steps:
-      #- name: Checkout OpenWRT
-        #uses: actions/checkout@v3
+      - name: Checkout OpenWRT
+        uses: actions/checkout@v3
 
       - name: Create Test File
         run: |
