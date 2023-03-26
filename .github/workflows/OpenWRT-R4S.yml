@@ -17,6 +17,7 @@ on:
 env:
   DEVICE_NAME: R4S  #设备名请用大写字母
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  LEDE_URL: https://github.com/coolsnowwolf/lede.git
   CORE_VER: https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
   CORE_TUN: https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux-arm64
   CORE_DEV: https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux-arm64.tar.gz
@@ -47,49 +48,26 @@ jobs:
 
       - name: Checkout OpenWRT
         uses: actions/checkout@v3
+        run: |
+          chmod +x ./Update/*.sh
 
       - name: Clone LEDE Code
         run: |
-          git clone --depth=1 --single-branch https://github.com/coolsnowwolf/lede.git
+          git clone --depth=1 --single-branch $LEDE_URL
 
       - name: Update Plugins
         run: |
           cd ./lede/package
 
-          #Design Theme
-          git clone --depth=1 --single-branch https://github.com/gngpp/luci-theme-design.git
-
-          #Design Config
-          git clone --depth=1 --single-branch https://github.com/gngpp/luci-app-design-config.git
-
-          #OpenClash
-          git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
-
-          #OpenClash Core
-          cd ./OpenClash/luci-app-openclash/root/etc/openclash
-          mkdir ./core && cd ./core
-
-          export TUN_VER=$(curl -s $CORE_VER | sed -n "2p")
-          curl -SsL -o ./tun.gz "$CORE_TUN"-"$TUN_VER".gz
-          gzip -d ./tun.gz
-          mv ./tun ./clash_tun
-
-          curl -SsL -o ./meta.tar.gz $CORE_MATE
-          tar -zxf ./meta.tar.gz
-          mv ./clash ./clash_meta
-
-          curl -SsL -o ./dev.tar.gz $CORE_DEV
-          tar -zxf ./dev.tar.gz
-
-          chmod +x ./clash*
-          rm -rf ./*.gz
+          #单独更新某个插件
+          $GITHUB_WORKSPACE/Update/Plugins.sh
 
       - name: Update Feeds
         run: |
           cd ./lede
 
-          #添加第三方插件源
-          #echo "src-git small8 https://github.com/kenzok8/small-package" >> ./feeds.conf.default
+          #添加第三方软件源
+          #$GITHUB_WORKSPACE/Update/Feeds.sh
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
@@ -98,21 +76,15 @@ jobs:
         run: |
           cd ./lede
 
-          #默认主机名
-          sed -i "s/OpenWrt/OpenWRT-$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
-          #默认IP地址
-          sed -i "s/192.168.1.1/192.168.2.1/g" ./package/base-files/files/bin/config_generate
-          #默认主题
-          sed -i "s/luci-theme-bootstrap/luci-theme-design/g" ./feeds/luci/collections/luci/Makefile
-          #默认时间格式
-          sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
+          #更新默认设置
+          $GITHUB_WORKSPACE/Update/Settings.sh
 
       - name: Custom Settings
         run: |
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat "$GITHUB_WORKSPACE/Config/$DEVICE_NAME" "$GITHUB_WORKSPACE/Config/General" > .config
+          cat "$GITHUB_WORKSPACE/Config/$DEVICE_NAME" "$GITHUB_WORKSPACE/Config/General" >> .config
 
           make defconfig
 
@@ -143,7 +115,7 @@ jobs:
           echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
 
           cd ./lede
-          rm -rf $(find ./bin/targets/ -type d -iname "packages")
+          rm -rf $(find ./bin/targets/ -type f -iname "*.manifest" -or -type d -iname "packages")
           cp -rf $(find ./bin/targets/ -type f -iname "*$DEVICE_NAME*.*") ./bin/targets/
           cp -rf ./.config ./bin/targets/config.txt
 
