@@ -10,7 +10,7 @@ name: OpenWRT-R4S  #设备名请用大写字母
 
 on:
   schedule:
-    - cron: 0 22 */2 * *
+    - cron: 0 22 * * *
 
   workflow_dispatch:
 
@@ -135,15 +135,3 @@ jobs:
             不要问，更就完事了！
             地址：192.168.2.1
             密码：password
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.1
-        with:
-          keep_latest: 3
-          delete_tags: true
-
-      - name: Delete Old Workflows
-        uses: Mattraks/delete-workflow-runs@v2
-        with:
-          retain_days: 1
-          keep_minimum_runs: 3
