@@ -27,32 +27,12 @@ jobs:
       - name: Checkout OpenWRT
         uses: actions/checkout@v3
 
-      - name: Create Test File
+      - name: Test 1
         run: |
-          mkdir -p ./test/t1/t2
+          apt list --installed
 
-          cd ./test
-          cat "$GITHUB_WORKSPACE/Config-$T1_NAME" "$GITHUB_WORKSPACE/Config-$T2_NAME" > .config
-
-      - name: Package Test File
+      - name: Test 2
         run: |
-          export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          echo "TEST_NAME=$TEST_NAME" >> $GITHUB_ENV
-
-          #cp -rf $(find ./test/ -type f -name "*$TEST_NAME*.*") ./test/
-
-          cd ./test
-          mv .config config.txt
-          zip -pmq "$TEST_NAME"_"$BUILD_DATE".zip *.*
-
-      - name: Release Test
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{env.TEST_NAME}}_${{env.BUILD_DATE}}
-          files: ./test/*.zip
-          body: |
-            测试一下！
-            $TEST_NAME
-            "$TEST_NAME"
-            ${{env.TEST_NAME}}
+          cd ./Update
+          chmod +x *.sh
+          dos2unix *.sh
