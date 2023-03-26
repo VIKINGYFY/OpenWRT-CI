@@ -124,7 +124,7 @@ jobs:
           cp -rf ./.config ./bin/targets/config.txt
 
           cd ./bin/targets
-          zip -pmq "$DEVICE_NAME"_Firmware_"$BUILD_DATE".zip *.*
+          zip -qm ./"$DEVICE_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
