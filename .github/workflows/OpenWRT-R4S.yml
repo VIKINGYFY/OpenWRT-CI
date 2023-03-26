@@ -17,6 +17,8 @@ on:
 env:
   DEVICE_NAME: R4S  #设备名请用大写字母
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  PURGE_LIST: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Purge_List.txt
+  INSTALL_LIST: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Install_List.txt
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   CORE_VER: https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
   CORE_TUN: https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux-arm64
@@ -38,9 +40,9 @@ jobs:
           sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
           sudo -E apt-mark hold grub-efi-amd64-signed
           sudo -E apt update
-          sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
+          sudo -E apt -y purge $(curl -fsL $PURGE_LIST)
           sudo -E apt -y full-upgrade
-          sudo -E apt -y install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+          sudo -E apt -y install $(curl -fsL $INSTALL_LIST)
           sudo -E systemctl daemon-reload
           sudo -E apt -y autoremove --purge
           sudo -E apt clean
@@ -51,8 +53,13 @@ jobs:
 
       - name: Clone LEDE Code
         run: |
-          chmod +x ./Update/*.sh
           git clone --depth=1 --single-branch $LEDE_URL
+
+      - name: Update Scripts
+        run: |
+          cd ./Update
+          chmod +x *.sh
+          dos2unix *.sh
 
       - name: Update Plugins
         run: |
