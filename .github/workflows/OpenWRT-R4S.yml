@@ -48,11 +48,10 @@ jobs:
 
       - name: Checkout OpenWRT
         uses: actions/checkout@v3
-        run: |
-          chmod +x ./Update/*.sh
 
       - name: Clone LEDE Code
         run: |
+          chmod +x ./Update/*.sh
           git clone --depth=1 --single-branch $LEDE_URL
 
       - name: Update Plugins
