@@ -70,7 +70,7 @@ jobs:
           mkdir ./core && cd ./core
 
           export TUN_VER=$(curl -s $CORE_VER | sed -n "2p")
-          curl -SsL -o ./tun.gz $CORE_TUN-$TUN_VER.gz
+          curl -SsL -o ./tun.gz "$CORE_TUN"-"$TUN_VER".gz
           gzip -d ./tun.gz
           mv ./tun ./clash_tun
 
