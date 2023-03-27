@@ -1,11 +1,3 @@
-#
-# <https://github.com/KFERMercer/OpenWrt-CI>
-#
-# Copyright (C) 2019 P3TERX
-#
-# Copyright (C) 2020 KFERMercer
-#
-
 name: OpenWRT-X86  #设备名请用大写字母
 
 on:
@@ -16,11 +8,10 @@ on:
 
 env:
   DEVICE_NAME: X86  #设备名请用大写字母
+  DEVICE_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  PURGE_LIST: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Purge_List.txt
-  REMOVE_LIST: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Remove_List.txt
-  INSTALL_LIST: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Install_List.txt
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
+  PLUG_URL: https://github.com/kenzok8/small-package.git
   CORE_VER: https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
   CORE_TUN: https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux-amd64
   CORE_DEV: https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux-amd64.tar.gz
@@ -38,43 +29,50 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi `docker images -q`
-          sudo -E rm -rf $(curl -fsL $REMOVE_LIST)
+          sudo -E rm -rf /etc/apt/sources.list.d /etc/mysql /etc/php /opt/ghc /usr/local/lib/android /usr/share/dotnet
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -fsL $PURGE_LIST)
+          sudo -E apt -yqq purge azure* docker* dotnet* firefox* ghc* google* llvm* moby* mongodb* mysql* openjdk* php* powershell* snap* zulu*
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -fsL $INSTALL_LIST)
+          sudo -E apt -yqq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
-      - name: Checkout OpenWRT
-        uses: actions/checkout@v3
-
       - name: Clone LEDE Code
         run: |
           git clone --depth=1 --single-branch $LEDE_URL
-
-      - name: Update Scripts
-        run: |
-          cd ./Update
-          chmod +x *.sh
-          dos2unix *.sh
 
       - name: Update Plugins
         run: |
           cd ./lede/package
 
-          #单独更新某个插件
-          $GITHUB_WORKSPACE/Update/Plugins.sh
+          #第三方插件源
+          git clone --depth=1 --single-branch $PLUG_URL
+
+          #OpenClash Core
+          cd ./small-package/luci-app-openclash/root/etc/openclash
+          mkdir ./core && cd ./core
+
+          export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2p")
+          curl -sofL ./tun.gz "$CORE_TUN"-"$TUN_VER".gz
+          gzip -d ./tun.gz
+          mv ./tun ./clash_tun
+
+          curl -sofL ./meta.tar.gz $CORE_MATE
+          tar -zxf ./meta.tar.gz
+          mv ./clash ./clash_meta
+
+          curl -sofL ./dev.tar.gz $CORE_DEV
+          tar -zxf ./dev.tar.gz
+
+          chmod +x ./clash*
+          rm -rf ./*.gz
 
       - name: Update Feeds
         run: |
           cd ./lede
-
-          #添加第三方软件源
-          #$GITHUB_WORKSPACE/Update/Feeds.sh
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
@@ -83,15 +81,51 @@ jobs:
         run: |
           cd ./lede
 
-          #更新默认设置
-          $GITHUB_WORKSPACE/Update/Settings.sh
+          #默认主机名
+          sed -i "s/OpenWrt/OpenWRT-$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
+          #默认IP地址
+          sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
+          #默认主题
+          sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
+          #默认时间格式
+          sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
 
       - name: Custom Settings
         run: |
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat "$GITHUB_WORKSPACE/Config/$DEVICE_NAME" "$GITHUB_WORKSPACE/Config/General" >> .config
+
+          cat >> .config <<EOF
+          #设置设备
+          CONFIG_TARGET_x86=y
+          #增加参数
+          CONFIG_TARGET_KERNEL_PARTSIZE=64
+          CONFIG_TARGET_ROOTFS_PARTSIZE=512
+          #删除参数
+          CONFIG_TARGET_ROOTFS_EXT4FS=n
+          #增加组件
+          CONFIG_PACKAGE_autosamba=y
+          CONFIG_PACKAGE_ipv6helper=y
+          CONFIG_PACKAGE_ip6tables-extra=y
+          CONFIG_PACKAGE_ip6tables-mod-nat=y
+          #增加主题
+          CONFIG_PACKAGE_luci-theme-design=y
+          CONFIG_PACKAGE_luci-app-design-config=y
+          #增加插件
+          CONFIG_PACKAGE_luci-app-ttyd=y
+          CONFIG_PACKAGE_luci-app-diskman=y
+          CONFIG_PACKAGE_luci-app-turboacc=y
+          CONFIG_PACKAGE_luci-app-openclash=y
+          CONFIG_PACKAGE_luci-app-unblockmusic=y
+          CONFIG_PACKAGE_luci-app-istorex=y
+          CONFIG_PACKAGE_luci-app-store=y
+          #删除插件
+          CONFIG_PACKAGE_luci-app-wol=n
+          CONFIG_PACKAGE_luci-app-ddns=n
+          CONFIG_PACKAGE_luci-app-vlmcsd=n
+          CONFIG_PACKAGE_luci-app-accesscontrol=n
+          EOF
 
           make defconfig
 
@@ -136,7 +170,7 @@ jobs:
           files: ./lede/bin/targets/*.zip
           body: |
             不要问，更就完事了！
-            地址：192.168.2.1
+            地址：$DEVICE_IP
             密码：password
 
       - name: Delete Old Releases
