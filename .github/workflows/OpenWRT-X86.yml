@@ -10,7 +10,7 @@ name: OpenWRT-X86  #设备名请用大写字母
 
 on:
   schedule:
-    - cron: 0 22 * * 1
+    - cron: 0 22 * * 0
 
   workflow_dispatch:
 
