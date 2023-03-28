@@ -1,0 +1,2 @@
+#设置设备
+CONFIG_TARGET_x86=y
