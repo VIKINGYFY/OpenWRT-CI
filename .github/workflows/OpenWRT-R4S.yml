@@ -123,3 +123,15 @@ jobs:
             不要问，更就完事了！
             地址：${{env.DEVICE_IP}}
             密码：password
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          keep_latest: 6
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
