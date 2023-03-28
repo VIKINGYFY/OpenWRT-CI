@@ -12,7 +12,7 @@ env:
   DEVICE_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
-  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/APT_List.txt
+  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
 
 permissions: write-all
 
@@ -26,11 +26,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL | sed -n "1p")
+          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove_List.txt)
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "2p")
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge_List.txt)
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "3p")
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install_List.txt)
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
