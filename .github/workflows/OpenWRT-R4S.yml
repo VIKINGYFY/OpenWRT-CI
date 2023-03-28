@@ -28,9 +28,9 @@ jobs:
           docker rmi $(docker images -q)
           sudo -E rm -rf $(curl -sfL $LIST_URL | sed -n "1p")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "2p")
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "3p")
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "3p")
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "5p")
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
