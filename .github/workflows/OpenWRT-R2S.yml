@@ -1,4 +1,4 @@
-name: OpenWRT-R2S  #设备型号请用大写字母,请勿乱写
+name: OpenWRT-R2S  #设备型号，请用大写字母，请勿乱写
 
 on:
   schedule:
