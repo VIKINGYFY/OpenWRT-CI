@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Test 1
         run: |
-          echo "$(find ./etc/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/etc.txt
-          echo "$(find ./opt/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/opt.txt
-          echo "$(find ./usr/share/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/share.txt
+          echo "$(find /etc/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/etc.txt
+          echo "$(find /opt/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/opt.txt
+          echo "$(find /usr/share/ -type d -iname "azure*" -or -type d -iname "docker*" -or -type d -iname "dotnet*" -or -type d -iname "firefox*" -or -type d -iname "ghc*" -or -type d -iname "google*" -or -type d -iname "llvm*" -or -type d -iname "moby*" -or -type d -iname "mongodb*" -or -type d -iname "mysql*" -or -type d -iname "openjdk*" -or -type d -iname "php*" -or -type d -iname "powershell*" -or -type d -iname "snap*" -or -type d -iname "zulu*")" >> /tmp/share.txt
 
       - name: Test 2
         uses: softprops/action-gh-release@v1
         with:
           tag_name: test file
-          files: ./tmp/*.txt
+          files: /tmp/*.txt
