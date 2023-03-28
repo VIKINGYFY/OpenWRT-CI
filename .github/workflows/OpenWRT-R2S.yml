@@ -2,7 +2,7 @@ name: OpenWRT-R2S  #设备名请用大写字母
 
 on:
   schedule:
-    - cron: 0 22 * * *
+    - cron: 0 22 * * 0
 
   workflow_dispatch:
 
