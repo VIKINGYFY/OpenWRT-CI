@@ -130,7 +130,9 @@ jobs:
           CONFIG_PACKAGE_luci-app-unblockmusic=y
           CONFIG_PACKAGE_luci-app-store=y
           CONFIG_PACKAGE_luci-app-ddnsto=y
+          CONFIG_PACKAGE_luci-app-istorex=y
           CONFIG_PACKAGE_luci-app-linkease=y
+          CONFIG_PACKAGE_luci-app-quickstart=y
           #删除插件
           CONFIG_PACKAGE_luci-app-wol=n
           CONFIG_PACKAGE_luci-app-ddns=n
@@ -165,6 +167,7 @@ jobs:
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
           echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
+          echo "DEVICE_IP=$DEVICE_IP" >> $GITHUB_ENV
 
           cd ./lede
           rm -rf $(find ./bin/targets/ -type f -iname "*.manifest" -or -type d -iname "packages")
@@ -181,5 +184,5 @@ jobs:
           files: ./lede/bin/targets/*.zip
           body: |
             不要问，更就完事了！
-            地址：$DEVICE_IP
+            地址：${{env.DEVICE_IP}}
             密码：password
