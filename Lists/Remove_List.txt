@@ -1,1 +1,1 @@
-/etc/apt/sources.list.d /usr/local/lib/android /etc/docker /etc/firefox /etc/mysql /etc/php /opt/google /usr/share/dotnet /usr/share/google /usr/share/moby /usr/share/mysql /usr/share/php
+/etc/apt/sources.list.d /usr/local/lib/android /usr/share/dotnet /etc/mysql /etc/php
