@@ -74,7 +74,6 @@ jobs:
           cat $GITHUB_WORKSPACE/Config/$DEVICE_NAME.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
-          cat .config
 
       - name: Download Packages
         run: |
