@@ -37,12 +37,12 @@ jobs:
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
-      - name: Checkout Projects
+      - name: Check Projects
         uses: actions/checkout@v3
 
       - name: Check Scripts
         run: |
-          cd ./Update
+          cd ./Scripts
 
           chmod +x ./*.sh
           dos2unix ./*.sh
@@ -58,19 +58,13 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-          $GITHUB_WORKSPACE/Update/Feeds.sh
-
-      - name: Update Plugins
-        run: |
-          cd ./lede/package
-
-          $GITHUB_WORKSPACE/Update/Plugins.sh
-
-      - name: Update Settings
+      - name: Custom Scripts
         run: |
           cd ./lede
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
 
-          $GITHUB_WORKSPACE/Update/Settings.sh
+          cd ./package
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
 
       - name: Custom Settings
         run: |
