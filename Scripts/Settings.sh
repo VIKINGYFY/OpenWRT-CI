@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #默认主机名
-sed -i "s/OpenWrt/OpenWRT-$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
+sed -i "s/OpenWrt/$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
 #默认IP地址
 sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
 #默认主题
