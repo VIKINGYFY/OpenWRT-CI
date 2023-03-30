@@ -114,14 +114,14 @@ jobs:
           echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
           echo "DEVICE_IP=$DEVICE_IP" >> $GITHUB_ENV
 
-          cd ./lede
-          cp -rf ./.config ./bin/targets/R4S_$BUILD_DATE.txt
+          cd ./lede && mkdir ./test
+          cp -rf ./.config ./test/R4S_$BUILD_DATE.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.DEVICE_NAME}}_Config_${{env.BUILD_DATE}}
-          files: ./lede/bin/targets/*.txt
+          files: ./lede/test/*.txt
           body: |
             测试专用
 
