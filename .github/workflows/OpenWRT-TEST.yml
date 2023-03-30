@@ -21,7 +21,6 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi `docker images -q`
-          sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
           sudo -E apt -y update
           sudo -E apt -y purge azure* docker* dotnet* firefox* ghc* google* llvm* moby* mongodb* mysql* openjdk* php* powershell* snap* zulu*
           sudo -E apt -y full-upgrade
