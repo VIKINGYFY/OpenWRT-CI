@@ -24,5 +24,4 @@ CONFIG_PACKAGE_luci-app-uugamebooster=y
 CONFIG_PACKAGE_luci-app-wol=n
 CONFIG_PACKAGE_luci-app-ddns=n
 CONFIG_PACKAGE_luci-app-vlmcsd=n
-CONFIG_PACKAGE_luci-app-xlnetacc=n
 CONFIG_PACKAGE_luci-app-accesscontrol=n
