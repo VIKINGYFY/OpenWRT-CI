@@ -22,8 +22,8 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove_List.txt)
+          docker rmi `docker images -q`
+          sudo -E rm -rf /etc/apt/sources.list.d* /usr/local/lib/android* /etc/docker* /etc/firefox* /etc/mysql* /etc/php* /opt/google* /usr/share/dotnet* /usr/share/google* /usr/share/moby* /usr/share/mysql* /usr/share/php*
           sudo -E apt -yqq update
           sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge_List.txt)
           sudo -E apt -yqq full-upgrade
@@ -68,7 +68,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat "$GITHUB_WORKSPACE/Config/R4S.txt" "$GITHUB_WORKSPACE/Config/General.txt" >> .config
+          cat $GITHUB_WORKSPACE/Config/R4S.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
 
