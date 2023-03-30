@@ -48,27 +48,10 @@ jobs:
         run: |
           git clone --depth=1 --single-branch $LEDE_URL
 
-      - name: Update Feeds
+      - name: Custom package
         run: |
-          cd ./lede
+          cd ./lede/package
 
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-
-      - name: Custom Scripts
-        run: |
-          cd ./lede
-
-          #默认主机名
-          sed -i "s/OpenWrt/$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
-          #默认IP地址
-          sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
-          #默认主题
-          sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
-          #默认时间格式
-          sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
-
-          cd ./package
           #Argon Theme
           git clone --depth=1 --single-branch --branch "18.06" https://github.com/jerrykuku/luci-theme-argon.git
           #Argon Config
@@ -103,6 +86,26 @@ jobs:
 
           chmod +x ./clash*
           rm -rf ./*.gz
+
+      - name: Update Feeds
+        run: |
+          cd ./lede
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Custom sed
+        run: |
+          cd ./lede
+
+          #默认主机名
+          sed -i "s/OpenWrt/$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
+          #默认IP地址
+          sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
+          #默认主题
+          sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
+          #默认时间格式
+          sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
 
       - name: Custom Settings
         run: |
