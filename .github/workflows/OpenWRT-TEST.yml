@@ -1,7 +1,7 @@
 name: OpenWRT-TEST  #设备型号，请用大写字母，请勿乱写
 
 on:
-  workflow_dispatch:
+  push:
 
 env:
   DEVICE_NAME: TEST  #设备型号，请用大写字母，请勿乱写
@@ -42,10 +42,6 @@ jobs:
         run: |
           cd ./lede/package
 
-          #Argon Theme
-          git clone --depth=1 --single-branch --branch "18.06" https://github.com/jerrykuku/luci-theme-argon.git
-          #Argon Config
-          git clone --depth=1 --single-branch https://github.com/jerrykuku/luci-app-argon-config.git
           #Design Theme
           git clone --depth=1 --single-branch https://github.com/gngpp/luci-theme-design.git
           #Design Config
@@ -93,7 +89,7 @@ jobs:
           #默认IP地址
           sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
           #默认主题
-          sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
+          sed -i 's/luci-theme-bootstrap/luci-theme-design/g' ./feeds/luci/collections/luci/Makefile
           #默认时间格式
           sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
 
@@ -118,8 +114,6 @@ jobs:
           CONFIG_PACKAGE_ip6tables-extra=y
           CONFIG_PACKAGE_ip6tables-mod-nat=y
           #增加主题
-          CONFIG_PACKAGE_luci-theme-argon=y
-          CONFIG_PACKAGE_luci-app-argon-config=y
           CONFIG_PACKAGE_luci-theme-design=y
           CONFIG_PACKAGE_luci-app-design-config=y
           #增加插件
