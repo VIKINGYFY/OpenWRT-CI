@@ -8,8 +8,8 @@ on:
 
 env:
   DEVICE_NAME: R2S  #设备型号，请用大写字母，请勿乱写
-  DEVICE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
   DEVICE_IP: 192.168.2.1  #设备默认登陆地址
+  CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
@@ -26,11 +26,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove_List.txt)
+          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove.txt)
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge_List.txt)
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge.txt)
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install_List.txt)
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install.txt)
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
@@ -74,7 +74,6 @@ jobs:
           cat $GITHUB_WORKSPACE/Config/$DEVICE_NAME.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
-          cat .config
 
       - name: Download Packages
         run: |
