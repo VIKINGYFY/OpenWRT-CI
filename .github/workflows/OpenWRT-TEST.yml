@@ -23,11 +23,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove_List.txt)
+          sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge_List.txt)
+          sudo -E apt -yqq purge azure* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install_List.txt)
+          sudo -E apt -yqq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
@@ -44,15 +44,6 @@ jobs:
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
-      - name: Update Plugins
-        run: |
-          cd ./lede/package
-
-          #Design Theme
-          git clone --depth=1 --single-branch https://github.com/gngpp/luci-theme-design.git
-          #Design Config
-          git clone --depth=1 --single-branch https://github.com/gngpp/luci-app-design-config.git
 
       - name: Update Settings
         run: |
@@ -77,9 +68,6 @@ jobs:
           CONFIG_TARGET_rockchip=y
           CONFIG_TARGET_rockchip_armv8=y
           CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
-          #增加主题
-          CONFIG_PACKAGE_luci-theme-design=y
-          CONFIG_PACKAGE_luci-app-design-config=y
           EOF
 
           make defconfig
