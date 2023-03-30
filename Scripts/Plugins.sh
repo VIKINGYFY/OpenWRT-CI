@@ -21,15 +21,15 @@ cd ./OpenClash/luci-app-openclash/root/etc/openclash
 mkdir ./core && cd ./core
 
 export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2p")
-curl -sfL -o ./tun.gz "$CORE_TUN"-"$DEVICE_TYPE"-"$TUN_VER".gz
+curl -sfL -o ./tun.gz "$CORE_TUN"-"$CORE_TYPE"-"$TUN_VER".gz
 gzip -d ./tun.gz
 mv ./tun ./clash_tun
 
-curl -sfL -o ./meta.tar.gz "$CORE_MATE"-"$DEVICE_TYPE".tar.gz
+curl -sfL -o ./meta.tar.gz "$CORE_MATE"-"$CORE_TYPE".tar.gz
 tar -zxf ./meta.tar.gz
 mv ./clash ./clash_meta
 
-curl -sfL -o ./dev.tar.gz "$CORE_DEV"-"$DEVICE_TYPE".tar.gz
+curl -sfL -o ./dev.tar.gz "$CORE_DEV"-"$CORE_TYPE".tar.gz
 tar -zxf ./dev.tar.gz
 
 chmod +x ./clash*
