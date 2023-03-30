@@ -5,7 +5,7 @@ on:
 
 env:
   DEVICE_NAME: TEST  #设备型号，请用大写字母，请勿乱写
-  DEVICE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
+  CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
   DEVICE_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
@@ -25,7 +25,7 @@ jobs:
           docker rmi $(docker images -q)
           sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
+          sudo -E apt -yqq purge azure* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
           sudo -E apt -yqq full-upgrade
           sudo -E apt -yqq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
           sudo -E apt -yqq autoremove --purge
