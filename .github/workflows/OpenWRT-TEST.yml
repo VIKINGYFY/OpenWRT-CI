@@ -68,7 +68,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/R4S.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat "$GITHUB_WORKSPACE/Config/R4S.txt" "$GITHUB_WORKSPACE/Config/General.txt" >> .config
 
           make defconfig
 
@@ -79,14 +79,14 @@ jobs:
           echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
           echo "DEVICE_IP=$DEVICE_IP" >> $GITHUB_ENV
 
-          cd ./lede && mkdir ./test
-          cp -rf ./.config ./test/R4S_config_$BUILD_DATE.txt
+          cd ./lede
+          cp -rf ./.config ./bin/targets/R4S_config_$BUILD_DATE.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.DEVICE_NAME}}_Config_${{env.BUILD_DATE}}
-          files: ./lede/test/*.txt
+          files: ./lede/bin/targets/*.txt
           body: |
             测试专用
 
