@@ -4,11 +4,11 @@ on:
   push:
 
 env:
-  DEVICE_NAME: TEST  #设备型号，请用大写字母，请勿乱写
-  CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
-  DEVICE_IP: 192.168.2.1  #设备默认登陆地址
+  OWRT_NAME: TEST  #设备型号，请用大写字母，请勿乱写
+  OWRT_IP: 192.168.2.1  #设备默认登陆地址
+  CORE_TYPE: mips64  #设备内核类型，请用小写字母，请勿乱写
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  LEDE_URL: https://github.com/coolsnowwolf/lede.git
+  LEDE_URL: https://github.com/MoShengQ7/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
 
 permissions: write-all
@@ -22,17 +22,27 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`
-          sudo -E rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove.txt)
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge azure* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* moby* snap*
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge.txt)
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install ack antlr3 aria2 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install.txt)
           sudo -E apt -yqq autoremove --purge
-          sudo -E apt clean
-          sudo -E apt autoclean
+          sudo -E apt -yqq clean
+          sudo -E apt -yqq autoclean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+      - name: Check Projects
+        uses: actions/checkout@v3
+
+      - name: Check Scripts
+        run: |
+          cd ./Scripts
+
+          chmod +x ./*.sh
+          dos2unix ./*.sh
 
       - name: Clone LEDE Code
         run: |
@@ -45,30 +55,20 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Update Settings
+      - name: Custom Scripts
         run: |
           cd ./lede
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
 
-          #默认主机名
-          sed -i "s/OpenWrt/$DEVICE_NAME/g" ./package/base-files/files/bin/config_generate
-          #默认IP地址
-          sed -i "s/192.168.1.1/$DEVICE_IP/g" ./package/base-files/files/bin/config_generate
-          #默认主题
-          #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci/Makefile
-          #默认时间格式
-          sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/lean/autocore/files/ -type f -name "index.htm")
+          cd ./package
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
 
       - name: Custom Settings
         run: |
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat >> .config << EOF
-          #设置设备
-          CONFIG_TARGET_rockchip=y
-          CONFIG_TARGET_rockchip_armv8=y
-          CONFIG_TARGET_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
-          EOF
+          cat $GITHUB_WORKSPACE/Config/E8820v2.txt >> .config
 
           make defconfig
 
@@ -76,25 +76,22 @@ jobs:
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
-          echo "DEVICE_IP=$DEVICE_IP" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./test
-          cp -rf ./.config ./test/R4S_$BUILD_DATE.txt
+          cp -rf ./.config ./test/$OWRT_NAME_$BUILD_DATE.txt
+
+          cd ./bin/targets
+          zip -qm ./"$OWRT_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.DEVICE_NAME}}_Config_${{env.BUILD_DATE}}
-          files: ./lede/test/*.txt
+          tag_name: ${{env.OWRT_NAME}}_Firmware_${{env.BUILD_DATE}}
+          files: ./lede/test/*.zip
           body: |
             测试专用
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.1
-        with:
-          keep_latest: 3
-          delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@v2
