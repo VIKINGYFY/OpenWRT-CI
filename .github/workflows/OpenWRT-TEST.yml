@@ -82,14 +82,11 @@ jobs:
           cd ./lede && mkdir ./test
           cp -rf ./.config ./test/$OWRT_NAME_$BUILD_DATE.txt
 
-          cd ./bin/targets
-          zip -qm ./"$OWRT_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
-
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.OWRT_NAME}}_Firmware_${{env.BUILD_DATE}}
-          files: ./lede/test/*.zip
+          files: ./lede/test/*.txt
           body: |
             测试专用
 
