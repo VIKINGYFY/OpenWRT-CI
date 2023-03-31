@@ -172,7 +172,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede
-          cp -rf $(find ./bin/targets/ -type f -iname "*.gz") ./bin/targets/
+          cp -rf $(find ./bin/targets/ -type f \( -iname "*.gz" -or -iname "*.vmdk" -or -iname "*.bin"\)) ./bin/targets/
           cp -rf ./.config ./bin/targets/config.txt
 
           cd ./bin/targets
