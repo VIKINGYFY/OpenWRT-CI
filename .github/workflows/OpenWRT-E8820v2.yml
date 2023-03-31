@@ -103,6 +103,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
+          rm -rf $(find ./bin/targets/ -type d -iname "packages")
           cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(gz\|bin\|iso\|vmdk\)") ./upload/
           cp -rf ./.config ./upload/config.txt
 
