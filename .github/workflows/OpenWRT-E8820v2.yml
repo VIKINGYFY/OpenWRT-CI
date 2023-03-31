@@ -71,7 +71,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_NAME.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$OWRT_NAME.txt >> .config
 
           make defconfig
 
@@ -102,18 +102,18 @@ jobs:
           echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-          cd ./lede
-          cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(gz\|bin\|iso\|vmdk\)") ./bin/targets/
-          cp -rf ./.config ./bin/targets/config.txt
+          cd ./lede && mkdir ./upload
+          cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(gz\|bin\|iso\|vmdk\)") ./upload/
+          cp -rf ./.config ./upload/config.txt
 
-          cd ./bin/targets
+          cd ./upload
           zip -qm ./"$OWRT_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.OWRT_NAME}}_Firmware_${{env.BUILD_DATE}}
-          files: ./lede/bin/targets/*.zip
+          files: ./lede/upload/*.zip
           body: |
             不要问，更就完事了！
             地址：${{env.OWRT_IP}}
