@@ -80,7 +80,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./test
-          cp -rf ./.config ./test/$OWRT_NAME_$BUILD_DATE.txt
+          cp -rf ./.config ./test/E8820v2_"$BUILD_DATE".txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
