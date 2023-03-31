@@ -103,8 +103,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede
-          rm -rf $(find ./bin/targets/ -type f -iname "*.manifest" -or -type d -iname "packages")
-          cp -rf $(find ./bin/targets/ -type f -iname "*$OWRT_NAME*.*") ./bin/targets/
+          cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(gz\|bin\|iso\|vmdk\)") ./bin/targets/
           cp -rf ./.config ./bin/targets/config.txt
 
           cd ./bin/targets
