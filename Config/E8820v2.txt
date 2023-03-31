@@ -2,5 +2,9 @@
 CONFIG_TARGET_ramips=y
 CONFIG_TARGET_ramips_mt7621=y
 CONFIG_TARGET_ramips_mt7621_DEVICE_zte_e8820v2=y
+#增加参数
+CONFIG_TARGET_ROOTFS_CPIOGZ=y
 #WIFI驱动
 CONFIG_PACKAGE_luci-app-mtwifi=y
+CONFIG_PACKAGE_mtk_apcli=y
+CONFIG_PACKAGE_mtkiappd=y
