@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 env:
-  DEVICE_NAME: R2S  #设备型号，请用大写字母，请勿乱写
-  DEVICE_IP: 192.168.2.1  #设备默认登陆地址
+  OWRT_NAME: R2S  #设备型号，请用大写字母，请勿乱写
+  OWRT_IP: 192.168.2.1  #设备默认登陆地址
   CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
@@ -71,7 +71,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$DEVICE_NAME.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$OWRT_NAME.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
 
@@ -99,25 +99,25 @@ jobs:
         run: |
           export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
-          echo "DEVICE_NAME=$DEVICE_NAME" >> $GITHUB_ENV
-          echo "DEVICE_IP=$DEVICE_IP" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede
           rm -rf $(find ./bin/targets/ -type f -iname "*.manifest" -or -type d -iname "packages")
-          cp -rf $(find ./bin/targets/ -type f -iname "*$DEVICE_NAME*.*") ./bin/targets/
+          cp -rf $(find ./bin/targets/ -type f -iname "*$OWRT_NAME*.*") ./bin/targets/
           cp -rf ./.config ./bin/targets/config.txt
 
           cd ./bin/targets
-          zip -qm ./"$DEVICE_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
+          zip -qm ./"$OWRT_NAME"_Firmware_"$BUILD_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.DEVICE_NAME}}_Firmware_${{env.BUILD_DATE}}
+          tag_name: ${{env.OWRT_NAME}}_Firmware_${{env.BUILD_DATE}}
           files: ./lede/bin/targets/*.zip
           body: |
             不要问，更就完事了！
-            地址：${{env.DEVICE_IP}}
+            地址：${{env.OWRT_IP}}
             密码：password
 
       - name: Delete Old Releases
