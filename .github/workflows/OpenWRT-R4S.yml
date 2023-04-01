@@ -114,7 +114,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.OWRT_DATE}}
-          files: ./lede/upload/*.zip
+          files: ./lede/upload/*.*
           body: |
             不要问，更就完事了！
             地址：${{env.OWRT_IP}}
