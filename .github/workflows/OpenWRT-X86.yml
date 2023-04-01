@@ -97,8 +97,8 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export BUILD_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          echo "BUILD_DATE=$BUILD_DATE" >> $GITHUB_ENV
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
@@ -108,12 +108,12 @@ jobs:
           cp -rf ./.config ./upload/config.txt
 
           cd ./upload
-          zip -qm ./"$OWRT_TYPE"_Firmware_"$BUILD_DATE".zip ./*.*
+          zip -qm ./"$OWRT_TYPE"_Firmware_"$OWRT_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.BUILD_DATE}}
+          tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.OWRT_DATE}}
           files: ./lede/upload/*.zip
           body: |
             不要问，更就完事了！
