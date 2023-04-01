@@ -79,7 +79,7 @@ jobs:
         run: |
           cd ./lede
 
-          make download -j16
+          make download -j$(nproc)
 
       - name: Compile Firmware
         run: |
