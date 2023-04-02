@@ -1,4 +1,4 @@
-name: Schedule-Rockchip  #CI项目名
+name: OpenWRT-Rockchip  #CI项目名
 
 on:
   schedule:  #自动编译：每天早上6点
