@@ -1,32 +1,13 @@
-name: Build-TEST  #CI项目名
+name: OpenWRT-TEST
 
 on:
-  #push:
-  workflow_dispatch:
-    inputs:
-      device:
-        description: 选择设备型号
-        required: true
-        default: 'R4S'
-        type: choice
-        options:
-          - 'X86'
-          - 'R2S'
-          - 'R4S'
-          - 'R5C'
-          - 'R66S'
-
-      address:
-        description: 输入登陆地址
-        required: false
-        default: '192.168.2.1'
-        type: string
+  push:
 
 env:
-  OWRT_TYPE: ${{ inputs.device }}
-  OWRT_IP: ${{ inputs.address }}
-  CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OWRT_TYPE: X86
+  OWRT_IP: 192.168.2.1
+  CORE_TYPE: amd64
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
 
