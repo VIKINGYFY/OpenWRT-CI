@@ -1,4 +1,4 @@
-name: Schedule-X86_X64  #CI项目名
+name: OpenWRT-X86_X64  #CI项目名
 
 on:
   schedule:  #自动编译：每天早上6点
