@@ -8,7 +8,7 @@ env:
   OWRT_IP: 192.168.2.1
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
-  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
+  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends
 
 permissions: write-all
 
