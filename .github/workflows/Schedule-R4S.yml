@@ -1,10 +1,10 @@
-name: OpenWRT-R4S  #设备型号，请用大写字母，请勿乱写
+name: Schedule-R4S  #自动编译专用
 
 on:
-  schedule:
+  schedule:  #自动编译：每天早上6点
     - cron: 0 22 * * *
 
-  workflow_dispatch:
+  #workflow_dispatch:  #手动编译
 
 env:
   OWRT_TYPE: R4S  #设备型号，请用大写字母，请勿乱写
@@ -108,12 +108,12 @@ jobs:
           cp -rf ./.config ./upload/config.txt
 
           cd ./upload
-          zip -qm ./"$OWRT_TYPE"_Firmware_"$OWRT_DATE".zip ./*.*
+          zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             不要问，更就完事了！
@@ -123,7 +123,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
-          keep_latest: 4
+          keep_latest: 5
           delete_tags: true
 
       - name: Delete Old Workflows
