@@ -1,20 +1,16 @@
 name: Build-OWRT  #CI项目名
 
 on:
-  #push:
   workflow_dispatch:
     inputs:
       device:
-        description: 选择设备型号
+        description: 选择设备平台
         required: true
-        default: 'X86'
+        default: 'X86_X64'
         type: choice
         options:
-          - 'X86'
-          - 'R2S'
-          - 'R4S'
-          - 'R5C'
-          - 'R66S'
+          - 'X86_X64'
+          - 'Rockchip'
 
       address:
         description: 输入登陆地址
@@ -112,14 +108,18 @@ jobs:
 
       - name: Package Firmware
         run: |
+          export OWRT_LIST=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt | sed 's/^#//')
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_LIST=$OWRT_LIST" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_ALL=$OWRT_ALL" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
           cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
-          cp -rf ./.config ./upload/config.txt
+          cp -rf ./.config ./upload/Config.txt
 
           cd ./upload
           zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
@@ -130,15 +130,11 @@ jobs:
           tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
-            不要问，更就完事了！
+            这是个平台固件包，内含多个设备！
+            请注意选择你需要的设备固件！
+            设备：${{env.OWRT_LIST}}
             地址：${{env.OWRT_IP}}
             密码：password
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.1
-        with:
-          keep_latest: 5
-          delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@v2
