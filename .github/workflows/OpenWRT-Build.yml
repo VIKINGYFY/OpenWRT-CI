@@ -1,16 +1,31 @@
-name: OpenWRT-X86  #设备型号，请用大写字母，请勿乱写
+name: Build-OWRT  #CI项目名
 
 on:
-  #schedule:
-    #- cron: 0 22 * * *
-
+  #push:
   workflow_dispatch:
+    inputs:
+      device:
+        description: 选择设备型号
+        required: true
+        default: 'X86'
+        type: choice
+        options:
+          - 'X86'
+          - 'R2S'
+          - 'R4S'
+          - 'R5C'
+          - 'R66S'
+
+      address:
+        description: 输入登陆地址
+        required: false
+        default: '192.168.2.1'
+        type: string
 
 env:
-  OWRT_TYPE: X86  #设备型号，请用大写字母，请勿乱写
-  OWRT_IP: 192.168.2.1  #设备默认登陆地址
-  CORE_TYPE: amd64  #设备内核类型，请用小写字母，请勿乱写
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  OWRT_TYPE: ${{ inputs.device }}
+  OWRT_IP: ${{ inputs.address }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
 
@@ -108,12 +123,12 @@ jobs:
           cp -rf ./.config ./upload/config.txt
 
           cd ./upload
-          zip -qm ./"$OWRT_TYPE"_Firmware_"$OWRT_DATE".zip ./*.*
+          zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             不要问，更就完事了！
@@ -123,7 +138,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
-          keep_latest: 4
+          keep_latest: 5
           delete_tags: true
 
       - name: Delete Old Workflows
