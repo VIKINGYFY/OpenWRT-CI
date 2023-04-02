@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TYPE: ALL  #大杂烩
+  OWRT_TYPE: ALL  #大杂烩专用
   OWRT_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
@@ -77,7 +77,7 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export OWRT_ALL=$(ls $GITHUB_WORKSPACE/Config/ | grep -v "General" | cut -f1 -d'.')
+          export OWRT_ALL=echo $(ls $GITHUB_WORKSPACE/Config/ | grep -v "General" | cut -f1 -d'.')
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
@@ -86,7 +86,7 @@ jobs:
 
           cd ./lede && mkdir ./upload
           cp -rf $GITHUB_WORKSPACE/Config/*.txt ./upload/
-          cp -rf ./.config ./upload/config.txt
+          cp -rf ./.config ./upload/Config.txt
 
           cd ./upload
           zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
