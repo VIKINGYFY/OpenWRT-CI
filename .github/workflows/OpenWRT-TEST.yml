@@ -1,11 +1,14 @@
-name: OpenWRT-TEST
+name: OpenWRT-TEST  #自动编译专用
 
 on:
-  workflow_dispatch:
+  #schedule:  #自动编译：每天早上6点
+    #- cron: 0 22 * * *
+
+  workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TYPE: X86
-  OWRT_IP: 192.168.2.1
+  OWRT_TYPE: ALL  #设备型号，请用大写字母，请勿乱写
+  OWRT_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends
@@ -67,27 +70,45 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/*.txt >> config.txt
+          grep -Ev '^\s*(#|$)' config.txt | sort -u > .config && rm -rf ./config.txt
 
           make defconfig
 
       - name: Package Firmware
         run: |
+          export OWRT_ALL=$(ls $GITHUB_WORKSPACE/Config/ | grep -v "General" | cut -f1 -d'.')
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_ALL=$OWRT_ALL" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
-          cp -rf ./.config ./upload/"$OWRT_TYPE"_"$OWRT_DATE".txt
+          cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
+          cp -rf $GITHUB_WORKSPACE/Config/*.txt ./upload/
+          cp -rf ./.config ./upload/config.txt
+
+          cd ./upload
+          zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_TEST_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
-            测试专用
+            这是个大杂烩固件包，请注意选择你需要的！
+            X86请手动更新正确的OpenClash内核！
+            包含：${{env.OWRT_ALL}}
+            地址：${{env.OWRT_IP}}
+            密码：password
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          keep_latest: 5
+          delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@v2
