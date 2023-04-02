@@ -123,7 +123,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
-          keep_latest: 3
+          keep_latest: 4
           delete_tags: true
 
       - name: Delete Old Workflows
