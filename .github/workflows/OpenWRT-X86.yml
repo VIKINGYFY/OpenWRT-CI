@@ -1,8 +1,8 @@
 name: OpenWRT-X86  #设备型号，请用大写字母，请勿乱写
 
 on:
-  schedule:
-    - cron: 0 22 * * *
+  #schedule:
+    #- cron: 0 22 * * *
 
   workflow_dispatch:
 
@@ -123,7 +123,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
-          keep_latest: 3
+          keep_latest: 4
           delete_tags: true
 
       - name: Delete Old Workflows
