@@ -6,7 +6,6 @@ on:
 env:
   OWRT_TYPE: X86
   OWRT_IP: 192.168.2.1
-  CORE_TYPE: amd64
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
