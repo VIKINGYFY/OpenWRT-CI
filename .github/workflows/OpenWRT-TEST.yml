@@ -1,4 +1,4 @@
-name: OpenWRT-TEST  #自动编译专用
+name: OpenWRT-TEST  #测试专用
 
 on:
   #schedule:  #自动编译：每天早上6点
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TYPE: ALL  #设备型号，请用大写字母，请勿乱写
+  OWRT_TYPE: ALL  #大杂烩
   OWRT_IP: 192.168.2.1  #设备默认登陆地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
@@ -85,7 +85,6 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
-          cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
           cp -rf $GITHUB_WORKSPACE/Config/*.txt ./upload/
           cp -rf ./.config ./upload/config.txt
 
