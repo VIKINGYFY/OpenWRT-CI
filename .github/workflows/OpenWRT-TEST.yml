@@ -1,7 +1,7 @@
 name: OpenWRT-TEST
 
 on:
-  push:
+  workflow_dispatch:
 
 env:
   OWRT_TYPE: X86
@@ -85,7 +85,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_Firmware_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TYPE}}_TEST_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             测试专用
