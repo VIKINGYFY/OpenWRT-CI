@@ -14,7 +14,7 @@ on:
 
       address:
         description: 输入登陆地址
-        required: false
+        required: true
         default: '192.168.2.1'
         type: string
 
