@@ -9,7 +9,6 @@ on:
 env:
   OWRT_TYPE: R4S  #设备型号，请用大写字母，请勿乱写
   OWRT_IP: 192.168.2.1  #设备默认登陆地址
-  CORE_TYPE: arm64  #设备内核类型，请用小写字母，请勿乱写
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Lists
