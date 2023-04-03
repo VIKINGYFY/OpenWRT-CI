@@ -1,4 +1,4 @@
-name: Build-OWRT  #CI项目名
+name: OpenWRT-OWRT  #CI项目名
 
 on:
   workflow_dispatch:
