@@ -3,23 +3,29 @@ name: Build-OWRT  #CI项目名
 on:
   workflow_dispatch:
     inputs:
-      device:
+      target:
         description: 选择设备平台
         required: true
-        default: 'X86_X64'
+        default: 'X86'
         type: choice
         options:
-          - 'X86_X64'
+          - 'X86'
           - 'Rockchip'
+
+      name:
+        description: 输入主机名字
+        required: true
+        default: 'OWRT'
+        type: string
 
       address:
         description: 输入登陆地址
         required: true
         default: '192.168.2.1'
         type: string
-
 env:
-  OWRT_TYPE: ${{ inputs.device }}
+  OWRT_TARGET: ${{ inputs.target }}
+  OWRT_NAME: ${{ inputs.name }}
   OWRT_IP: ${{ inputs.address }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
@@ -82,7 +88,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
 
@@ -108,31 +114,30 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export OWRT_LIST=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt | sed 's/^#//')
+          export OWRT_TYPE=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt | sed 's/^#//')
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
 
+          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_LIST=$OWRT_LIST" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_ALL=$OWRT_ALL" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
           cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
-          cp -rf ./.config ./upload/Config.txt
+          cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
 
           cd ./upload
-          zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
+          $GITHUB_WORKSPACE/Scripts/Renames.sh
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TARGET}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
-            设备：${{env.OWRT_LIST}}
+            设备：${{env.OWRT_TYPE}}
             地址：${{env.OWRT_IP}}
             密码：password
 
