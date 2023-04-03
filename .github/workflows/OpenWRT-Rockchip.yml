@@ -106,10 +106,7 @@ jobs:
 
           cd ./lede && mkdir ./upload
           cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
-          cp -rf ./.config ./upload/Config.txt
-
-          cd ./upload
-          zip -qm ./"$OWRT_TYPE"_OWRT_"$OWRT_DATE".zip ./*.*
+          cp -rf ./.config ./upload/"$OWRT_TYPE"_Config_"$OWRT_DATE".txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
