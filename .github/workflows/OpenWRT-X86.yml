@@ -1,4 +1,4 @@
-name: OpenWRT-X86_X64  #CI项目名
+name: OpenWRT-X86  #CI项目名
 
 on:
   schedule:  #自动编译：每天早上6点
@@ -6,8 +6,9 @@ on:
   workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TYPE: X86_X64  #平台类型
-  OWRT_IP: 192.168.2.1  #设备默认登陆地址
+  OWRT_TARGET: X86  #项目平台
+  OWRT_NAME: OWRT  #默认主机名
+  OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends
@@ -69,7 +70,7 @@ jobs:
           cd ./lede
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           make defconfig
 
@@ -95,28 +96,30 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export OWRT_LIST=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TYPE.txt | sed 's/^#//')
+          export OWRT_TYPE=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt | sed 's/^#//')
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
 
+          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_LIST=$OWRT_LIST" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_ALL=$OWRT_ALL" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
           cp -rf $(find ./bin/targets/ -type f -regex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
-          cp -rf ./.config ./upload/"$OWRT_TYPE"_Config_"$OWRT_DATE".txt
+          cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
+
+          cd ./upload
+          $GITHUB_WORKSPACE/Scripts/Renames.sh
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TYPE}}_OWRT_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TARGET}}_OWRT_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
-            设备：${{env.OWRT_LIST}}
+            设备：${{env.OWRT_TYPE}}
             地址：${{env.OWRT_IP}}
             密码：password
 
