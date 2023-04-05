@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #删除冲突主题
-rm -rf $(find ./feeds/luci/ -type d -regex ".*\(argon\|design\).*")
+rm -rf $(find ./feeds/luci/ -type d -name "*design*")
 #修改默认主机名
 sed -i "s/OpenWrt/$OWRT_NAME/g" ./package/base-files/files/bin/config_generate
 #修改默认IP地址
