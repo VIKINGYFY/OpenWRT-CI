@@ -123,8 +123,11 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./lede && mkdir ./upload
+          cp -rf $(find ./bin/targets/ -type f -iregex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
           cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
-          $GITHUB_WORKSPACE/Scripts/Packages.sh
+
+          cd ./upload
+          $GITHUB_WORKSPACE/Scripts/Renames.sh
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
