@@ -11,7 +11,7 @@ env:
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   LEDE_URL: https://github.com/coolsnowwolf/lede.git
-  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends
+  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends.txt
 
 permissions: write-all
 
@@ -25,11 +25,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL/Remove.txt)
+          sudo -E rm -rf $(curl -sfL $LIST_URL | sed -n "1{s/\r$//;p;q}")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL/Purge.txt)
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "2{s/\r$//;p;q}")
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL/Install.txt)
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "3{s/\r$//;p;q}")
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq clean
           sudo -E apt -yqq autoclean
@@ -96,7 +96,7 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export OWRT_TYPE=$(head -n 1 $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt | sed 's/^#//')
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
 
           echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
