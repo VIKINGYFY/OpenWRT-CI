@@ -4,7 +4,7 @@
 for var in $OWRT_TYPE; do
   for file in $(find ./ -type f -iname "*$var*.*"); do
     export ext=$(basename "$file" | cut -d '.' -f 2-3)
-    export name=$(basename "$file" | cut -d '.' -f1 | grep -io "\($var\).*")
+    export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
     export new_file="$OWRT_NAME"_"$name"_"$OWRT_DATE"."$ext"
     mv -f "$file" "$new_file"
   done
