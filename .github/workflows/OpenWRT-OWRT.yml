@@ -119,6 +119,7 @@ jobs:
 
           echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
@@ -132,7 +133,7 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{env.OWRT_TARGET}}_OWRT_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
           files: ./lede/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
