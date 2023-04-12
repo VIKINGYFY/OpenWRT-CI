@@ -84,14 +84,13 @@ jobs:
         run: |
           cd ./lede
 
+          make clean
           make -j$(nproc) || make -j1 V=s
 
           echo "======================="
           df -h
           echo "======================="
-          du -h --max-depth=1 ./build_dir
-          echo "======================="
-          du -h --max-depth=1 ./bin
+          du -h --max-depth=2
           echo "======================="
 
       - name: Package Firmware
