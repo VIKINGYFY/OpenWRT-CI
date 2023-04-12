@@ -74,6 +74,12 @@ jobs:
 
           make defconfig
 
+      - name: Cleanup Toolchain
+        run: |
+          cd ./lede
+
+          make clean
+
       - name: Download Packages
         run: |
           cd ./lede
@@ -84,7 +90,7 @@ jobs:
         run: |
           cd ./lede
 
-          make clean && make -j$(nproc) || make -j1 V=s
+          make -j$(nproc) || make -j1 V=s
 
           echo "======================="
           df -h
