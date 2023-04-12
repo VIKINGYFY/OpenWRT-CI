@@ -84,8 +84,7 @@ jobs:
         run: |
           cd ./lede
 
-          make clean
-          make -j$(nproc) || make -j1 V=s
+          make clean && make -j$(nproc) || make -j1 V=s
 
           echo "======================="
           df -h
