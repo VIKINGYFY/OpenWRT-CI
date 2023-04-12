@@ -74,6 +74,12 @@ jobs:
 
           make defconfig
 
+      - name: Cleanup Toolchain
+        run: |
+          cd ./lede
+
+          make clean
+
       - name: Download Packages
         run: |
           cd ./lede
@@ -89,9 +95,7 @@ jobs:
           echo "======================="
           df -h
           echo "======================="
-          du -h --max-depth=1 ./build_dir
-          echo "======================="
-          du -h --max-depth=1 ./bin
+          du -h --max-depth=2
           echo "======================="
 
       - name: Package Firmware
