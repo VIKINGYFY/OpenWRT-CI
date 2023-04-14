@@ -1,4 +1,4 @@
-name: OpenWRT-Rockchip  #CI项目名
+name: L-WRT-Rockchip  #CI项目名
 
 on:
   schedule:  #自动编译：每天早上6点
@@ -7,10 +7,10 @@ on:
 
 env:
   OWRT_TARGET: Rockchip  #项目平台
-  OWRT_NAME: OWRT  #默认主机名
+  OWRT_NAME: L-WRT  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  LEDE_URL: https://github.com/coolsnowwolf/lede.git
+  OWRT_URL: https://github.com/coolsnowwolf/lede.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends.txt
 
 permissions: write-all
@@ -46,20 +46,20 @@ jobs:
           chmod +x ./*.sh
           dos2unix ./*.sh
 
-      - name: Clone LEDE Code
+      - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch $LEDE_URL
+          git clone --depth=1 --single-branch $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
-          cd ./lede
+          cd ./owrt
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: Custom Scripts
         run: |
-          cd ./lede
+          cd ./owrt
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           cd ./package
@@ -67,28 +67,30 @@ jobs:
 
       - name: Custom Settings
         run: |
-          cd ./lede
+          cd ./owrt
 
           rm -rf ./tmp && rm -rf ./.config*
           cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+
+          $GITHUB_WORKSPACE/Scripts/Themes.sh
 
           make defconfig
 
       - name: Cleanup Toolchain
         run: |
-          cd ./lede
+          cd ./owrt
 
           make dirclean
 
       - name: Download Packages
         run: |
-          cd ./lede
+          cd ./owrt
 
           make download -j$(nproc)
 
       - name: Compile Firmware
         run: |
-          cd ./lede
+          cd ./owrt
 
           make -j$(nproc) || make -j1 V=s
 
@@ -109,7 +111,7 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-          cd ./lede && mkdir ./upload
+          cd ./owrt && mkdir ./upload
           cp -rf $(find ./bin/targets/ -type f -iregex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
           cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
 
@@ -120,7 +122,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
-          files: ./lede/upload/*.*
+          files: ./owrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
