@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Argon Theme
+git clone --depth=1 --single-branch https://github.com/jerrykuku/luci-theme-argon.git
+#Argon Config
+git clone --depth=1 --single-branch https://github.com/jerrykuku/luci-app-argon-config.git
 #Design Theme
 git clone --depth=1 --single-branch https://github.com/gngpp/luci-theme-design.git
 #Design Config
@@ -13,7 +17,7 @@ export CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clas
 export CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
 export CORE_MATE=https://github.com/vernesong/OpenClash/raw/core/dev/meta/clash-linux
 
-export CORE_TYPE=$(if [ "$OWRT_TYPE" == "X86" ] ; then echo "amd64" ; else echo "arm64" ; fi)
+export CORE_TYPE=$(if [[ $OWRT_TYPE == *"86"* ]] ; then echo "amd64" ; else echo "arm64" ; fi)
 export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2{s/\r$//;p;q}")
 
 cd ./OpenClash/luci-app-openclash/root/etc/openclash
