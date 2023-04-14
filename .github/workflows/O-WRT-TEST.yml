@@ -1,4 +1,4 @@
-name: OpenWRT-TEST  #CI项目名
+name: O-WRT-TEST  #CI项目名
 
 on:
   workflow_dispatch:  #手动编译
@@ -8,8 +8,8 @@ env:
   OWRT_NAME: TEST  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  LEDE_URL: https://github.com/coolsnowwolf/lede.git
-  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OpenWRT-LEDE/main/Depends.txt
+  OWRT_URL: https://github.com/coolsnowwolf/lede.git
+  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OWRT-CI/main/Depends.txt
 
 permissions: write-all
 
@@ -44,20 +44,20 @@ jobs:
           chmod +x ./*.sh
           dos2unix ./*.sh
 
-      - name: Clone LEDE Code
+      - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch $LEDE_URL
+          git clone --depth=1 --single-branch $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
-          cd ./lede
+          cd ./owrt
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: Custom Scripts
         run: |
-          cd ./lede
+          cd ./owrt
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           cd ./package
@@ -65,7 +65,7 @@ jobs:
 
       - name: Custom Settings
         run: |
-          cd ./lede
+          cd ./owrt
 
           rm -rf ./tmp && rm -rf ./.config*
           cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
@@ -83,14 +83,14 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-          cd ./lede && mkdir ./upload
+          cd ./owrt && mkdir ./upload
           cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
-          files: ./lede/upload/*.*
+          files: ./owrt/upload/*.*
           body: |
             测试专用
 
