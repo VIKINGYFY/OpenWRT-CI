@@ -78,7 +78,7 @@ jobs:
         run: |
           cd ./lede
 
-          make clean
+          make dirclean
 
       - name: Download Packages
         run: |
