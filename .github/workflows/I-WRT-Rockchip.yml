@@ -1,0 +1,143 @@
+name: I-WRT-Rockchip  #CI项目名
+
+on:
+  schedule:  #自动编译：每天早上6点
+    - cron: 0 22 * * *
+  workflow_dispatch:  #手动编译
+
+env:
+  OWRT_TARGET: Rockchip  #项目平台
+  OWRT_NAME: I-WRT  #默认主机名
+  OWRT_IP: 192.168.2.1  #默认IP地址
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OWRT-CI/main/Depends.txt
+
+permissions: write-all
+
+jobs:
+  build_openwrt:
+    name: Build Firmware
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(curl -sfL $LIST_URL | sed -n "1{s/\r$//;p;q}")
+          sudo -E apt -yqq update
+          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq full-upgrade
+          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq autoremove --purge
+          sudo -E apt -yqq autoclean
+          sudo -E apt -yqq clean
+          sudo -E systemctl daemon-reload
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+      - name: Check Projects
+        uses: actions/checkout@v3
+
+      - name: Check Scripts
+        run: |
+          cd ./Scripts
+
+          chmod +x ./*.sh
+          dos2unix ./*.sh
+
+      - name: Clone OWRT Code
+        run: |
+          git clone --depth=1 --single-branch $OWRT_URL ./owrt
+
+      - name: Update Feeds
+        run: |
+          cd ./owrt
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Custom Scripts
+        run: |
+          cd ./owrt
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
+
+          cd ./package
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
+
+      - name: Custom Settings
+        run: |
+          cd ./owrt
+
+          rm -rf ./tmp && rm -rf ./.config*
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+
+          $GITHUB_WORKSPACE/Scripts/Themes.sh
+
+          make defconfig
+
+      - name: Cleanup Toolchain
+        run: |
+          cd ./owrt
+
+          make dirclean
+
+      - name: Download Packages
+        run: |
+          cd ./owrt
+
+          make download -j$(nproc)
+
+      - name: Compile Firmware
+        run: |
+          cd ./owrt
+
+          make -j$(nproc) || make -j1 V=s
+
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
+
+      - name: Package Firmware
+        run: |
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+
+          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+
+          cd ./owrt && mkdir ./upload
+          cp -rf $(find ./bin/targets/ -type f -iregex ".*\.\(bin\|iso\|vmdk\|img.gz\)") ./upload/
+          cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
+
+          cd ./upload
+          $GITHUB_WORKSPACE/Scripts/Renames.sh
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
+          files: ./owrt/upload/*.*
+          body: |
+            这是个平台固件包，内含多个设备！
+            请注意选择你需要的设备固件！
+            设备：${{env.OWRT_TYPE}}
+            地址：${{env.OWRT_IP}}
+            密码：password
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@v0.2.1
+        with:
+          keep_latest: 4
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
