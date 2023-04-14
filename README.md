@@ -1,6 +1,8 @@
-# OpenWRT-LEDE
-云编译OpenWRT-LEDE固件
+# OpenWRT-CI
+云编译OpenWRT固件
 
-自动编译OpenWRT固件，源码来自LEDE。
-
+LEDE源码：
 https://github.com/coolsnowwolf/lede
+
+IMMORTALWRT源码：
+https://github.com/immortalwrt/immortalwrt
