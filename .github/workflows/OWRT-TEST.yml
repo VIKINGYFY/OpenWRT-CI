@@ -1,4 +1,4 @@
-name: O-WRT-TEST  #CI项目名
+name: OWRT-TEST  #CI项目名
 
 on:
   workflow_dispatch:  #手动编译
