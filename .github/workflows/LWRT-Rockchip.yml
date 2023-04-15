@@ -1,4 +1,4 @@
-name: L-WRT-Rockchip  #CI项目名
+name: LWRT-Rockchip  #CI项目名
 
 on:
   schedule:  #自动编译：每天早上6点
@@ -7,7 +7,7 @@ on:
 
 env:
   OWRT_TARGET: Rockchip  #项目平台
-  OWRT_NAME: L-WRT  #默认主机名
+  OWRT_NAME: LWRT  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_URL: https://github.com/coolsnowwolf/lede.git
