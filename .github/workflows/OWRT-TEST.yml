@@ -70,6 +70,8 @@ jobs:
           rm -rf ./tmp && rm -rf ./.config*
           cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
+          $GITHUB_WORKSPACE/Scripts/Extras.sh
+
           make defconfig
 
       - name: Package Firmware
@@ -84,7 +86,7 @@ jobs:
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./owrt && mkdir ./upload
-          cp -rf ./.config ./upload/"$OWRT_TARGET"_Config_"$OWRT_DATE".txt
+          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v1
