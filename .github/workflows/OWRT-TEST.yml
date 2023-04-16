@@ -4,11 +4,11 @@ on:
   workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TARGET: X86  #项目平台
+  OWRT_TARGET: Rockchip  #项目平台
   OWRT_NAME: TEST  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  OWRT_URL: https://github.com/coolsnowwolf/lede.git
+  OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
   LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OWRT-CI/main/Depends.txt
 
 permissions: write-all
