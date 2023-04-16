@@ -2,5 +2,6 @@
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 CONFIG_TARGET_x86_64_DEVICE_generic=y
-#镜像格式
+#额外配置
 CONFIG_VMDK_IMAGES=y
+CONFIG_PACKAGE_luci-app-dockerman=y
