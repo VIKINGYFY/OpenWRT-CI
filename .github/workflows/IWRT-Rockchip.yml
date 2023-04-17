@@ -59,6 +59,8 @@ jobs:
 
       - name: Custom Scripts
         run: |
+          export OWRT_THEME=$(if [[ $OWRT_URL == *"lede"* ]] ; then echo "design" ; else echo "argon" ; fi)
+
           cd ./owrt
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
