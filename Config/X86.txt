@@ -1,0 +1,7 @@
+#X86
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_generic=y
+#额外配置
+CONFIG_GRUB_IMAGES=y
+CONFIG_VMDK_IMAGES=y
+CONFIG_PACKAGE_luci-app-dockerman=y
