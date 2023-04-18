@@ -1,8 +1,8 @@
 name: LWRT-X64  #CI项目名
 
 on:
-  schedule:  #自动编译：每天早上6点
-    - cron: 0 22 * * *
+  schedule:  #自动编译：每天早上3点
+    - cron: 0 19 * * *
   workflow_dispatch:  #手动编译
 
 env:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Custom Scripts
         run: |
-          export OWRT_THEME=$(if [[ $OWRT_URL == *"lede"* ]] ; then echo "design" ; else echo "argon" ; fi)
+          export OWRT_THEME=$(echo $OWRT_URL | grep -iq "lede" && echo "design" || echo "argon")
 
           cd ./owrt
           $GITHUB_WORKSPACE/Scripts/Settings.sh
@@ -136,7 +136,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@v0.2.1
         with:
-          keep_latest: 4
+          keep_latest: 6
           delete_tags: true
 
       - name: Delete Old Workflows
