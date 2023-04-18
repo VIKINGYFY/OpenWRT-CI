@@ -7,6 +7,7 @@ on:
 
 env:
   OWRT_TARGET: Rockchip  #项目平台
+  OWRT_THEME: design  #默认主题
   OWRT_NAME: LWRT  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -59,8 +60,6 @@ jobs:
 
       - name: Custom Scripts
         run: |
-          export OWRT_THEME=$(echo $OWRT_URL | grep -iq "lede" && echo "design" || echo "argon")
-
           cd ./owrt
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
