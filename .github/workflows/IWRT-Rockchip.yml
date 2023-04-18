@@ -38,7 +38,7 @@ jobs:
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
       - name: Check Projects
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
 
       - name: Check Scripts
         run: |
@@ -121,7 +121,7 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Renames.sh
 
       - name: Release Firmware
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@master
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
           files: ./owrt/upload/*.*
@@ -133,13 +133,13 @@ jobs:
             密码：无
 
       - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@v0.2.1
+        uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 6
           delete_tags: true
 
       - name: Delete Old Workflows
-        uses: Mattraks/delete-workflow-runs@v2
+        uses: Mattraks/delete-workflow-runs@main
         with:
           retain_days: 1
           keep_minimum_runs: 3
