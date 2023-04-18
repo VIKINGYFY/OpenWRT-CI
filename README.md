@@ -13,11 +13,11 @@ LWRT——LEDE源码
 
 IWRT——IMMORTALWRT源码
 
-Rockchip——RK系列，包含R4S、R5C、R66S、R68S
+Rockchip——RK系列，每天早上6点自动编译，包含R4S、R5C、R66S、R68S
 
-X64——X64系列，包含X64、X86
+X64——X64系列，每天早上3点自动编译，包含X64、X86
 
-X86——X86系列，仅包含X86
+X86——X86系列，每天早上3点自动编译，仅包含X86
 
 # 目录简要说明：
 
