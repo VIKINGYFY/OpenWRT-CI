@@ -9,11 +9,10 @@ jobs:
   owrt_build:
     uses: ./.github/workflows/OWRT-TC.yml
     with:
-      env:
-        OWRT_TARGET: Rockchip  #项目平台
-        OWRT_THEME: argon  #默认主题
-        OWRT_NAME: IWRT  #默认主机名
-        OWRT_PW: password  #默认密码，仅作展示，请勿修改
-        OWRT_IP: 192.168.2.1  #默认IP地址
-        OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      OWRT_TARGET: Rockchip  #项目平台
+      OWRT_THEME: argon  #默认主题
+      OWRT_NAME: IWRT  #默认主机名
+      OWRT_PW: password  #默认密码，仅作展示，请勿修改
+      OWRT_IP: 192.168.2.1  #默认IP地址
+      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
