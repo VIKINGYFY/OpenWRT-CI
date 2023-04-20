@@ -3,11 +3,8 @@ name: OWRT-TC  #云编译公用核心
 on:
   workflow_call:  #公用核心标识
 
-env:
-  OWRT_IP: 192.168.2.1  #默认IP地址
-
 jobs:
-  build_owrt:
+  owrt_core:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
