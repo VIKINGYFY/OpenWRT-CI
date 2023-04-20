@@ -8,7 +8,6 @@ env:
 
 jobs:
   build_owrt:
-    name: OWRT Core
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
