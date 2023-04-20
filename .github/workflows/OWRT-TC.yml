@@ -16,7 +16,7 @@ on:
       OWRT_URL:
         required: true
     secrets:
-      GITHUB_TOKEN:
+      TOKEN:
         required: true
 
 jobs:
