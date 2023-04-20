@@ -29,17 +29,30 @@ jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
-      - name: Show values
+      - name: Show inputs
         run: |
-          echo "$OWRT_TARGET"
-          echo "$OWRT_DATE"
-          echo "$OWRT_NAME"
-          echo "$OWRT_TYPE"
-          echo "$OWRT_IP"
-          echo "$OWRT_PW"
+          echo "${{inputs.OWRT_TARGET}}"
+          echo "${{inputs.OWRT_THEME}}"
+          echo "${{inputs.OWRT_NAME}}"
+          echo "${{inputs.OWRT_PW}}"
+          echo "${{inputs.OWRT_IP}}"
+          echo "${{inputs.OWRT_URL}}"
 
-      - name: Checkout Projects
-        uses: actions/checkout@main
+      - name: Show export
+        run: |
+          export OWRT_TARGET=${{inputs.OWRT_TARGET}}
+          export OWRT_THEME=${{inputs.OWRT_THEME}}
+          export OWRT_NAME=${{inputs.OWRT_NAME}}
+          export OWRT_PW=${{inputs.OWRT_PW}}
+          export OWRT_IP=${{inputs.OWRT_IP}}
+          export OWRT_URL=${{inputs.OWRT_URL}}
+
+          echo "$OWRT_TARGET"
+          echo "$OWRT_THEME"
+          echo "$OWRT_NAME"
+          echo "$OWRT_PW"
+          echo "$OWRT_IP"
+          echo "$OWRT_URL"
 
       - name: Clone OWRT Code
         run: |
