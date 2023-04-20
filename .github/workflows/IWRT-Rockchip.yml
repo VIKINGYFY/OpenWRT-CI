@@ -10,9 +10,8 @@ env:
   OWRT_THEME: argon  #默认主题
   OWRT_NAME: IWRT  #默认主机名
   OWRT_IP: 192.168.2.1  #默认IP地址
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
-  LIST_URL: https://raw.githubusercontent.com/VIKINGYFY/OWRT-CI/main/Depends.txt
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 permissions: write-all
 
@@ -26,11 +25,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $(curl -sfL $LIST_URL | sed -n "1{s/\r$//;p;q}")
+          sudo -E rm -rf $($GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(curl -sfL $LIST_URL | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq purge $($GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(curl -sfL $LIST_URL | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq install $($GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
