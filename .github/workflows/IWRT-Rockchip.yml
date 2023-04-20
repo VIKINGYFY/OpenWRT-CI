@@ -20,6 +20,9 @@ jobs:
     name: Build Firmware
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
       - name: Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -35,9 +38,6 @@ jobs:
           sudo -E apt -yqq clean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
-
-      - name: Check Projects
-        uses: actions/checkout@main
 
       - name: Check Scripts
         run: |
