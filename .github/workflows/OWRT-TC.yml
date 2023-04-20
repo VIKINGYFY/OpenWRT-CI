@@ -5,16 +5,22 @@ on:
     inputs:
       OWRT_TARGET:
         required: true
+        type: string
       OWRT_THEME:
         required: true
+        type: string
       OWRT_NAME:
         required: true
+        type: string
       OWRT_PW:
         required: true
+        type: string
       OWRT_IP:
         required: true
+        type: string
       OWRT_URL:
         required: true
+        type: string
     secrets:
       TOKEN:
         required: true
