@@ -2,6 +2,22 @@ name: OWRT-TC  #云编译公用核心
 
 on:
   workflow_call:  #公用核心标识
+    inputs:
+      OWRT_TARGET:
+        required: true
+      OWRT_THEME:
+        required: true
+      OWRT_NAME:
+        required: true
+      OWRT_PW:
+        required: true
+      OWRT_IP:
+        required: true
+      OWRT_URL:
+        required: true
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   owrt_core:
