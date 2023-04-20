@@ -1,0 +1,107 @@
+name: OWRT-TC  #云编译公用核心
+
+on:
+  workflow_call:  #公用核心标识
+
+env:
+  OWRT_IP: 192.168.2.1  #默认IP地址
+
+jobs:
+  build_owrt:
+    name: OWRT Core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
+          sudo -E apt -yqq update
+          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq full-upgrade
+          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq autoremove --purge
+          sudo -E apt -yqq autoclean
+          sudo -E apt -yqq clean
+          sudo -E systemctl daemon-reload
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+      - name: Check Scripts
+        run: |
+          cd ./Scripts
+
+          chmod +x ./*.sh
+          dos2unix ./*.sh
+
+      - name: Clone OWRT Code
+        run: |
+          git clone --depth=1 --single-branch $OWRT_URL ./owrt
+
+      - name: Update Feeds
+        run: |
+          cd ./owrt
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Custom Scripts
+        run: |
+          cd ./owrt
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
+
+          cd ./package
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
+
+      - name: Custom Settings
+        run: |
+          cd ./owrt
+
+          rm -rf ./tmp && rm -rf ./.config*
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+
+          $GITHUB_WORKSPACE/Scripts/Extras.sh
+
+          make defconfig
+
+      - name: Package Firmware
+        run: |
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
+          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+
+          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
+          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
+          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
+
+          cd ./owrt && mkdir ./upload
+          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
+          files: ./owrt/upload/*.*
+          body: |
+            这是个平台固件包，内含多个设备！
+            请注意选择你需要的设备固件！
+            设备：${{env.OWRT_TYPE}}
+            地址：${{env.OWRT_IP}}
+            密码：${{env.OWRT_PW}}
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 6
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3

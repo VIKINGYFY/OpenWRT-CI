@@ -1,0 +1,19 @@
+name: OWRT-T1  #CI项目名
+
+on:
+  workflow_dispatch:  #手动编译
+
+env:
+  OWRT_TARGET: Rockchip  #项目平台
+  OWRT_THEME: argon  #默认主题
+  OWRT_NAME: IWRT  #默认主机名
+  OWRT_PW: password  #默认密码，仅作展示，请勿修改
+  OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+permissions: write-all
+
+jobs:
+  build_owrt:
+    name: OWRT Firmware
+    uses: VIKINGYFY/OpenWRT-CI/.github/workflows/OWRT-TC.yml@main
