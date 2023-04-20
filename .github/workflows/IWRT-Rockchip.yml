@@ -25,11 +25,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           docker rmi $(docker images -q)
-          sudo -E rm -rf $($GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
+          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $($GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $($GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
