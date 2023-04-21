@@ -21,63 +21,97 @@ on:
       OWRT_URL:
         required: true
         type: string
-    secrets:
-      TOKEN:
-        required: true
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+permissions: write-all
 
 jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
-      - name: Show inputs
+      - name: Conver values
         run: |
-          echo "${{inputs.OWRT_TARGET}}"
-          echo "${{inputs.OWRT_THEME}}"
-          echo "${{inputs.OWRT_NAME}}"
-          echo "${{inputs.OWRT_PW}}"
-          echo "${{inputs.OWRT_IP}}"
-          echo "${{inputs.OWRT_URL}}"
+          echo "OWRT_TARGET=${{inputs.OWRT_TARGET}}" >> $GITHUB_ENV
+          echo "OWRT_THEME=${{inputs.OWRT_THEME}}" >> $GITHUB_ENV
+          echo "OWRT_NAME=${{inputs.OWRT_NAME}}" >> $GITHUB_ENV
+          echo "OWRT_URL=${{inputs.OWRT_URL}}" >> $GITHUB_ENV
+          echo "OWRT_IP=${{inputs.OWRT_IP}}" >> $GITHUB_ENV
+          echo "OWRT_PW=${{inputs.OWRT_PW}}" >> $GITHUB_ENV
 
-      - name: Show export
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
-          export OWRT_TARGET=${{inputs.OWRT_TARGET}}
-          export OWRT_THEME=${{inputs.OWRT_THEME}}
-          export OWRT_NAME=${{inputs.OWRT_NAME}}
-          export OWRT_PW=${{inputs.OWRT_PW}}
-          export OWRT_IP=${{inputs.OWRT_IP}}
-          export OWRT_URL=${{inputs.OWRT_URL}}
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
+          sudo -E apt -yqq update
+          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq full-upgrade
+          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq autoremove --purge
+          sudo -E apt -yqq autoclean
+          sudo -E apt -yqq clean
+          sudo -E systemctl daemon-reload
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
 
-          echo "$OWRT_TARGET"
-          echo "$OWRT_THEME"
-          echo "$OWRT_NAME"
-          echo "$OWRT_PW"
-          echo "$OWRT_IP"
-          echo "$OWRT_URL"
+      - name: Check Scripts
+        run: |
+          cd ./Scripts
+
+          chmod +x ./*.sh
+          dos2unix ./*.sh
 
       - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch $OWRT_URL ./owrt
+          git clone --depth=1 --single-branch ${{env.OWRT_URL}} ./owrt
+
+      - name: Update Feeds
+        run: |
+          cd ./owrt
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Custom Scripts
+        run: |
+          cd ./owrt
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
+
+          cd ./package
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
+
+      - name: Custom Settings
+        run: |
+          cd ./owrt
+
+          rm -rf ./tmp && rm -rf ./.config*
+          cat $GITHUB_WORKSPACE/Config/${{env.OWRT_TARGET}}.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+
+          $GITHUB_WORKSPACE/Scripts/Extras.sh
+
+          make defconfig
 
       - name: Package Firmware
         run: |
-          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/${{env.OWRT_TARGET}}.txt)
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
 
-          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
-          echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
 
           cd ./owrt && mkdir ./upload
-          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
+          cp -rf ./.config ./upload/Config_${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
-          files: ./owrt/upload/*.md
+          files: ./owrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
