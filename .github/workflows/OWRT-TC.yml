@@ -31,6 +31,11 @@ jobs:
     steps:
       - name: Conver values
         run: |
+          echo "$OWRT_TARGET"
+          echo "$OWRT_THEME"
+          echo "$OWRT_NAME"
+          echo "$OWRT_URL"
+          echo "=========="
           echo "OWRT_TARGET=${{inputs.OWRT_TARGET}}" >> $GITHUB_ENV
           echo "OWRT_THEME=${{inputs.OWRT_THEME}}" >> $GITHUB_ENV
           echo "OWRT_NAME=${{inputs.OWRT_NAME}}" >> $GITHUB_ENV
