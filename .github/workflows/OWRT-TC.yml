@@ -25,8 +25,6 @@ on:
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-permissions: write-all
-
 jobs:
   owrt_core:
     runs-on: ubuntu-latest
