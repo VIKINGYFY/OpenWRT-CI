@@ -31,11 +31,6 @@ jobs:
     steps:
       - name: Conver values
         run: |
-          echo "$OWRT_TARGET"
-          echo "$OWRT_THEME"
-          echo "$OWRT_NAME"
-          echo "$OWRT_URL"
-          echo "=========="
           echo "OWRT_TARGET=${{inputs.OWRT_TARGET}}" >> $GITHUB_ENV
           echo "OWRT_THEME=${{inputs.OWRT_THEME}}" >> $GITHUB_ENV
           echo "OWRT_NAME=${{inputs.OWRT_NAME}}" >> $GITHUB_ENV
@@ -83,10 +78,10 @@ jobs:
       - name: Custom Scripts
         run: |
           cd ./owrt
-          $GITHUB_WORKSPACE/Scripts/Settings.sh
+          bash -c "$GITHUB_WORKSPACE/Scripts/Settings.sh"
 
           cd ./package
-          $GITHUB_WORKSPACE/Scripts/Plugins.sh
+          bash -c "$GITHUB_WORKSPACE/Scripts/Plugins.sh"
 
       - name: Custom Settings
         run: |
@@ -95,7 +90,7 @@ jobs:
           rm -rf ./tmp && rm -rf ./.config*
           cat $GITHUB_WORKSPACE/Config/${{env.OWRT_TARGET}}.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
-          $GITHUB_WORKSPACE/Scripts/Extras.sh
+          bash -c "$GITHUB_WORKSPACE/Scripts/Extras.sh"
 
           make defconfig
 
