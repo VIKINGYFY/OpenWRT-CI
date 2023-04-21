@@ -2,13 +2,37 @@ name: OWRT-Core  #云编译公用核心
 
 on:
   workflow_call:  #公用核心标识
+    inputs:
+      OWRT_TARGET:
+        required: true
+        type: string
+      OWRT_THEME:
+        required: true
+        type: string
+      OWRT_NAME:
+        required: true
+        type: string
+      OWRT_PW:
+        required: true
+        type: string
+      OWRT_IP:
+        required: true
+        type: string
+      OWRT_URL:
+        required: true
+        type: string
 
 env:
-  OWRT_IP: 192.168.2.1  #默认IP地址
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  OWRT_TARGET: ${{inputs.OWRT_TARGET}}
+  OWRT_THEME: ${{inputs.OWRT_THEME}}
+  OWRT_NAME: ${{inputs.OWRT_NAME}}
+  OWRT_URL: ${{inputs.OWRT_URL}}
+  OWRT_IP: ${{inputs.OWRT_IP}}
+  OWRT_PW: ${{inputs.OWRT_PW}}
 
 jobs:
-  build_owrt:
-    name: Build Firmware
+  owrt_core:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
