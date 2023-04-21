@@ -14,9 +14,8 @@ permissions: write-all
 #CI任务
 jobs:
   owrt_build:
+    #调用公用编译核心OWRT-CORE.yml
     uses: ./.github/workflows/OWRT-CORE.yml
-    #其他人直接调用我写好的OWRT-CORE.yml
-    #uses: VIKINGYFY/OpenWRT-CI/.github/workflows/OWRT-CORE.yml@main
     with:
       #编译平台
       OWRT_TARGET: Rockchip
