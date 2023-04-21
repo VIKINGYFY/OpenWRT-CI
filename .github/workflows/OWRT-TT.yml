@@ -1,0 +1,28 @@
+#CI项目名
+name: OWRT-TT
+
+on:
+  #手动编译
+  workflow_dispatch:
+
+#CI权限
+permissions: write-all
+
+#CI任务
+jobs:
+  owrt_build:
+    #调用公用编译核心OWRT-TC.yml
+    uses: ./.github/workflows/OWRT-TC.yml
+    with:
+      #编译平台
+      OWRT_TARGET: Rockchip
+      #默认主题
+      OWRT_THEME: argon
+      #默认主机名
+      OWRT_NAME: TEST
+      #默认密码，仅作展示，请勿乱改
+      OWRT_PW: 无
+      #默认IP地址
+      OWRT_IP: 192.168.2.1
+      #默认源码
+      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
