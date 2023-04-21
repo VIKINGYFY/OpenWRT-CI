@@ -21,9 +21,9 @@ export CORE_MATE=https://github.com/vernesong/OpenClash/raw/core/dev/meta/clash-
 export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2{s/\r$//;p;q}")
 
 export CORE_TYPE=arm64
-if [[ $OWRT_TARGET == *"64"* ]] ; then
+if [[ ${{env.OWRT_TARGET}} == *"64"* ]] ; then
   export CORE_TYPE=amd64
-elif [[ $OWRT_TARGET == *"86"* ]] ; then
+elif [[ ${{env.OWRT_TARGET}} == *"86"* ]] ; then
   export CORE_TYPE=386
 fi
 
