@@ -1,7 +1,9 @@
-name: OWRT-TC  #云编译公用核心
+#云编译公用核心
+name: OWRT-TC
 
 on:
-  workflow_call:  #公用核心标识
+  #公用核心标识
+  workflow_call:
     inputs:
       OWRT_TARGET:
         required: true
@@ -112,17 +114,10 @@ jobs:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
           files: ./owrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
+            测试专用
             设备：${{env.OWRT_TYPE}}
             地址：${{env.OWRT_IP}}
             密码：${{env.OWRT_PW}}
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@master
-        with:
-          keep_latest: 6
-          delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
