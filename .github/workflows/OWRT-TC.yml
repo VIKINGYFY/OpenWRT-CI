@@ -24,20 +24,17 @@ on:
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  OWRT_TARGET: ${{inputs.OWRT_TARGET}}
+  OWRT_THEME: ${{inputs.OWRT_THEME}}
+  OWRT_NAME: ${{inputs.OWRT_NAME}}
+  OWRT_URL: ${{inputs.OWRT_URL}}
+  OWRT_IP: ${{inputs.OWRT_IP}}
+  OWRT_PW: ${{inputs.OWRT_PW}}
 
 jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
-      - name: Conver values
-        run: |
-          echo "OWRT_TARGET=${{inputs.OWRT_TARGET}}" >> $GITHUB_ENV
-          echo "OWRT_THEME=${{inputs.OWRT_THEME}}" >> $GITHUB_ENV
-          echo "OWRT_NAME=${{inputs.OWRT_NAME}}" >> $GITHUB_ENV
-          echo "OWRT_URL=${{inputs.OWRT_URL}}" >> $GITHUB_ENV
-          echo "OWRT_IP=${{inputs.OWRT_IP}}" >> $GITHUB_ENV
-          echo "OWRT_PW=${{inputs.OWRT_PW}}" >> $GITHUB_ENV
-
       - name: Checkout Projects
         uses: actions/checkout@main
 
@@ -66,7 +63,7 @@ jobs:
 
       - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch ${{env.OWRT_URL}} ./owrt
+          git clone --depth=1 --single-branch $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
@@ -78,32 +75,36 @@ jobs:
       - name: Custom Scripts
         run: |
           cd ./owrt
-          bash -c "$GITHUB_WORKSPACE/Scripts/Settings.sh"
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           cd ./package
-          bash -c "$GITHUB_WORKSPACE/Scripts/Plugins.sh"
+          $GITHUB_WORKSPACE/Scripts/Plugins.sh
 
       - name: Custom Settings
         run: |
           cd ./owrt
 
           rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/${{env.OWRT_TARGET}}.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
-          bash -c "$GITHUB_WORKSPACE/Scripts/Extras.sh"
+          $GITHUB_WORKSPACE/Scripts/Extras.sh
 
           make defconfig
 
       - name: Package Firmware
         run: |
-          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/${{env.OWRT_TARGET}}.txt)
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
 
+          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
+          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
 
           cd ./owrt && mkdir ./upload
-          cp -rf ./.config ./upload/Config_${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}.txt
+          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
