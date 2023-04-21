@@ -1,144 +1,32 @@
-name: IWRT-X64  #CI项目名
+#CI项目名
+name: IWRT-X64
 
 on:
-  schedule:  #自动编译：每天早上3点
+  #自动编译：每天早上3点
+  schedule:
     - cron: 0 19 * * *
-  workflow_dispatch:  #手动编译
+  #手动编译
+  workflow_dispatch:
 
-env:
-  OWRT_TARGET: X64  #项目平台，X64包含X86
-  OWRT_THEME: argon  #默认主题
-  OWRT_NAME: IWRT  #默认主机名
-  OWRT_IP: 192.168.2.1  #默认IP地址
-  OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
+#CI权限
 permissions: write-all
 
+#CI任务
 jobs:
-  build_openwrt:
-    name: Build Firmware
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Projects
-        uses: actions/checkout@main
-
-      - name: Initialization Environment
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          docker rmi $(docker images -q)
-          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
-          sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
-          sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
-          sudo -E apt -yqq autoremove --purge
-          sudo -E apt -yqq autoclean
-          sudo -E apt -yqq clean
-          sudo -E systemctl daemon-reload
-          sudo -E timedatectl set-timezone "Asia/Shanghai"
-
-      - name: Check Scripts
-        run: |
-          cd ./Scripts
-
-          chmod +x ./*.sh
-          dos2unix ./*.sh
-
-      - name: Clone OWRT Code
-        run: |
-          git clone --depth=1 --single-branch $OWRT_URL ./owrt
-
-      - name: Update Feeds
-        run: |
-          cd ./owrt
-
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-
-      - name: Custom Scripts
-        run: |
-          cd ./owrt
-          $GITHUB_WORKSPACE/Scripts/Settings.sh
-
-          cd ./package
-          $GITHUB_WORKSPACE/Scripts/Plugins.sh
-
-      - name: Custom Settings
-        run: |
-          cd ./owrt
-
-          rm -rf ./tmp && rm -rf ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
-
-          $GITHUB_WORKSPACE/Scripts/Extras.sh
-
-          make defconfig
-
-      - name: Cleanup Toolchain
-        run: |
-          cd ./owrt
-
-          make dirclean
-
-      - name: Download Packages
-        run: |
-          cd ./owrt
-
-          make download -j$(nproc)
-
-      - name: Compile Firmware
-        run: |
-          cd ./owrt
-
-          make -j$(nproc) || make -j1 V=s
-
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
-
-      - name: Package Firmware
-        run: |
-          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
-          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-
-          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
-          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
-          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
-
-          cd ./owrt && mkdir ./upload
-          rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
-          cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
-          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
-
-          cd ./upload
-          $GITHUB_WORKSPACE/Scripts/Renames.sh
-
-      - name: Release Firmware
-        uses: softprops/action-gh-release@master
-        with:
-          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
-          files: ./owrt/upload/*.*
-          body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            设备：${{env.OWRT_TYPE}}
-            地址：${{env.OWRT_IP}}
-            密码：无
-
-      - name: Delete Old Releases
-        uses: dev-drprasad/delete-older-releases@master
-        with:
-          keep_latest: 6
-          delete_tags: true
-
-      - name: Delete Old Workflows
-        uses: Mattraks/delete-workflow-runs@main
-        with:
-          retain_days: 1
-          keep_minimum_runs: 3
+  owrt_build:
+    uses: ./.github/workflows/OWRT-CORE.yml
+    #其他人直接调用我写好的OWRT-CORE.yml
+    #uses: VIKINGYFY/OpenWRT-CI/.github/workflows/OWRT-CORE.yml@main
+    with:
+      #编译平台，X64包含X86
+      OWRT_TARGET: X64
+      #默认主题
+      OWRT_THEME: argon
+      #默认主机名
+      OWRT_NAME: IWRT
+      #默认密码，仅作展示，请勿乱改
+      OWRT_PW: 无
+      #默认IP地址
+      OWRT_IP: 192.168.2.1
+      #默认源码
+      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
