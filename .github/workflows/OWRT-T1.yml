@@ -3,8 +3,6 @@ name: OWRT-T1  #CI项目名
 on:
   workflow_dispatch:  #手动编译
 
-permissions: write-all
-
 jobs:
   owrt_build:
     uses: ./.github/workflows/OWRT-TC.yml
@@ -15,5 +13,3 @@ jobs:
       OWRT_PW: password  #默认密码，仅作展示，请勿修改
       OWRT_IP: 192.168.2.1  #默认IP地址
       OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
-    secrets:
-      TOKEN: ${{secrets.GITHUB_TOKEN}}
