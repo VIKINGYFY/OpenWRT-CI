@@ -118,9 +118,11 @@ jobs:
 
       - name: Package Firmware
         run: |
-          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 4-)
+          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
 
+          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
           echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
           echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
@@ -131,7 +133,7 @@ jobs:
           cd ./owrt && mkdir ./upload
           rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
           cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
-          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_NAME"_"$OWRT_DATE".txt
+          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
 
           cd ./upload
           $GITHUB_WORKSPACE/Scripts/Renames.sh
@@ -139,11 +141,12 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_NAME}}_${{env.OWRT_DATE}}
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
           files: ./owrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
+            源码：${{env.OWRT_SOURCE}}
             设备：${{env.OWRT_TYPE}}
             地址：${{env.OWRT_IP}}
             密码：${{env.OWRT_PW}}
