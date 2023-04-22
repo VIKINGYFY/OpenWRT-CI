@@ -152,11 +152,11 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 6
+          keep_latest: 4
           delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
         with:
-          retain_days: 1
-          keep_minimum_runs: 3
+          retain_days: 0
+          keep_minimum_runs: 4
