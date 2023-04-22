@@ -1,5 +1,5 @@
 #CI项目名
-name: LWRT-Rockchip
+name: Lede-Rockchip
 
 on:
   #自动编译：每天早上6点
@@ -13,7 +13,7 @@ permissions: write-all
 
 #CI任务
 jobs:
-  owrt_build:
+  owrt_config:
     #调用公用编译核心OWRT-CORE.yml
     uses: ./.github/workflows/OWRT-CORE.yml
     with:
@@ -22,7 +22,7 @@ jobs:
       #默认主题
       OWRT_THEME: design
       #默认主机名
-      OWRT_NAME: LWRT
+      OWRT_NAME: OWRT
       #默认密码，仅作展示，请勿乱改
       OWRT_PW: password
       #默认地址
