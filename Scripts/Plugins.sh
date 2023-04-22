@@ -18,14 +18,9 @@ export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/c
 export CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
 export CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
 export CORE_MATE=https://github.com/vernesong/OpenClash/raw/core/dev/meta/clash-linux
-export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2{s/\r$//;p;q}")
 
-export CORE_TYPE=arm64
-if [[ $OWRT_TARGET == *"64"* ]] ; then
-  export CORE_TYPE=amd64
-elif [[ $OWRT_TARGET == *"86"* ]] ; then
-  export CORE_TYPE=386
-fi
+export CORE_TYPE=$(echo $OWRT_TARGET | grep -iq "64" && echo "amd64" || echo "arm64")
+export TUN_VER=$(curl -sfL $CORE_VER | sed -n "2{s/\r$//;p;q}")
 
 export GEO_MMDB=https://github.com/alecthw/mmdb_china_ip_list/raw/release/lite/Country.mmdb
 export GEO_SITE=https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat
