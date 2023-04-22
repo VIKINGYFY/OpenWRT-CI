@@ -14,8 +14,12 @@ jobs:
     name: Build TEST
     runs-on: ubuntu-latest
     steps:
+      - name: test1
+        run: |
+          echo "CI_RUNS=$CI_RUNS" >> $GITHUB_ENV
+
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
         with:
           retain_days: 0
-          keep_minimum_runs: $CI_RUNS
+          keep_minimum_runs: ${{env.CI_RUNS}}
