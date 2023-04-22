@@ -13,7 +13,7 @@ git clone --depth=1 --single-branch https://github.com/gngpp/luci-app-design-con
 #Open Clash
 git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
 
-#Open Clash Core
+#预置OpenClash内核和GEO数据
 export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
 export CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
 export CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
