@@ -4,29 +4,17 @@ on:
   workflow_dispatch:  #手动编译
 
 env:
-  OWRT_TARGET: Rockchip  #项目平台
-  OWRT_THEME: argon  #默认主题
-  OWRT_NAME: IWRT  #默认主机名
-  OWRT_PW: password  #默认密码，仅作展示，请勿修改
-  OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 permissions: write-all
 
 jobs:
-  build_openwrt:
+  build_test:
     name: Build TEST
     runs-on: ubuntu-latest
     steps:
-      - name: TEST 1
-        run: |
-          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
-          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
-          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
-
-      - name: TEST 2
-        run: |
-          echo "$GITHUB_ENV"
-          echo "$GITHUB_ENV.OWRT_TARGET"
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 3
