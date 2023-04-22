@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  CI_RUNS: 6
+  CI_RUNS: 2
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 permissions: write-all
