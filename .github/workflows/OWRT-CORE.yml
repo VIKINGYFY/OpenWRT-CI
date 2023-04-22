@@ -17,21 +17,20 @@ on:
       OWRT_URL:
         required: true
         type: string
-      OWRT_IP:
-        required: true
-        type: string
       OWRT_PW:
         required: true
         type: string
-
+      OWRT_IP:
+        required: true
+        type: string
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
   OWRT_THEME: ${{inputs.OWRT_THEME}}
   OWRT_NAME: ${{inputs.OWRT_NAME}}
   OWRT_URL: ${{inputs.OWRT_URL}}
-  OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_PW: ${{inputs.OWRT_PW}}
+  OWRT_IP: ${{inputs.OWRT_IP}}
 
 jobs:
   owrt_core:
@@ -126,8 +125,8 @@ jobs:
           echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
           echo "OWRT_NAME=$OWRT_NAME" >> $GITHUB_ENV
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
+          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
           cd ./owrt && mkdir ./upload
           rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
@@ -152,11 +151,11 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 4
+          keep_latest: 6
           delete_tags: true
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
         with:
           retain_days: 0
-          keep_minimum_runs: 4
+          keep_minimum_runs: 2
