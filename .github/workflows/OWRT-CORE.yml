@@ -100,7 +100,7 @@ jobs:
         run: |
           cd ./owrt
 
-          rm -rf ./tmp && rm -rf ./.config*
+          rm -rf ./tmp* ./.config*
           cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
           $GITHUB_WORKSPACE/Scripts/Extras.sh
