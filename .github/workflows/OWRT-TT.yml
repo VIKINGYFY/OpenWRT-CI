@@ -10,7 +10,7 @@ permissions: write-all
 
 #CI任务
 jobs:
-  owrt_build:
+  owrt_config:
     #调用公用编译核心OWRT-TC.yml
     uses: ./.github/workflows/OWRT-TC.yml
     with:
@@ -22,7 +22,7 @@ jobs:
       OWRT_NAME: TEST
       #默认密码，仅作展示，请勿乱改
       OWRT_PW: 无
-      #默认IP地址
+      #默认地址
       OWRT_IP: 192.168.2.1
       #默认源码
-      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      OWRT_URL: https://github.com/openwrt/openwrt.git
