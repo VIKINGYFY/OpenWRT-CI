@@ -2,5 +2,9 @@
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_mt7981=y
 CONFIG_TARGET_mediatek_mt7981_DEVICE_mt7981-360-t7-108M=y
-#额外插件
+#额外组件
 CONFIG_PACKAGE_luci-app-mtk=y
+CONFIG_PACKAGE_kmod-conninfra=y
+CONFIG_PACKAGE_kmod-mt_wifi=y
+CONFIG_PACKAGE_kmod-warp=y
+CONFIG_PACKAGE_wifi-profile=y
