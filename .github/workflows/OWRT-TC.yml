@@ -119,12 +119,12 @@ jobs:
           files: ./owrt/upload/*.*
           body: |
             测试专用
+
             源码：${{env.OWRT_SOURCE}}
             平台：${{env.OWRT_TARGET}}
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
-            密码：${{env.OWRT_PW}}
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
