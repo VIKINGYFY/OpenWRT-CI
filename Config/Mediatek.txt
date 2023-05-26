@@ -4,8 +4,8 @@ CONFIG_TARGET_mediatek_filogic=y
 CONFIG_TARGET_mediatek_filogic_DEVICE_qihoo_360-t7-ubootmod=y
 #无线驱动
 CONFIG_PACKAGE_wpad=y
-CONFIG_PACKAGE_wpad-wolfssl=y
-CONFIG_PACKAGE_wpad-mesh-wolfssl=y
+CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_wpad-mesh-openssl=y
 CONFIG_PACKAGE_wpa-supplicant=y
-CONFIG_PACKAGE_wpa-supplicant-wolfssl=y
-CONFIG_PACKAGE_wpa-supplicant-mesh-wolfssl=y
+CONFIG_PACKAGE_wpa-supplicant-openssl=y
+CONFIG_PACKAGE_wpa-supplicant-mesh-openssl=y
