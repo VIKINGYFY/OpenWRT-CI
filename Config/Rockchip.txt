@@ -1,10 +1,11 @@
-#R2S R4S R5C R66S R68S H66K H68K
+#R2S R4S R5C R6S R66S R68S H66K H68K
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r5c=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r6s=y
 #LEDE源专用
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r66s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r68s=y
