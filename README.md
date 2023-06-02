@@ -13,9 +13,9 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间
 
-Rockchip——RK系列，包含NEO3 R2C R2S R4S R4SE R5C R5S R6S R66S R68S H66K H68K H69K
+Rockchip——RK系列，包含R2C R2S R4S R5C R5S R6S R66S R68S H66K H68K H69K
 
-Mediatek系列，包含360T7、REDMIAX6000
+Mediatek系列，包含360T7、红米AX6000
 
 X64——X64系列，包含X64、X86
 
