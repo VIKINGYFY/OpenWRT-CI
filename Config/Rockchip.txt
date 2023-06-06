@@ -17,3 +17,12 @@ CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_hinlink_opc-h69k=y
 #IMMORTALWRT源专用
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_lunzn_fastrhino-r66s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_lunzn_fastrhino-r68s=y
+#WIFI驱动
+CONFIG_DRIVER_11AC_SUPPORT=y
+CONFIG_DRIVER_11AX_SUPPORT=y
+CONFIG_PACKAGE_iwlwifi-firmware-ax200=y
+CONFIG_PACKAGE_kmod-mt7922-firmware=y
+CONFIG_PACKAGE_wpad=y
+CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_wpa-supplicant=y
+CONFIG_PACKAGE_wpa-supplicant-openssl=y
