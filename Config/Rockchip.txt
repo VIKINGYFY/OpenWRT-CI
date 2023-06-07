@@ -23,5 +23,3 @@ CONFIG_DRIVER_11AX_SUPPORT=y
 CONFIG_PACKAGE_kmod-mt7922-firmware=y
 CONFIG_PACKAGE_wpad=y
 CONFIG_PACKAGE_wpad-openssl=y
-CONFIG_PACKAGE_wpa-supplicant=y
-CONFIG_PACKAGE_wpa-supplicant-openssl=y
