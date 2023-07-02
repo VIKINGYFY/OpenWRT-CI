@@ -24,7 +24,7 @@ jobs:
       #默认主机名
       OWRT_NAME: OWRT
       #默认密码，仅作展示，请勿乱改
-      OWRT_PW: 无
+      OWRT_PW: password
       #默认地址
       OWRT_IP: 192.168.10.1
       #默认源码
