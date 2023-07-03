@@ -7,3 +7,5 @@ CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_h3c_magic-nx30-pro=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_jcg_q30_pro=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_qihoo_360t7=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u=y
+#额外插件
+CONFIG_PACKAGE_luci-app-easymesh=y
