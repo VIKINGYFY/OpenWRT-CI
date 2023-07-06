@@ -15,7 +15,7 @@ https://github.com/immortalwrt/immortalwrt
 
 Rockchip系列，包含R2C R2S R4S R5C R5S R6S R66S R68S H66K H68K H69K
 
-Mediatek系列，包含GL-MT3000 NX30-PRO Q30_PRO 360T7 CT3001 WR30U
+Mediatek系列，包含GL-MT3000 NX30-PRO Q30_PRO 360T7 CT3003 WR30U
 
 X64系列，包含X64、X86
 
