@@ -29,6 +29,4 @@ Config——自定义配置
 
 workflows——自定义CI配置
 
-打开下面链接生成.config配置文件:
-https://hackyes.github.io/openwrt-menuconfig/index.html
-编辑 .config 文件，把内容清空替换成上面链接生成的配置内容
+点击[链接](https://jack2583.github.io/openwrt-menuconfig/index.html)https://jack2583.github.io/openwrt-menuconfig/index.html生成.config配置文件；编辑 config 文件夹内的对应配置，把内容清空替换成上面链接生成的配置内容。
