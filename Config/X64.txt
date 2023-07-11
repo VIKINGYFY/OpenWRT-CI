@@ -1,4 +1,3 @@
-# https://hackyes.github.io/openwrt-menuconfig/index.html
 #X64 X86
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
