@@ -58,7 +58,7 @@ jobs:
       - name: Initialization Values
         run: |
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5)
+          export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
           export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
 
           echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
