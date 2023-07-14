@@ -162,7 +162,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 5
+          keep_latest: 6
           delete_tags: true
 
       - name: Delete Old Workflows
