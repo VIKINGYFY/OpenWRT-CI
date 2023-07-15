@@ -7,6 +7,9 @@ https://github.com/coolsnowwolf/lede
 IMMORTALWRT源码：
 https://github.com/immortalwrt/immortalwrt
 
+ATF and u-boot源码
+https://github.com/hanwckf/bl-mt798x
+
 # 固件简要说明：
 
 固件每天早上4点自动编译。

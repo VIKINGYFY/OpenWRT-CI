@@ -1,0 +1,25 @@
+#CI项目名
+name: u-boot
+
+on:
+  #自动编译：每周日早上2点
+  schedule:
+    - cron: 0 18 * * Sun
+  #手动编译
+  workflow_dispatch:
+
+#CI权限
+permissions: write-all
+
+#CI任务
+jobs:
+  u-boot_config:
+    #调用公用编译核心u-boot-CORE.yml
+    uses: ./.github/workflows/u-boot-CORE.yml
+    with:
+      #编译项目
+      uboot_TARGET: u-boot
+      #默认源码
+      uboot_URL: https://github.com/hanwckf/bl-mt798x.git
+      #默认分支
+      uboot_BRANCH: master

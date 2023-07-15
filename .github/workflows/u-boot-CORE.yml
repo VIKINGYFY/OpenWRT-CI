@@ -1,0 +1,111 @@
+#云编译公用核心
+name: uboot-CORE
+
+on:
+  #公用核心标识
+  workflow_call:
+    inputs:
+      uboot_TARGET:
+        required: true
+        type: string
+      uboot_URL:
+        required: true
+        type: string
+      uboot_BRANCH:
+        required: true
+        type: string
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  uboot_TARGET: ${{inputs.uboot_TARGET}}
+  uboot_URL: ${{inputs.uboot_URL}}
+  uboot_BRANCH: ${{inputs.uboot_BRANCH}}
+
+jobs:
+  uboot_core:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
+          sudo -E apt -yqq update
+          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
+          sudo -E apt -yqq full-upgrade
+          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
+          ##------Build Prepare------
+          sudo -E apt-get -yqq install gcc-aarch64-linux-gnu
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          ##-------------------------
+          sudo -E apt -yqq autoremove --purge
+          sudo -E apt -yqq autoclean
+          sudo -E apt -yqq clean
+          sudo -E systemctl daemon-reload
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+      - name: Initialization Values
+        run: |
+          export uboot_DATE=$(TZ=UTC-8 date +"%y.%m.%d")
+          export uboot_SOURCE=$(echo $uboot_URL | cut -d '/' -f 5)
+          export uboot_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Scripts/Uboot.sh)
+
+          echo "uboot_SOURCE=$uboot_SOURCE" >> $GITHUB_ENV
+          echo "uboot_TARGET=$uboot_TARGET" >> $GITHUB_ENV
+          echo "uboot_DATE=$uboot_DATE" >> $GITHUB_ENV
+          echo "uboot_TYPE=$uboot_TYPE" >> $GITHUB_ENV
+
+      - name: Check Scripts
+        run: |
+          cd ./Scripts
+
+          chmod +x ./*.sh
+          dos2unix ./*.sh
+
+      - name: Clone uboot Code
+        run: |
+          git clone --depth=1 --single-branch --branch $uboot_BRANCH $uboot_URL ./uboot
+
+      - name: Compile uboot
+        run: |
+          cd ./uboot
+
+          $GITHUB_WORKSPACE/Scripts/Uboot.sh
+
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
+
+      - name: Package Firmware
+        run: |
+          cd ./uboot && mkdir ./upload
+
+          cp -rf $(find ./output/ -type f -iname "*.*") ./upload/
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: ${{env.uboot_TARGET}}_${{env.uboot_SOURCE}}_${{env.uboot_DATE}}
+          files: ./uboot/upload/*.*
+          body: |
+
+            源码：${{env.uboot_SOURCE}}
+            项目：${{env.uboot_TARGET}}
+            设备：${{env.uboot_TYPE}}
+
+      - name: Delete Old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 5
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 1
