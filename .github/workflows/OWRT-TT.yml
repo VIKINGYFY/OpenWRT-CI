@@ -15,9 +15,9 @@ jobs:
     uses: ./.github/workflows/OWRT-TC.yml
     with:
       #编译平台
-      OWRT_TARGET: Mediatek
+      OWRT_TARGET: Rockchip
       #默认主题
-      OWRT_THEME: argon
+      OWRT_THEME: deign
       #默认主机名
       OWRT_NAME: OWRT
       #默认密码，仅作展示，请勿乱改
@@ -25,4 +25,4 @@ jobs:
       #默认地址
       OWRT_IP: 192.168.10.1
       #默认源码
-      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      OWRT_URL: https://github.com/coolsnowwolf/lede.git
