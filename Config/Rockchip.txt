@@ -1,4 +1,4 @@
-#R2C R2S R4S R5C R5S R6S R66S R68S H66K H68K H69K PANTHER_X2
+#R2C R2S R4S R5C R5S R6C R6S R66S R68S H66K H68K H69K PANTHER_X2
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
@@ -7,6 +7,7 @@ CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r5c=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r5s=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r6c=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r6s=y
 #LEDE源
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_panther_x2=y
