@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/OWRT-TC.yml
     with:
       #编译平台
-      OWRT_TARGET: Rockchip
+      OWRT_TARGET: TEST
       #默认主题
       OWRT_THEME: deign
       #默认主机名
