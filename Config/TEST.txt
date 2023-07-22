@@ -1,1 +1,3 @@
 #测试专用
+CONFIG_TARGET_ramips=y
+CONFIG_TARGET_ramips_7620a=y
