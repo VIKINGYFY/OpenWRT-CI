@@ -8,7 +8,11 @@ CONFIG_TARGET_ROOTFS_PARTSIZE=2048
 #删除参数
 CONFIG_TARGET_ROOTFS_EXT4FS=n
 #增加组件
+CONFIG_DEFAULT_luci-app-ssr-plus=n
+CONFIG_PACKAGE_ddns-scripts=n
+CONFIG_PACKAGE_ddns-scripts_aliyun=n
 CONFIG_PACKAGE_autocore=y
+CONFIG_PACKAGE_ddns-scripts_dnspod=n
 CONFIG_PACKAGE_autosamba=y
 CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-lib-ipkg=y
