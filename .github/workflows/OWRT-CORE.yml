@@ -77,7 +77,7 @@ jobs:
 
       - name: Clone OWRT Code
         run: |
-          git clone  -b 19.07 --depth=1 --single-branch $OWRT_URL ./owrt
+          git clone  --depth=1 --single-branch $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
