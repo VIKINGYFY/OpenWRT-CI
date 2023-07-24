@@ -6,6 +6,7 @@ https://github.com/coolsnowwolf/lede
 
 Lienol源码：
 https://github.com/Lienol/openwrt
+[![Mediatek-Lienol](https://github.com/flwh/OpenWRT-CI/actions/workflows/Mediatek-Lienol.yml/badge.svg)](https://github.com/flwh/OpenWRT-CI/actions/workflows/Mediatek-Lienol.yml)
 
 IMMORTALWRT源码：
 https://github.com/immortalwrt/immortalwrt
