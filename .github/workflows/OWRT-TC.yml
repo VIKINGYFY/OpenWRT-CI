@@ -23,6 +23,7 @@ on:
       OWRT_IP:
         required: true
         type: string
+
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
