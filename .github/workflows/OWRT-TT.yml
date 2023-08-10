@@ -25,4 +25,4 @@ jobs:
       #默认地址
       OWRT_IP: 192.168.10.1
       #默认源码
-      OWRT_URL: https://github.com/coolsnowwolf/lede.git
+      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
