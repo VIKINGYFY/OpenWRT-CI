@@ -28,5 +28,7 @@ workflows——自定义CI配置
 Scripts——自定义脚本
 
 Config——自定义配置
+
   -- General.txt 为通用配置文件，用于设定各平台都用得到的插件。
+
   -- Rockchip.txt Mediatek.txt X64.txt 为各平台主要配置文件，用于设定机型及额外插件。
