@@ -1,7 +1,9 @@
-#R2C R2S R4S R5C R5S R6C R6S R66S R68S H66K H68K H69K PANTHER_X2
+#T4 T6 R2C R2S R4S R5C R5S R6C R6S R66S R68S H66K H68K H69K
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopc-t4=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopc-t6=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2c=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r2s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r4s=y
@@ -13,7 +15,6 @@ CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_hinlink_opc-h66k=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_hinlink_opc-h68k=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_hinlink_opc-h69k=y
 #LEDE源
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_panther_x2=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r66s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r68s=y
 #IMMORTALWRT源
