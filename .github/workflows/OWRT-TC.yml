@@ -37,6 +37,25 @@ jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
+      - name: Before Disk Space
+        run: |
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
+
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+          with:
+            tool-cache: false
+            dotnet: true
+            android: true
+            haskell: true
+            swap-storage: true
+            docker-images: true
+            large-packages: true
+
       - name: Checkout Projects
         uses: actions/checkout@main
 
@@ -44,10 +63,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi $(docker images -q)
-          sudo -E rm -rf $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "1{s/\r$//;p;q}")
           sudo -E apt -yqq update
-          sudo -E apt -yqq purge $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "2{s/\r$//;p;q}")
           sudo -E apt -yqq full-upgrade
           sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
           sudo -E apt -yqq autoremove --purge
@@ -68,6 +84,14 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+
+      - name: After Disk Space
+        run: |
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
 
       - name: Check Scripts
         run: |
