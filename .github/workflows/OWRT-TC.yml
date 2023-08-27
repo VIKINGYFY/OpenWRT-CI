@@ -48,13 +48,13 @@ jobs:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@main
         with:
-            tool-cache: false
-            dotnet: true
-            android: true
-            haskell: true
-            swap-storage: true
-            docker-images: true
-            large-packages: true
+          tool-cache: false
+          dotnet: true
+          android: true
+          haskell: true
+          swap-storage: true
+          docker-images: true
+          large-packages: true
 
       - name: Checkout Projects
         uses: actions/checkout@main
