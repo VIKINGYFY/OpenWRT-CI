@@ -37,14 +37,6 @@ jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
-      - name: Before Disk Space
-        run: |
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
-
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@main
         with:
@@ -85,20 +77,12 @@ jobs:
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-      - name: After Disk Space
-        run: |
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
-
       - name: Check Scripts
         run: |
           cd ./Scripts
 
-          chmod +x ./*.sh
           dos2unix ./*.sh
+          chmod +x ./*.sh
 
       - name: Clone OWRT Code
         run: |
@@ -150,6 +134,14 @@ jobs:
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
+
+      - name: Disk Space Usage
+        run: |
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
