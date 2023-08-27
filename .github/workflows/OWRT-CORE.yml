@@ -134,12 +134,6 @@ jobs:
 
           make -j$(nproc) || make -j1 V=s
 
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
-
       - name: Package Firmware
         run: |
           cd ./owrt && mkdir ./upload
@@ -167,6 +161,14 @@ jobs:
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
+
+      - name: Disk Space Usage
+        run: |
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
 
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
