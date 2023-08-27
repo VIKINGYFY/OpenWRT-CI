@@ -37,6 +37,9 @@ jobs:
   owrt_core:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@main
         with:
@@ -47,9 +50,6 @@ jobs:
           swap-storage: true
           docker-images: true
           large-packages: true
-
-      - name: Checkout Projects
-        uses: actions/checkout@main
 
       - name: Initialization Environment
         env:
