@@ -57,7 +57,7 @@ jobs:
         run: |
           sudo -E apt -yqq update
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(cat $GITHUB_WORKSPACE/Depends.txt | sed -n "3{s/\r$//;p;q}")
+          sudo -E apt -yqq install $(sed "{s/\r$//g;p;q}" $GITHUB_WORKSPACE/Depends.txt)
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
@@ -77,12 +77,11 @@ jobs:
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-      - name: Check Scripts
+      - name: Check Files
         run: |
-          cd ./Scripts
 
-          dos2unix ./*.sh
-          chmod +x ./*.sh
+          dos2unix $(find ./ -maxdepth 2 -iregex ".*\(txt\|sh\)$")
+          chmod +x $(find ./ -maxdepth 2 -type f -iname "*.sh")
 
       - name: Clone OWRT Code
         run: |
@@ -134,6 +133,12 @@ jobs:
 
           make -j$(nproc) || make -j1 V=s
 
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
+
       - name: Package Firmware
         run: |
           cd ./owrt && mkdir ./upload
@@ -161,14 +166,6 @@ jobs:
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
-
-      - name: Disk Space Usage
-        run: |
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
 
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
