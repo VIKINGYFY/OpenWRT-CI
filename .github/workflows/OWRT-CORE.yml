@@ -40,24 +40,16 @@ jobs:
       - name: Checkout Projects
         uses: actions/checkout@main
 
-      - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: false
-          dotnet: true
-          android: true
-          haskell: true
-          swap-storage: true
-          docker-images: true
-          large-packages: true
-
       - name: Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          docker rmi $(docker images -q)
+          sudo -E rm -rf $(sed -n "1{s/\r$//g;p;q}" $GITHUB_WORKSPACE/Depends.txt)
           sudo -E apt -yqq update
+          sudo -E apt -yqq purge $(sed -n "2{s/\r$//g;p;q}" $GITHUB_WORKSPACE/Depends.txt)
           sudo -E apt -yqq full-upgrade
-          sudo -E apt -yqq install $(sed "{s/\r$//g;p;q}" $GITHUB_WORKSPACE/Depends.txt)
+          sudo -E apt -yqq install $(sed -n "3{s/\r$//g;p;q}" $GITHUB_WORKSPACE/Depends.txt)
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
