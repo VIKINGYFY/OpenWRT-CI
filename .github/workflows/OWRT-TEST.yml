@@ -12,8 +12,22 @@ jobs:
   owrt_test:
     runs-on: ubuntu-latest
     steps:
+      - name: find
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo -E find ./ -maxdepth 3 -type d -iregex ".*\(azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu\).*" > /tmp/find.txt
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
+          files: /tmp/*.txt
+          body: |
+            测试专用
+
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
         with:
           retain_days: 0
-          keep_minimum_runs: 0
+          keep_minimum_runs: 1
