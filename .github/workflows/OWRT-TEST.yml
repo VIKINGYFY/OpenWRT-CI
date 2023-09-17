@@ -14,11 +14,11 @@ jobs:
     steps:
       - name: find
         run: |
-          export list="azure* docker* dotnet* firefox* ghc* google* libgl1* llvm* mongodb* mono* mysql* openjdk* php* powershell* snap* zulu*"
-          export regex=$(echo $list | tr '* ' '|')
-          sudo find /etc/ -maxdepth 2 -type d -iregex ".*\/($regex).*" >> /tmp/find.txt
-          sudo find /opt/ -maxdepth 2 -type d -iregex ".*\/($regex).*" >> /tmp/find.txt
-          sudo find /usr/ -maxdepth 2 -type d -iregex ".*\/($regex).*" >> /tmp/find.txt
+          export list="android\|azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu"
+          sudo find /etc/ /opt/ /usr/ -maxdepth 2 -type d -iregex "\($list).*" >> /tmp/find.txt
+          sudo find /etc/ -maxdepth 2 -type d -iregex "\($list).*" >> /tmp/etc.txt
+          sudo find /opt/ -maxdepth 2 -type d -iregex "\($list).*" >> /tmp/opt.txt
+          sudo find /usr/ -maxdepth 2 -type d -iregex "\($list).*" >> /tmp/usr.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
