@@ -15,7 +15,8 @@ jobs:
       - name: find
         run: |
           export list="azure* docker* dotnet* firefox* ghc* google* libgl1* llvm* mongodb* mono* mysql* openjdk* php* powershell* snap* zulu*"
-          sudo find /etc/ /opt/ /usr/ -maxdepth 2 -type d -iregex "^($(echo $list | tr ' ' '|'))" >> /tmp/find.txt
+          export regex=$(echo $list | tr '* ' '|')
+          sudo find /etc/ /opt/ /usr/ -maxdepth 2 -type d -iregex ".*\/($regex).*" >> /tmp/find.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
