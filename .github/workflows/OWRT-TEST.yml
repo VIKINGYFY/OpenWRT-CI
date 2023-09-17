@@ -14,7 +14,18 @@ jobs:
     steps:
       - name: find
         run: |
-          echo $(sudo find ./ -maxdepth 3 -type d -iregex ".*\(azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu\).*")
+          export list=".*\(azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu\).*"
+          sudo find /etc/ -maxdepth 3 -type d -iregex "$list" > /tmp/etc.txt
+          sudo find /opt/ -maxdepth 3 -type d -iregex "$list" > /tmp/opt.txt
+          sudo find /usr/ -maxdepth 3 -type d -iregex "$list" > /tmp/usr.txt
+
+      - name: Release Firmware
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
+          files: /tmp/*.txt
+          body: |
+            测试专用
 
       - name: Delete Old Workflows
         uses: Mattraks/delete-workflow-runs@main
