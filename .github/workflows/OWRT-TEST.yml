@@ -15,7 +15,7 @@ jobs:
       - name: find
         run: |
           export list="\(android\|azure\|docker\|dotnet\|firefox\|ghc\|google\|libgl1\|llvm\|mongodb\|mono\|mysql\|openjdk\|php\|powershell\|snap\|zulu\).*"
-          sudo find / -maxdepth 4 -type d -iregex "$list" >> /tmp/all.txt
+          sudo find -maxdepth 4 -type d -iregex "$list" >> /tmp/all.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@master
