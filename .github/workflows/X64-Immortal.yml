@@ -20,7 +20,7 @@ jobs:
       #编译平台，X64包含X86
       OWRT_TARGET: X64
       #默认主题
-      OWRT_THEME: design
+      OWRT_THEME: argon
       #默认主机名
       OWRT_NAME: OWRT
       #默认密码，仅作展示，请勿乱改
