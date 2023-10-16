@@ -18,6 +18,7 @@ git clone --depth=1 --single-branch https://github.com/linkease/nas-packages-luc
 git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
 #Pass Wall
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall.git
+git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall2.git
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall-packages.git
 #Hello World
 git clone --depth=1 --single-branch https://github.com/fw876/helloworld.git
