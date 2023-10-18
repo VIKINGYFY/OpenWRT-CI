@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/OWRT-TC.yml
     with:
       #编译平台
-      OWRT_TARGET: Rockchip
+      OWRT_TARGET: TEST
       #默认主题
       OWRT_THEME: argon
       #默认主机名
@@ -25,4 +25,4 @@ jobs:
       #默认地址
       OWRT_IP: 192.168.10.1
       #默认源码
-      OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      OWRT_URL: https://github.com/coolsnowwolf/openwrt-gl-ax1800.git
