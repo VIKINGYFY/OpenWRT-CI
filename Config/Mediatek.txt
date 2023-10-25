@@ -1,4 +1,4 @@
-#JCG_Q30 NX30-PRO GL-MT3000 QIHOO_360T7 CETRON_CT3003 CMCC_RAX3000M LC-HX3001 MI-ROUTER-AX3000T MI-ROUTER-WR30U REDMI-ROUTER-AX6000
+#ABT_ASR3000 CETRON_CT3003 CMCC_A10 CMCC_RAX3000M GL-MT3000 JCG_Q30 LC-HX3001 NX30-PRO QIHOO_360T7 MI-ROUTER-AX3000T MI-ROUTER-WR30U REDMI-ROUTER-AX6000
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_filogic=y
@@ -15,9 +15,11 @@ CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-ax3000t=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_mi-router-wr30u=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_xiaomi_redmi-router-ax6000=y
 #特殊分区
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_abt_asr3000-ubootmod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-mod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-stock=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-ubootmod=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cmcc_a10-ubootmod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cmcc_rax3000m-emmc-ubootmod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cmcc_rax3000m-nand-ubootmod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_h3c_magic-nx30-pro-nmbm=y
