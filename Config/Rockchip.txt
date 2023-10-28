@@ -29,4 +29,3 @@ CONFIG_PACKAGE_kmod-mt7921e=y
 CONFIG_PACKAGE_kmod-mt7922-firmware=y
 CONFIG_PACKAGE_kmod-mt792x-firmware=y
 CONFIG_PACKAGE_wpad=y
-CONFIG_PACKAGE_wpad-openssl=y
