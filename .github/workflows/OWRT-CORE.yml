@@ -69,11 +69,6 @@ jobs:
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
 
-      - name: Check Files
-        run: |
-          dos2unix $(find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$")
-          chmod +x $(find ./ -maxdepth 2 -type f -iname "*.sh")
-
       - name: Clone OWRT Code
         run: |
           git clone --depth=1 --single-branch $OWRT_URL ./owrt
@@ -84,6 +79,10 @@ jobs:
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+
+      - name: Check Scripts
+        run: |
+          find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
       - name: Custom Scripts
         run: |
