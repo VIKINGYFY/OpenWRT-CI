@@ -5,6 +5,9 @@ on:
   #公用核心标识
   workflow_call:
     inputs:
+      OWRT_BRANCH:
+        required: false
+        type: string
       OWRT_TARGET:
         required: true
         type: string
@@ -26,6 +29,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
   OWRT_THEME: ${{inputs.OWRT_THEME}}
   OWRT_NAME: ${{inputs.OWRT_NAME}}
@@ -71,7 +75,7 @@ jobs:
 
       - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch $OWRT_URL ./owrt
+          git clone --depth=1 --single-branch --branch "$OWRT_BRANCH" $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
