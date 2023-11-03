@@ -14,17 +14,17 @@ git clone --depth=1 --single-branch --branch $(echo $OWRT_URL | grep -iq "lede" 
 git clone --depth=1 --single-branch https://github.com/linkease/istore.git
 git clone --depth=1 --single-branch https://github.com/linkease/nas-packages.git
 git clone --depth=1 --single-branch https://github.com/linkease/nas-packages-luci.git
-#Open Clash
-git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
 #Pass Wall
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall.git
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall2.git
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall-packages.git
+#Open Clash
+git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
 #Hello World
-git clone --depth=1 --single-branch https://github.com/fw876/helloworld.git
+git clone --depth=1 --single-branch --branch "main" https://github.com/fw876/helloworld.git
 #Home Proxy
 if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
-  git clone --depth=1 --single-branch https://github.com/immortalwrt/homeproxy.git
+  git clone --depth=1 --single-branch --branch "dev" https://github.com/immortalwrt/homebridger.git
 fi
 
 #预置OpenClash内核和GEO数据
