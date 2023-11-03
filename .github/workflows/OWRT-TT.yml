@@ -26,3 +26,5 @@ jobs:
       OWRT_IP: 192.168.10.1
       #默认源码
       OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      #默认分支，非必要参数，可不用写
+      #OWRT_BRANCH: master
