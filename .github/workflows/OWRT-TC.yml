@@ -6,7 +6,7 @@ on:
   workflow_call:
     inputs:
       OWRT_BRANCH:
-        required: false
+        required: true
         type: string
       OWRT_TARGET:
         required: true
