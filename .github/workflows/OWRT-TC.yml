@@ -2,7 +2,6 @@
 name: OWRT-TC
 
 on:
-  #公用核心标识
   workflow_call:
     inputs:
       OWRT_BRANCH:
@@ -103,9 +102,15 @@ jobs:
           cd ./owrt
 
           rm -rf ./tmp* ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
-          $GITHUB_WORKSPACE/Scripts/Extras.sh
+          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          echo "CONFIG_PACKAGE_luci-theme-$OWRT_THEME=y" >> .config
+          echo "CONFIG_PACKAGE_luci-app-$OWRT_THEME-config=y" >> .config
+
+          if [[ $OWRT_URL != *"lede"* ]] ; then
+            echo "CONFIG_PACKAGE_luci=y" >> .config
+            echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
+          fi
 
           make defconfig
 
@@ -122,6 +127,7 @@ jobs:
       - name: Package Firmware
         run: |
           cd ./owrt && mkdir ./upload
+
           cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
 
       - name: Release Firmware
