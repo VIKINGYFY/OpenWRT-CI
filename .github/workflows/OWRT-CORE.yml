@@ -129,6 +129,8 @@ jobs:
 
       - name: Space Usage
         run: |
+          cd ./owrt
+
           echo "======================="
           df -h
           echo "======================="
