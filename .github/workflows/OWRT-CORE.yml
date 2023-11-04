@@ -104,6 +104,7 @@ jobs:
           rm -rf ./tmp* ./.config*
 
           cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+
           echo "CONFIG_PACKAGE_luci-theme-$OWRT_THEME=y" >> .config
           echo "CONFIG_PACKAGE_luci-app-$OWRT_THEME-config=y" >> .config
 
