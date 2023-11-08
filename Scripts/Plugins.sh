@@ -19,7 +19,7 @@ git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwal
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall2.git
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall-packages.git
 #Open Clash
-git clone --depth=1 --single-branch --branch "dev" fddb8edcefd3a9f5afd8e2d2672fc466609823b8 https://github.com/vernesong/OpenClash.git
+git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git && cd OpenClash && git checkout fddb8edcefd3a9f5afd8e2d2672fc466609823b8
 #Hello World
 git clone --depth=1 --single-branch --branch "main" https://github.com/fw876/helloworld.git
 #Home Proxy
