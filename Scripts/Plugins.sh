@@ -19,13 +19,16 @@ git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwal
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall2.git
 git clone --depth=1 --single-branch https://github.com/xiaorouji/openwrt-passwall-packages.git
 #Open Clash
-git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git && cd OpenClash && git checkout fddb8edcefd3a9f5afd8e2d2672fc466609823b8
+git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/OpenClash.git
 #Hello World
 git clone --depth=1 --single-branch --branch "main" https://github.com/fw876/helloworld.git
 #Home Proxy
 if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
   git clone --depth=1 --single-branch --branch "dev" https://github.com/immortalwrt/homebridger.git
 fi
+
+#修复OpenClash报错
+sed -i "s#/usr/lib/lua/luci/http.lua#/usr/share/ucode/luci/http.uc#g" ./OpenClash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
 #预置OpenClash内核和GEO数据
 export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
