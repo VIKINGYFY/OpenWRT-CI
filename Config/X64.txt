@@ -7,10 +7,3 @@ CONFIG_GRUB_IMAGES=y
 CONFIG_VMDK_IMAGES=y
 #额外插件
 CONFIG_PACKAGE_luci-app-dockerman=y
-CONFIG_PACKAGE_luci-app-store=y
-CONFIG_PACKAGE_luci-app-ddnsto=y
-CONFIG_PACKAGE_luci-app-istorex=y
-CONFIG_PACKAGE_luci-app-linkease=y
-CONFIG_PACKAGE_luci-app-unishare=y
-CONFIG_PACKAGE_luci-app-quickstart=y
-CONFIG_PACKAGE_luci-app-kodexplorer=y
