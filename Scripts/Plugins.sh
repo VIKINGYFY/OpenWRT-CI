@@ -28,7 +28,7 @@ if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
 fi
 
 #修复OpenClash报错
-sed -i "s#/usr/lib/lua/luci/http.lua#/usr/share/ucode/luci/http.uc#g" ./OpenClash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
+sed -i "194s#/usr/lib/lua/luci/http.lua#/usr/share/ucode/luci/http.uc#" ./OpenClash/luci-app-openclash/root/etc/uci-defaults/luci-openclash
 
 #预置OpenClash内核和GEO数据
 export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
