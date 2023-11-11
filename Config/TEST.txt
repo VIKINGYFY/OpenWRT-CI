@@ -1,3 +1,0 @@
-#测试专用
-CONFIG_TARGET_ipq40xx=y
-CONFIG_TARGET_ipq40xx_generic=y
