@@ -28,6 +28,6 @@ jobs:
       #默认地址
       OWRT_IP: 192.168.1.254
       #默认源码
-      OWRT_URL: https://github.com/abettmr/immortalwrt.git
+      OWRT_URL: https://github.com/abettmr/immortalwrt_asr3000.git
       #默认分支
       OWRT_BRANCH: master
