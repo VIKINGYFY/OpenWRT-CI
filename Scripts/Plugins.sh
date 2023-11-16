@@ -16,7 +16,7 @@ git clone --depth=1 --single-branch --branch "dev" https://github.com/vernesong/
 git clone --depth=1 --single-branch --branch "main" https://github.com/fw876/helloworld.git
 #Home Proxy
 if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
-  git clone --depth=1 --single-branch --branch "dev" https://github.com/immortalwrt/homebridger.git
+  git clone --depth=1 --single-branch --branch "master" https://github.com/immortalwrt/homebridger.git
 fi
 
 #预置OpenClash内核和GEO数据
