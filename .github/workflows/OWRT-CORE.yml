@@ -25,6 +25,10 @@ on:
       OWRT_IP:
         required: true
         type: string
+      OWRT_CFG:
+        required: false
+        default: 'false'
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -35,6 +39,7 @@ env:
   OWRT_URL: ${{inputs.OWRT_URL}}
   OWRT_PW: ${{inputs.OWRT_PW}}
   OWRT_IP: ${{inputs.OWRT_IP}}
+  OWRT_CFG: ${{inputs.OWRT_CFG}}
 
 jobs:
   owrt_core:
@@ -116,18 +121,21 @@ jobs:
           make defconfig
 
       - name: Cleanup Toolchain
+        if: env.OWRT_CFG == 'false'
         run: |
           cd ./owrt
 
           make dirclean
 
       - name: Download Packages
+        if: env.OWRT_CFG == 'false'
         run: |
           cd ./owrt
 
           make download -j$(nproc)
 
       - name: Compile Firmware
+        if: env.OWRT_CFG == 'false'
         run: |
           cd ./owrt
 
@@ -179,6 +187,7 @@ jobs:
             地址：${{env.OWRT_IP}}
 
       - name: Delete Old Releases
+        if: env.OWRT_CFG == 'false'
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 6
