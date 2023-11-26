@@ -28,5 +28,5 @@ jobs:
       OWRT_URL: https://github.com/padavanonly/immortalwrtARM.git
       #默认分支
       OWRT_BRANCH: mt7981
-      #仅输出配置文件
+      #仅输出配置文件，非必选参数
       OWRT_CFG: true
