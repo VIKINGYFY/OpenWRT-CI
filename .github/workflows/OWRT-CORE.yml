@@ -158,19 +158,19 @@ jobs:
           cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
 
           if [ $OWRT_CFG = false ]; then
-           rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
-           cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
+            rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
+            cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
 
-           cd ./upload
+            cd ./upload
 
-           for var in $OWRT_TYPE ; do
-             for file in $(find ./ -type f -iname "*$var*.*" ! -iname "*.txt") ; do
-               export ext=$(basename "$file" | cut -d '.' -f 2-)
-               export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
-               export new_file="$OWRT_SOURCE"_"$name"_"$OWRT_DATE"."$ext"
-               mv -f "$file" "$new_file"
-             done
-           done
+            for var in $OWRT_TYPE ; do
+              for file in $(find ./ -type f -iname "*$var*.*" ! -iname "*.txt") ; do
+                export ext=$(basename "$file" | cut -d '.' -f 2-)
+                export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
+                export new_file="$OWRT_SOURCE"_"$name"_"$OWRT_DATE"."$ext"
+                mv -f "$file" "$new_file"
+              done
+            done
           fi
 
       - name: Release Firmware
