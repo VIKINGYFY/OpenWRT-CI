@@ -11,8 +11,8 @@ permissions: write-all
 #CI任务
 jobs:
   owrt_config:
-    #调用公用编译核心OWRT-TC.yml
-    uses: ./.github/workflows/OWRT-TC.yml
+    #调用公用编译核心OWRT-CORE.yml
+    uses: ./.github/workflows/OWRT-CORE.yml
     with:
       #编译平台
       OWRT_TARGET: Mediatek
@@ -28,3 +28,5 @@ jobs:
       OWRT_URL: https://github.com/padavanonly/immortalwrtARM.git
       #默认分支
       OWRT_BRANCH: mt7981
+      #仅输出配置文件
+      OWRT_CFG: true
