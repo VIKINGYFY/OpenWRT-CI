@@ -161,7 +161,7 @@ jobs:
             rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
 
             for var in $OWRT_TYPE ; do
-              for file in $(find ./bin/targets/ -type f -iname "*.*") ; do
+              for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
                 export ext=$(basename "$file" | cut -d '.' -f 2-)
                 export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
                 export new_file="$OWRT_SOURCE"_"$name"_"$OWRT_DATE"."$ext"
