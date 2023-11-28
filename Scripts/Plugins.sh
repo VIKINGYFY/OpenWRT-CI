@@ -21,6 +21,8 @@ if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
   git clone --depth=1 --single-branch --branch "dev" https://github.com/immortalwrt/homeproxy.git
 fi
 
+#修改Tiny Filemanager
+sed -i '/msgid "Tiny File Manager"/{n; s/msgstr.*/msgstr "文件管理器"/}' ./luci-app-tinyfilemanager/po/zh_Hans/tinyfilemanager.po
 #预置OpenClash内核和GEO数据
 export CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
 export CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
