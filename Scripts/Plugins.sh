@@ -1,26 +1,29 @@
 #!/bin/bash
 
+#精简git命令
+CLONE="git clone --depth=1 --single-branch"
+
 #Tiny Filemanager
-$OWRT_CLONE https://github.com/muink/luci-app-tinyfilemanager.git
+$CLONE https://github.com/muink/luci-app-tinyfilemanager.git
 #Design Theme
-$OWRT_CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "main" || echo "js") https://github.com/gngpp/luci-theme-design.git
-$OWRT_CLONE https://github.com/gngpp/luci-app-design-config.git
+$CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "main" || echo "js") https://github.com/gngpp/luci-theme-design.git
+$CLONE https://github.com/gngpp/luci-app-design-config.git
 #Argon Theme
-$OWRT_CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-theme-argon.git
-$OWRT_CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-app-argon-config.git
+$CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-theme-argon.git
+$CLONE --branch $(echo $OWRT_URL | grep -iq "lede" && echo "18.06" || echo "master") https://github.com/jerrykuku/luci-app-argon-config.git
 #Pass Wall
-$OWRT_CLONE https://github.com/xiaorouji/openwrt-passwall.git
-$OWRT_CLONE https://github.com/xiaorouji/openwrt-passwall2.git
-$OWRT_CLONE https://github.com/xiaorouji/openwrt-passwall-packages.git
+$CLONE https://github.com/xiaorouji/openwrt-passwall.git
+$CLONE https://github.com/xiaorouji/openwrt-passwall2.git
+$CLONE https://github.com/xiaorouji/openwrt-passwall-packages.git
 #Open Clash
-$OWRT_CLONE --branch "dev" https://github.com/vernesong/OpenClash.git
+$CLONE --branch "dev" https://github.com/vernesong/OpenClash.git
 #Hello World
 if [[ $OWRT_URL == *"lede"* ]] ; then
-  $OWRT_CLONE --branch "main" https://github.com/fw876/helloworld.git
+  $CLONE --branch "main" https://github.com/fw876/helloworld.git
 fi
 #Home Proxy
 if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
-  $OWRT_CLONE --branch "dev" https://github.com/immortalwrt/homeproxy.git
+  $CLONE --branch "dev" https://github.com/immortalwrt/homeproxy.git
 fi
 
 #修改Tiny Filemanager汉化
