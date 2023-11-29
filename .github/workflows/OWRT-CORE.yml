@@ -66,6 +66,7 @@ jobs:
 
       - name: Initialization Values
         run: |
+          export OWRT_CLONE="git clone --depth=1 --single-branch"
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
           export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
@@ -79,7 +80,7 @@ jobs:
 
       - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch --branch "$OWRT_BRANCH" $OWRT_URL ./owrt
+          $OWRT_CLONE --branch "$OWRT_BRANCH" $OWRT_URL ./owrt
 
       - name: Update Feeds
         run: |
