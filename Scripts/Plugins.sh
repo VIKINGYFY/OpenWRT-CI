@@ -23,7 +23,8 @@ if [[ $OWRT_URL == *"lede"* ]] ; then
 fi
 #Home Proxy
 if [[ $OWRT_URL == *"immortalwrt"* ]] ; then
-  $CLONE --branch "dev" https://github.com/immortalwrt/homeproxy.git
+  #$CLONE --branch "dev" https://github.com/immortalwrt/homeproxy.git
+  $CLONE --branch "dev" https://github.com/douglarek/luci-app-homeproxy.git
 fi
 
 #修改Tiny Filemanager汉化
