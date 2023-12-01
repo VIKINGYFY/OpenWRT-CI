@@ -158,7 +158,7 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
 
-          if [[ $OWRT_CFG == false ]]; then
+          if [[ $OWRT_CFG == "false" ]]; then
             rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
 
             for var in $OWRT_TYPE ; do
