@@ -22,7 +22,7 @@ UPDATE_VERSION() {
 	local pkg_file=$(find ./feeds/packages/*/$pkg_name/ -type f -name "Makefile" 2>/dev/null)
 
 	if [ -f "$pkg_file" ]; then
-		local old_ver=$(egrep -o 'PKG_VERSION:=\K.*' "$pkg_file")
+		local old_ver=$(grep -Po "PKG_VERSION:=\K.*" "$pkg_file")
 		if dpkg --compare-versions "$old_ver" lt "$new_ver"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$new_ver/g" "$pkg_file"
 			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$new_hash/g" "$pkg_file"
