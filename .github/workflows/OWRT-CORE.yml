@@ -101,6 +101,7 @@ jobs:
           cd ./package
 
           $GITHUB_WORKSPACE/Scripts/Plugins.sh
+          $GITHUB_WORKSPACE/Scripts/Handles.sh
 
       - name: Custom Settings
         run: |
