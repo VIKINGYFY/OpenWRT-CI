@@ -142,10 +142,12 @@ jobs:
 
           make -j$(nproc) || make -j1 V=s
 
-      - name: Space Usage
+      - name: Machine Information
         run: |
           cd ./owrt
 
+          echo "======================="
+          lscpu | egrep 'Model name|Core|Thread'
           echo "======================="
           df -h
           echo "======================="
