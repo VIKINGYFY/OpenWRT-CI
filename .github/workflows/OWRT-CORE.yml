@@ -147,7 +147,7 @@ jobs:
           cd ./owrt
 
           echo "======================="
-          lscpu | egrep 'Model name|Core|Thread'
+          lscpu | egrep 'name|Core|Thread'
           echo "======================="
           df -h
           echo "======================="
