@@ -3,8 +3,6 @@
 #精简git命令
 CLONE="git clone --depth=1 --single-branch"
 
-#MOS DNS
-$CLONE https://github.com/sbwml/luci-app-mosdns.git
 #Tiny Filemanager
 $CLONE https://github.com/muink/luci-app-tinyfilemanager.git
 
