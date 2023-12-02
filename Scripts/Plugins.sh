@@ -20,8 +20,10 @@ $CLONE https://github.com/xiaorouji/openwrt-passwall-packages.git
 #Open Clash
 $CLONE --branch "dev" https://github.com/vernesong/OpenClash.git
 #Hello World
-[[ $OWRT_URL == *"lede"* ]] && $CLONE --branch "master" https://github.com/fw876/helloworld.git
+if [[ $OWRT_URL == *"lede"* ]]; then
+	$CLONE --branch "master" https://github.com/fw876/helloworld.git
+fi
 #Home Proxy
-[[ $OWRT_URL == *"immortalwrt"* ]] && $CLONE --branch "mdev" https://github.com/muink/homeproxy.git
-
-echo "testing!"
+if [[ $OWRT_URL == *"immortalwrt"* ]]; then
+	$CLONE --branch "mdev" https://github.com/muink/homeproxy.git
+fi
