@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "start updating resources!"
+
 #预置HomeProxy数据
 if [[ -d "homeproxy" ]]; then
 	HP_PATCH="../homeproxy/root/etc/homeproxy/resources"
