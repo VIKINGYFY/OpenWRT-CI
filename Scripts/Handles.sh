@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #预置HomeProxy数据
-if [ -d *"homeproxy"* ]; then
+if [[ -d "homeproxy" ]]; then
 	HP_PATCH="../homeproxy/root/etc/homeproxy/resources"
 
 	UPDATE_RESOURCES() {
@@ -45,7 +45,7 @@ if [ -d *"homeproxy"* ]; then
 fi
 
 #预置OpenClash内核和数据
-if [ -d *"OpenClash"* ]; then
+if [[ -d "OpenClash" ]]; then
 	CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
 	CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
 	CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
