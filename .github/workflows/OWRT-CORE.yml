@@ -100,8 +100,11 @@ jobs:
 
           cd ./package/
 
+          echo "a"
           $GITHUB_WORKSPACE/Scripts/Plugins.sh
+          echo "b"
           $GITHUB_WORKSPACE/Scripts/Handles.sh
+          echo "c"
 
       - name: Custom Settings
         run: |
