@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #预置HomeProxy数据
+echo "1"
 if [[ -d "homeproxy" ]]; then
+	echo "2"
 	HP_PATCH="../homeproxy/root/etc/homeproxy/resources"
 
 	UPDATE_RESOURCES() {
@@ -42,10 +44,13 @@ if [[ -d "homeproxy" ]]; then
 	UPDATE_RESOURCES "geoip" "1715173329/sing-geoip" "1" "master" "geoip.db"
 	UPDATE_RESOURCES "geosite" "1715173329/sing-geosite" "1" "master" "geosite.db"
 	UPDATE_RESOURCES "clash_dashboard" "MetaCubeX/metacubexd" "1" "gh-pages" "gh-pages.zip"
+	echo "4"
 fi
 
 #预置OpenClash内核和数据
+echo "5"
 if [[ -d "OpenClash" ]]; then
+	echo "6"
 	CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
 	CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
 	CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
@@ -79,4 +84,6 @@ if [[ -d "OpenClash" ]]; then
 
 	chmod +x clash*
 	rm -rf *.gz
+	echo "7"
 fi
+echo "8"
