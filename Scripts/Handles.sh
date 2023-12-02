@@ -24,14 +24,19 @@ if [ -d *"homeproxy"* ]; then
 		if [[ "${res_file##*.}" == "txt" ]]; then
 			echo $(git log -1 --pretty=format:'%s' -- $res_file | grep -o "[0-9]*") > "$res_type.ver"
 			mv -f $res_file "$res_type.${res_file##*.}"
-			cp -f $res_type.* $HP_PATCH/
+		fi
+		if [[ "${res_file##*.}" == "zip" ]]; then
+			echo $(git log -1 --pretty=format:'%s' | cut -d ' ' -f 1) > "$res_type.ver"
+			curl -sfL -O "https://github.com/$res_repo/archive/$res_file"
+			mv -f $res_file $HP_PATCH/"${res_repo//\//_}.${res_file##*.}"
 		fi
 		if [[ "${res_file##*.}" == "db" ]]; then
-			local file_ver=$(git tag | tail -n 1)
-			echo $file_ver > "$res_type.ver"
-			curl -sfL -O "https://github.com/$res_repo/releases/download/$file_ver/$res_file"
-			cp -f $res_type.* $HP_PATCH/
+			local res_ver=$(git tag | tail -n 1)
+			echo $res_ver > "$res_type.ver"
+			curl -sfL -O "https://github.com/$res_repo/releases/download/$res_ver/$res_file"
 		fi
+
+		cp -f $res_type.* $HP_PATCH/
 
 		cd .. && rm -rf ./$res_type/
 	}
@@ -42,6 +47,7 @@ if [ -d *"homeproxy"* ]; then
 	UPDATE_RESOURCES "china_list" "Loyalsoldier/v2ray-rules-dat" "1" "release" "direct-list.txt"
 	UPDATE_RESOURCES "geoip" "1715173329/sing-geoip" "1" "master" "geoip.db"
 	UPDATE_RESOURCES "geosite" "1715173329/sing-geosite" "1" "master" "geosite.db"
+	UPDATE_RESOURCES "clash_dashboard" "MetaCubeX/metacubexd" "1" "gh-pages" "gh-pages.zip"
 fi
 
 #预置OpenClash内核和数据
