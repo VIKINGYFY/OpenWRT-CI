@@ -79,11 +79,11 @@ jobs:
 
       - name: Clone OWRT Code
         run: |
-          git clone --depth=1 --single-branch --branch "$OWRT_BRANCH" $OWRT_URL ./owrt
+          git clone --depth=1 --single-branch --branch "$OWRT_BRANCH" $OWRT_URL ./owrt/
 
       - name: Update Feeds
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
@@ -94,7 +94,7 @@ jobs:
 
       - name: Custom Scripts
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
@@ -105,7 +105,7 @@ jobs:
 
       - name: Custom Settings
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           rm -rf ./tmp* ./.config*
 
@@ -124,27 +124,27 @@ jobs:
       - name: Cleanup Toolchain
         if: env.OWRT_CFG == 'false'
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           make dirclean
 
       - name: Download Packages
         if: env.OWRT_CFG == 'false'
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
         if: env.OWRT_CFG == 'false'
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           make -j$(nproc) || make -j1 V=s
 
       - name: Machine Information
         run: |
-          cd ./owrt
+          cd ./owrt/
 
           echo "======================="
           lscpu | egrep "name|Core|Thread"
@@ -156,7 +156,7 @@ jobs:
 
       - name: Package Firmware
         run: |
-          cd ./owrt && mkdir ./upload
+          cd ./owrt/ && mkdir ./upload/
 
           cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
 
