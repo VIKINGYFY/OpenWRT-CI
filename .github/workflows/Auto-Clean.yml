@@ -18,7 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Delete Old Releases
-        if: env.WRT_CFG == 'false'
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 6
