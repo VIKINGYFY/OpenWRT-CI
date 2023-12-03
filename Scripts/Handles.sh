@@ -1,7 +1,13 @@
 #!/bin/bash
 
+#修改Tiny Filemanager汉化
+if [ -d *"tinyfilemanager"* ]; then
+	sed -i '/msgid "Tiny File Manager"/{n; s/msgstr.*/msgstr "文件管理器"/}' ./luci-app-tinyfilemanager/po/zh_Hans/tinyfilemanager.po
+	sed -i 's/启用用户验证/用户验证/g;s/家目录/初始目录/g;s/Favicon 路径/收藏夹图标路径/g' ./luci-app-tinyfilemanager/po/zh_Hans/tinyfilemanager.po
+fi
+
 #预置HomeProxy数据
-if [[ -d "homeproxy" ]]; then
+if [ -d *"homeproxy"* ]; then
 	HP_PATCH="../homeproxy/root/etc/homeproxy/resources"
 
 	UPDATE_RESOURCES() {
@@ -43,7 +49,7 @@ if [[ -d "homeproxy" ]]; then
 fi
 
 #预置OpenClash内核和数据
-if [[ -d "OpenClash" ]]; then
+if [ -d *"OpenClash"* ]; then
 	CORE_VER=https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version
 	CORE_TUN=https://github.com/vernesong/OpenClash/raw/core/dev/premium/clash-linux
 	CORE_DEV=https://github.com/vernesong/OpenClash/raw/core/dev/dev/clash-linux
