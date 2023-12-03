@@ -13,21 +13,21 @@ permissions: write-all
 
 #CI任务
 jobs:
-  owrt_config:
-    #调用公用编译核心OWRT-CORE.yml
-    uses: ./.github/workflows/OWRT-CORE.yml
+  wrt_config:
+    #调用公用编译核心WRT-CORE.yml
+    uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      OWRT_TARGET: Mediatek
+      WRT_TARGET: Mediatek
       #默认主题
-      OWRT_THEME: design
+      WRT_THEME: design
       #默认主机名
-      OWRT_NAME: OWRT
+      WRT_NAME: OWRT
       #默认密码，仅作展示，请勿乱改
-      OWRT_PW: password
+      WRT_PW: password
       #默认地址
-      OWRT_IP: 192.168.10.1
+      WRT_IP: 192.168.10.1
       #默认源码
-      OWRT_URL: https://github.com/coolsnowwolf/lede.git
+      WRT_URL: https://github.com/coolsnowwolf/lede.git
       #默认分支
-      OWRT_BRANCH: master
+      WRT_BRANCH: master

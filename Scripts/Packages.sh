@@ -18,10 +18,10 @@ UPDATE_PACKAGE() {
 	fi
 }
 
-UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $OWRT_URL == *"lede"* ]] && echo "main" || echo "js")"
+UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $WRT_URL == *"lede"* ]] && echo "main" || echo "js")"
 UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
-UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $OWRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
-UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $OWRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
+UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
+UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 
 UPDATE_PACKAGE "tinyfilemanager" "muink/luci-app-tinyfilemanager" "master"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
@@ -31,10 +31,10 @@ UPDATE_PACKAGE "passwall2" "xiaorouji/openwrt-passwall2" "main"
 UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
-if [[ $OWRT_URL == *"lede"* ]]; then
+if [[ $WRT_URL == *"lede"* ]]; then
 	UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 fi
-if [[ $OWRT_URL == *"immortalwrt"* ]]; then
+if [[ $WRT_URL == *"immortalwrt"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
 	#UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi

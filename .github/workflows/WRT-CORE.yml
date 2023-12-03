@@ -1,48 +1,48 @@
 #云编译公用核心
-name: OWRT-CORE
+name: WRT-CORE
 
 on:
   workflow_call:
     inputs:
-      OWRT_BRANCH:
+      WRT_BRANCH:
         required: true
         type: string
-      OWRT_TARGET:
+      WRT_TARGET:
         required: true
         type: string
-      OWRT_THEME:
+      WRT_THEME:
         required: true
         type: string
-      OWRT_NAME:
+      WRT_NAME:
         required: true
         type: string
-      OWRT_URL:
+      WRT_URL:
         required: true
         type: string
-      OWRT_PW:
+      WRT_PW:
         required: true
         type: string
-      OWRT_IP:
+      WRT_IP:
         required: true
         type: string
-      OWRT_CFG:
+      WRT_CFG:
         required: false
         default: 'false'
         type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
-  OWRT_TARGET: ${{inputs.OWRT_TARGET}}
-  OWRT_THEME: ${{inputs.OWRT_THEME}}
-  OWRT_NAME: ${{inputs.OWRT_NAME}}
-  OWRT_URL: ${{inputs.OWRT_URL}}
-  OWRT_PW: ${{inputs.OWRT_PW}}
-  OWRT_IP: ${{inputs.OWRT_IP}}
-  OWRT_CFG: ${{inputs.OWRT_CFG}}
+  WRT_BRANCH: ${{inputs.WRT_BRANCH}}
+  WRT_TARGET: ${{inputs.WRT_TARGET}}
+  WRT_THEME: ${{inputs.WRT_THEME}}
+  WRT_NAME: ${{inputs.WRT_NAME}}
+  WRT_URL: ${{inputs.WRT_URL}}
+  WRT_PW: ${{inputs.WRT_PW}}
+  WRT_IP: ${{inputs.WRT_IP}}
+  WRT_CFG: ${{inputs.WRT_CFG}}
 
 jobs:
-  owrt_core:
+  wrt_core:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
@@ -66,24 +66,24 @@ jobs:
 
       - name: Initialization Values
         run: |
-          export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
-          export OWRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt)
+          export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)
+          export WRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt)
 
-          echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
-          echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV
-          echo "OWRT_DATE=$OWRT_DATE" >> $GITHUB_ENV
-          echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
-          echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
-          echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "WRT_SOURCE=$WRT_SOURCE" >> $GITHUB_ENV
+          echo "WRT_TARGET=$WRT_TARGET" >> $GITHUB_ENV
+          echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
+          echo "WRT_TYPE=$WRT_TYPE" >> $GITHUB_ENV
+          echo "WRT_PW=$WRT_PW" >> $GITHUB_ENV
+          echo "WRT_IP=$WRT_IP" >> $GITHUB_ENV
 
-      - name: Clone OWRT Code
+      - name: Clone WRT Code
         run: |
-          git clone --depth=1 --single-branch --branch "$OWRT_BRANCH" $OWRT_URL ./owrt/
+          git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
 
       - name: Update Feeds
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
@@ -94,7 +94,7 @@ jobs:
 
       - name: Custom Scripts
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
@@ -105,16 +105,16 @@ jobs:
 
       - name: Custom Settings
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           rm -rf ./tmp* ./.config*
 
-          cat $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
-          echo "CONFIG_PACKAGE_luci-theme-$OWRT_THEME=y" >> .config
-          echo "CONFIG_PACKAGE_luci-app-$OWRT_THEME-config=y" >> .config
+          echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> .config
+          echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> .config
 
-          if [[ $OWRT_URL != *"lede"* ]] ; then
+          if [[ $WRT_URL != *"lede"* ]] ; then
             echo "CONFIG_PACKAGE_luci=y" >> .config
             echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
           fi
@@ -122,29 +122,29 @@ jobs:
           make defconfig
 
       - name: Cleanup Toolchain
-        if: env.OWRT_CFG == 'false'
+        if: env.WRT_CFG == 'false'
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           make dirclean
 
       - name: Download Packages
-        if: env.OWRT_CFG == 'false'
+        if: env.WRT_CFG == 'false'
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
-        if: env.OWRT_CFG == 'false'
+        if: env.WRT_CFG == 'false'
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           make -j$(nproc) || make -j1 V=s
 
       - name: Machine Information
         run: |
-          cd ./owrt/
+          cd ./wrt/
 
           echo "======================="
           lscpu | egrep "name|Core|Thread"
@@ -156,18 +156,18 @@ jobs:
 
       - name: Package Firmware
         run: |
-          cd ./owrt/ && mkdir ./upload/
+          cd ./wrt/ && mkdir ./upload/
 
-          cp -rf ./.config ./upload/Config_"$OWRT_TARGET"_"$OWRT_SOURCE"_"$OWRT_DATE".txt
+          cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
-          if [[ $OWRT_CFG == 'false' ]]; then
+          if [[ $WRT_CFG == 'false' ]]; then
             rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
 
-            for var in $OWRT_TYPE ; do
+            for var in $WRT_TYPE ; do
               for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
                 export ext=$(basename "$file" | cut -d '.' -f 2-)
                 export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
-                export new_file="$OWRT_SOURCE"_"$name"_"$OWRT_DATE"."$ext"
+                export new_file="$WRT_SOURCE"_"$name"_"$WRT_DATE"."$ext"
                 mv -f "$file" ./upload/"$new_file"
               done
             done
@@ -176,21 +176,21 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
-          files: ./owrt/upload/*.*
+          tag_name: ${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}_${{env.WRT_DATE}}
+          files: ./wrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
             不要问，更就完事了！
 
-            源码：${{env.OWRT_SOURCE}}
-            平台：${{env.OWRT_TARGET}}
-            设备：${{env.OWRT_TYPE}}
-            密码：${{env.OWRT_PW}}
-            地址：${{env.OWRT_IP}}
+            源码：${{env.WRT_SOURCE}}
+            平台：${{env.WRT_TARGET}}
+            设备：${{env.WRT_TYPE}}
+            密码：${{env.WRT_PW}}
+            地址：${{env.WRT_IP}}
 
       - name: Delete Old Releases
-        if: env.OWRT_CFG == 'false'
+        if: env.WRT_CFG == 'false'
         uses: dev-drprasad/delete-older-releases@master
         with:
           keep_latest: 6
