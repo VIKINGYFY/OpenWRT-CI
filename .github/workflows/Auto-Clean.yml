@@ -1,0 +1,31 @@
+#CI项目名
+name: Auto-Clean
+
+on:
+  #自动清理：每天早上8点
+  schedule:
+    - cron: 0 0 * * *
+  #手动清理
+  workflow_dispatch:
+
+permissions: write-all
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+jobs:
+  auto_clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Old Releases
+        if: env.WRT_CFG == 'false'
+        uses: dev-drprasad/delete-older-releases@master
+        with:
+          keep_latest: 6
+          delete_tags: true
+
+      - name: Delete Old Workflows
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 0
+          keep_minimum_runs: 1
