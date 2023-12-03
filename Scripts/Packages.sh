@@ -23,7 +23,7 @@ UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $OWRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $OWRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 
-UPDATE_PACKAGE "fileassistant" "Lienol/openwrt-package" "main" "true"
+UPDATE_PACKAGE "tinyfilemanager" "muink/luci-app-tinyfilemanager" "master"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
 
 UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
@@ -35,7 +35,8 @@ if [[ $OWRT_URL == *"lede"* ]]; then
 	UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 fi
 if [[ $OWRT_URL == *"immortalwrt"* ]]; then
-	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
+	UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
+	#UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
 #更新软件包版本
@@ -45,7 +46,7 @@ UPDATE_VERSION() {
 	local new_hash=$3
 	local pkg_file=$(find ../feeds/packages/*/$pkg_name/ -type f -name "Makefile" 2>/dev/null)
 
-	if [[ -f "$pkg_file" ]]; then
+	if [ -f "$pkg_file" ]; then
 		local old_ver=$(grep -Po "PKG_VERSION:=\K.*" "$pkg_file")
 		if dpkg --compare-versions "$old_ver" lt "$new_ver"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$new_ver/g" "$pkg_file"
