@@ -77,7 +77,7 @@ jobs:
           echo "WRT_PW=$WRT_PW" >> $GITHUB_ENV
           echo "WRT_IP=$WRT_IP" >> $GITHUB_ENV
 
-      - name: Clone WRT Code
+      - name: Clone Code
         run: |
           git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
 
