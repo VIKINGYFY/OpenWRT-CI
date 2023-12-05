@@ -81,6 +81,10 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
 
+      - name: Check Scripts
+        run: |
+          find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+
       - name: Update Feeds
         run: |
           cd ./wrt/
@@ -88,17 +92,9 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Check Scripts
+      - name: Custom Packages
         run: |
-          find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
-
-      - name: Custom Scripts
-        run: |
-          cd ./wrt/
-
-          $GITHUB_WORKSPACE/Scripts/Settings.sh
-
-          cd ./package/
+          cd ./wrt/package/
 
           $GITHUB_WORKSPACE/Scripts/Packages.sh
           $GITHUB_WORKSPACE/Scripts/Handles.sh
@@ -111,13 +107,7 @@ jobs:
 
           cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
 
-          echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> .config
-          echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> .config
-
-          if [[ $WRT_URL != *"lede"* ]] ; then
-            echo "CONFIG_PACKAGE_luci=y" >> .config
-            echo "CONFIG_LUCI_LANG_zh_Hans=y" >> .config
-          fi
+          $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           make defconfig
 

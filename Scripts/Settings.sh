@@ -13,3 +13,13 @@ sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" 
 if [[ $WRT_URL == *"lede"* ]]; then
 	sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 fi
+
+#配置文件修改
+echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
+
+if [[ $WRT_URL == *"immortalwrt"* ]] ; then
+	echo "CONFIG_PACKAGE_luci=y" >> ./.config
+	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
+	sed -i "s/CONFIG_PACKAGE_luci-app-openclash=y/CONFIG_PACKAGE_luci-app-openclash=n/g" ./.config
+fi
