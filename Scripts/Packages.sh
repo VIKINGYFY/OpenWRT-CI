@@ -35,8 +35,8 @@ if [[ $WRT_URL == *"lede"* ]]; then
 	UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 fi
 if [[ $WRT_URL == *"immortalwrt"* ]]; then
-	#UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
-	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
+	UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
+	#UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
 #更新软件包版本
