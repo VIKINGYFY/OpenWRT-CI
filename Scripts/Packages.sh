@@ -29,11 +29,9 @@ UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL =
 UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
 UPDATE_PACKAGE "passwall2" "xiaorouji/openwrt-passwall2" "main"
 UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
+UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
+UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
-if [[ $WRT_URL == *"lede"* ]]; then
-	UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
-	UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
-fi
 if [[ $WRT_URL == *"immortalwrt"* ]]; then
 	#UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
