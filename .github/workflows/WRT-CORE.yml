@@ -83,6 +83,12 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
 
+      - name: Cache Toolchain
+        uses: actions/cache@main
+        with:
+          path: ./wrt/staging_dir
+          key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+
       - name: Check Scripts
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
@@ -112,13 +118,6 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           make defconfig
-
-      - name: Cleanup Toolchain
-        if: env.WRT_CFG == 'false'
-        run: |
-          cd ./wrt/
-
-          make dirclean
 
       - name: Download Packages
         if: env.WRT_CFG == 'false'
