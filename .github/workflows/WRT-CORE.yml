@@ -19,10 +19,10 @@ on:
       WRT_URL:
         required: true
         type: string
-      WRT_PW:
+      WRT_IP:
         required: true
         type: string
-      WRT_IP:
+      WRT_PW:
         required: true
         type: string
       WRT_CFG:
@@ -37,8 +37,8 @@ env:
   WRT_THEME: ${{inputs.WRT_THEME}}
   WRT_NAME: ${{inputs.WRT_NAME}}
   WRT_URL: ${{inputs.WRT_URL}}
-  WRT_PW: ${{inputs.WRT_PW}}
   WRT_IP: ${{inputs.WRT_IP}}
+  WRT_PW: ${{inputs.WRT_PW}}
   WRT_CFG: ${{inputs.WRT_CFG}}
 
 jobs:
@@ -66,28 +66,26 @@ jobs:
 
       - name: Initialization Values
         run: |
-          export WRT_REPO=$(basename "$GITHUB_WORKSPACE")
           export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export WRT_REPO=$(basename "$GITHUB_WORKSPACE")
           export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)
           export WRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt)
 
+          echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
           echo "WRT_REPO=$WRT_REPO" >> $GITHUB_ENV
           echo "WRT_SOURCE=$WRT_SOURCE" >> $GITHUB_ENV
-          echo "WRT_TARGET=$WRT_TARGET" >> $GITHUB_ENV
-          echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
           echo "WRT_TYPE=$WRT_TYPE" >> $GITHUB_ENV
-          echo "WRT_PW=$WRT_PW" >> $GITHUB_ENV
-          echo "WRT_IP=$WRT_IP" >> $GITHUB_ENV
 
       - name: Clone Code
         run: |
           git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
 
-      - name: Cache Toolchain
-        uses: actions/cache@main
+      - name: Check Cache
+        uses: stupidloud/cachewrtbuild@main
         with:
-          path: ./wrt/staging_dir
-          key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+          ccache: 'true'
+          prefix: ${{github.workspace}}/wrt
+          mixkey: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
 
       - name: Check Scripts
         run: |
