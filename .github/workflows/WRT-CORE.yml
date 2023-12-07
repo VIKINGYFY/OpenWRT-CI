@@ -67,7 +67,7 @@ jobs:
       - name: Initialization Values
         run: |
           export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          export WRT_REPO=$(basename "$GITHUB_WORKSPACE")
+          export WRT_REPO=$(basename $GITHUB_WORKSPACE)
           export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)
           export WRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt)
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Clone Code
         run: |
-          git clone --depth=1 --single-branch --branch "$WRT_BRANCH" $WRT_URL ./wrt/
+          git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
 
       - name: Check Cache
         if: env.WRT_CFG == 'false'
@@ -155,10 +155,10 @@ jobs:
 
             for var in $WRT_TYPE ; do
               for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
-                export ext=$(basename "$file" | cut -d '.' -f 2-)
-                export name=$(basename "$file" | cut -d '.' -f 1 | grep -io "\($var\).*")
+                export ext=$(basename $file | cut -d '.' -f 2-)
+                export name=$(basename $file | cut -d '.' -f 1 | grep -io "\($var\).*")
                 export new_file="$WRT_SOURCE"_"$name"_"$WRT_DATE"."$ext"
-                mv -f "$file" ./upload/"$new_file"
+                mv -f $file ./upload/$new_file
               done
             done
           fi
