@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: Rockchip
+      WRT_TARGET: Mediatek
       #默认主题
       WRT_THEME: argon
       #默认主机名
@@ -25,7 +25,7 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      WRT_URL: https://github.com/coolsnowwolf/lede.git
       #默认分支
       WRT_BRANCH: master
       #仅输出配置文件，非必选参数
