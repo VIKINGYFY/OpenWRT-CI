@@ -80,7 +80,7 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
 
-      - name: Check Cache
+      - name: Check Caches
         if: env.WRT_CFG == 'false'
         uses: stupidloud/cachewrtbuild@main
         with:
