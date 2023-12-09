@@ -87,6 +87,7 @@ jobs:
           ccache: 'true'
           prefix: ${{github.workspace}}/wrt
           mixkey: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+          clean: ${{contains(github.event.action, 'nocache')}}
 
       - name: Check Scripts
         run: |
