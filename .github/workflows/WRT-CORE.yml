@@ -93,6 +93,10 @@ jobs:
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
+          echo ${{steps.check-cache.outputs.cache-hit}}
+          echo ${{steps.check-cache.outputs.check_result}}
+          echo ${{steps.check-cache.outputs}}
+
       - name: Update Feeds
         run: |
           cd ./wrt/
@@ -185,6 +189,10 @@ jobs:
         run: |
           gh extension install actions/gh-actions-cache
 
-          gh actions-cache delete "$WRT_SOURCE-$WRT_TARGET" --confirm
+          cache_list=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET")
+
+          for cache_key in $cache_list; do
+              gh actions-cache delete $cache_key --confirm
+          done
 
           echo "cleanup caches done!"
