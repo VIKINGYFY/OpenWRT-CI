@@ -80,22 +80,36 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
 
-      - name: Check Caches
-        id: check-cache
-        if: env.WRT_CFG == 'false'
-        uses: stupidloud/cachewrtbuild@main
-        with:
-          ccache: 'true'
-          prefix: ${{github.workspace}}/wrt
-          mixkey: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
-
       - name: Check Scripts
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
-          for key in ${{steps.check-cache.outputs}}; do
-            echo $key
-          done
+      - name: Check Caches
+        id: check-cache
+        if: env.WRT_CFG == 'false'
+        uses: actions/cache@main
+        with:
+          path: ./wrt/staging_dir
+          key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+
+      - name: Update Caches
+        if: env.WRT_CFG == 'false'
+        run: |
+          if ${{steps.cache-npm.outputs.cache-hit == 'true'}}; then
+            sed -i 's/ $(tool.*\/stamp-compile)//;' ./wrt/Makefile
+            sed -i 's/ $(tool.*\/stamp-install)//;' ./wrt/Makefile
+
+            echo "toolchain skiped done!"
+          else
+            gh extension install actions/gh-actions-cache
+
+            CACHE_LIST=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET")
+            for CACHE_KEY in $CACHE_LIST; do
+               gh actions-cache delete $CACHE_KEY --confirm
+            done
+
+            echo "caches cleanup done!"
+          fi
 
       - name: Update Feeds
         run: |
@@ -183,16 +197,3 @@ jobs:
             设备：${{env.WRT_TYPE}}
             密码：${{env.WRT_PW}}
             地址：${{env.WRT_IP}}
-
-      - name: Cleanup Caches
-        if: env.WRT_CFG == 'false' && steps.check-cache.outputs.cache-hit != 'true'
-        run: |
-          gh extension install actions/gh-actions-cache
-
-          cache_list=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET")
-
-          for cache_key in $cache_list; do
-            gh actions-cache delete $cache_key --confirm
-          done
-
-          echo "cleanup caches done!"
