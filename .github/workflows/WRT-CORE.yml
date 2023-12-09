@@ -85,8 +85,8 @@ jobs:
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
       - name: Check Caches
-        id: check-cache
         if: env.WRT_CFG == 'false'
+        id: check-cache
         uses: actions/cache@main
         with:
           path: ./wrt/staging_dir
