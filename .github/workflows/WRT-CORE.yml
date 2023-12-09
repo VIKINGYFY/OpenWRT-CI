@@ -96,8 +96,8 @@ jobs:
         if: env.WRT_CFG == 'false'
         run: |
           if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
-            sed -i 's/ $(tool.*\/stamp-compile)//;' ./wrt/Makefile
-            sed -i 's/ $(tool.*\/stamp-install)//;' ./wrt/Makefile
+            sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
+            sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
 
             echo "toolchain skiped done!"
           else
