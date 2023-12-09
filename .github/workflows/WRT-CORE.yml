@@ -93,9 +93,9 @@ jobs:
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
-          echo ${{steps.check-cache.outputs.cache-hit}}
-          echo ${{steps.check-cache.outputs.check_result}}
-          echo ${{steps.check-cache.outputs}}
+          for key in ${{steps.check-cache.outputs}}; do
+            echo $key
+          done
 
       - name: Update Feeds
         run: |
@@ -192,7 +192,7 @@ jobs:
           cache_list=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET")
 
           for cache_key in $cache_list; do
-              gh actions-cache delete $cache_key --confirm
+            gh actions-cache delete $cache_key --confirm
           done
 
           echo "cleanup caches done!"
