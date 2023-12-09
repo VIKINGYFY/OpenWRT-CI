@@ -95,7 +95,7 @@ jobs:
       - name: Update Caches
         if: env.WRT_CFG == 'false'
         run: |
-          if ${{steps.cache-npm.outputs.cache-hit == 'true'}}; then
+          if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
             sed -i 's/ $(tool.*\/stamp-compile)//;' ./wrt/Makefile
             sed -i 's/ $(tool.*\/stamp-install)//;' ./wrt/Makefile
 
@@ -103,7 +103,7 @@ jobs:
           else
             gh extension install actions/gh-actions-cache
 
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET")
+            CACHE_LIST=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
                gh actions-cache delete $CACHE_KEY --confirm
             done
