@@ -47,9 +47,9 @@ if [ -d *"homeproxy"* ]; then
 	UPDATE_RESOURCES "china_ip6" "1715173329/IPCIDR-CHINA" "master" "ipv6.txt" "5"
 	UPDATE_RESOURCES "gfw_list" "Loyalsoldier/v2ray-rules-dat" "release" "gfw.txt"
 	UPDATE_RESOURCES "china_list" "Loyalsoldier/v2ray-rules-dat" "release" "direct-list.txt"
-	UPDATE_RESOURCES "geoip" "1715173329/sing-geoip" "master" "geoip.db"
-	UPDATE_RESOURCES "geosite" "1715173329/sing-geosite" "master" "geosite.db"
-	UPDATE_RESOURCES "clash_dashboard" "MetaCubeX/metacubexd" "gh-pages" "gh-pages.zip"
+	#UPDATE_RESOURCES "geoip" "1715173329/sing-geoip" "master" "geoip.db"
+	#UPDATE_RESOURCES "geosite" "1715173329/sing-geosite" "master" "geosite.db"
+	#UPDATE_RESOURCES "clash_dashboard" "MetaCubeX/metacubexd" "gh-pages" "gh-pages.zip"
 
 	echo "homeproxy date has been updated!"
 fi
