@@ -174,9 +174,9 @@ jobs:
 
             for var in $WRT_TYPE ; do
               for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
-                export ext=$(basename $file | cut -d '.' -f 2-)
-                export name=$(basename $file | cut -d '.' -f 1 | grep -io "\($var\).*")
-                export new_file="$WRT_SOURCE"_"$name"_"$WRT_DATE"."$ext"
+                ext=$(basename $file | cut -d '.' -f 2-)
+                name=$(basename $file | cut -d '.' -f 1 | grep -io "\($var\).*")
+                new_file="$WRT_SOURCE"_"$name"_"$WRT_DATE"."$ext"
                 mv -f $file ./upload/$new_file
               done
             done
