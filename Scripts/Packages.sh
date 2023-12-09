@@ -12,9 +12,11 @@ UPDATE_PACKAGE() {
 
 	git clone --depth=1 --single-branch --branch $pkg_branch "https://github.com/$pkg_repo.git"
 
-	if [[ $pkg_special == "true" ]]; then
+	if [[ $pkg_special == "pkg" ]]; then
 		cp -rf $(find ./$repo_name/ -type d -iname "*$pkg_name*" -prune) ./
 		rm -rf ./$repo_name
+	elif [[ $pkg_special == "name" ]]; then
+		mv -f $repo_name $pkg_name
 	fi
 }
 
@@ -30,7 +32,6 @@ UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
 if [[ $WRT_URL == *"immortalwrt"* ]]; then
-	#UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "mdev"
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
