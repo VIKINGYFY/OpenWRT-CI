@@ -81,13 +81,13 @@ jobs:
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
 
       - name: Check Caches
+        id: check-cache
         if: env.WRT_CFG == 'false'
         uses: stupidloud/cachewrtbuild@main
         with:
           ccache: 'true'
           prefix: ${{github.workspace}}/wrt
           mixkey: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
-          clean: ${{contains(github.event.action, 'nocache')}}
 
       - name: Check Scripts
         run: |
@@ -179,3 +179,12 @@ jobs:
             设备：${{env.WRT_TYPE}}
             密码：${{env.WRT_PW}}
             地址：${{env.WRT_IP}}
+
+      - name: Cleanup Caches
+        if: env.WRT_CFG == 'false' && steps.check-cache.outputs.cache-hit != 'true'
+        run: |
+          gh extension install actions/gh-actions-cache
+
+          gh actions-cache delete "$WRT_SOURCE-$WRT_TARGET" --confirm
+
+          echo "cleanup caches done!"
