@@ -34,7 +34,6 @@ UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
 if [[ $WRT_URL == *"immortalwrt"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
-	UPDATE_PACKAGE "alpha" "derisamedia/luci-theme-alpha" "master"
 fi
 
 #更新软件包版本
