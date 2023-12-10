@@ -89,7 +89,7 @@ jobs:
         id: check-cache
         uses: actions/cache@main
         with:
-          key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}
           path: |
             ./wrt/.ccache
             ./wrt/staging_dir/host*
@@ -106,7 +106,7 @@ jobs:
           else
             gh extension install actions/gh-actions-cache
 
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_SOURCE-$WRT_TARGET" | cut -f 1)
+            CACHE_LIST=$(gh actions-cache list --key "$WRT_TARGET-$WRT_SOURCE" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
                gh actions-cache delete $CACHE_KEY --confirm
             done
