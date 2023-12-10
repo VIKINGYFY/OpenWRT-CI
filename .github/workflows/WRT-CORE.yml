@@ -92,7 +92,7 @@ jobs:
           key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
           path: |
             ./.ccache
-            ./wrt/staging_dir/
+            ./wrt/staging_dir
 
       - name: Update Caches
         if: env.WRT_CFG == 'false'
