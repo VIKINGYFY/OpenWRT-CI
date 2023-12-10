@@ -89,8 +89,10 @@ jobs:
         id: check-cache
         uses: actions/cache@main
         with:
-          path: ./wrt/staging_dir
           key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
+          path: |
+            ./.ccache
+            ./wrt/staging_dir/
 
       - name: Update Caches
         if: env.WRT_CFG == 'false'
