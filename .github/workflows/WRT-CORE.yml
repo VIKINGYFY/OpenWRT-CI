@@ -92,7 +92,8 @@ jobs:
           key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
           path: |
             ./wrt/.ccache
-            ./wrt/staging_dir
+            ./wrt/staging_dir/host*
+            ./wrt/staging_dir/tool*
 
       - name: Update Caches
         if: env.WRT_CFG == 'false'
@@ -172,8 +173,6 @@ jobs:
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
           if [[ $WRT_CFG == 'false' ]]; then
-            rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
-
             for var in $WRT_TYPE ; do
               for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
                 ext=$(basename $file | cut -d '.' -f 2-)
