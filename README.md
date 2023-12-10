@@ -13,7 +13,7 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-Rockchip系列、Mediatek系列、X64系列。
+ROCKCHIP系列、MEDIATEK系列、X64系列。
 
 # 目录简要说明：
 
