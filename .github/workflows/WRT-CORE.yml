@@ -91,7 +91,7 @@ jobs:
         with:
           key: ${{env.WRT_SOURCE}}-${{env.WRT_TARGET}}
           path: |
-            ./.ccache
+            ./wrt/.ccache
             ./wrt/staging_dir
 
       - name: Update Caches
