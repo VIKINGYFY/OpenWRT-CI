@@ -39,6 +39,7 @@ if [ -d *"homeproxy"* ]; then
 		fi
 
 		cp -f "$res_type".* $HP_PATCH/
+		chmod +x $HP_PATCH/*.*
 
 		cd .. && rm -rf ./$res_type/
 	}
