@@ -15,7 +15,7 @@ if [ -d *"homeproxy"* ]; then
 
 	UPDATE_RESOURCES() {
 		local res_type=$1
-		local res_repo=$2
+		local res_repo=$(echo "$2" | tr '[:upper:]' '[:lower:]')
 		local res_branch=$3
 		local res_file=$4
 		local res_depth=${5:-1}
@@ -29,7 +29,9 @@ if [ -d *"homeproxy"* ]; then
 			echo $(git log -1 --pretty=format:'%s' -- $res_file | grep -o "[0-9]*") > "$res_type".ver
 			mv -f $res_file "$res_type"."$res_ext"
 		elif [[ $res_ext == "zip" ]]; then
-			echo $(git log -1 --pretty=format:'%s' | cut -d ' ' -f 1) > "$res_type".ver
+			local repo_id=$(echo -n "$res_repo" | md5sum | cut -d ' ' -f 1)
+			local repo_ver=$(git log -1 --pretty=format:'%s' | cut -d ' ' -f 1)
+			echo "{ \"$repo_id\": { \"repo\": \"$(echo $res_repo | sed 's/\//\\\//g')\", \"version\": \"$repo_ver\" } }" > "$res_type".ver
 			curl -sfL -O "https://github.com/$res_repo/archive/$res_file"
 			mv -f $res_file $HP_PATCH/"${res_repo//\//_}"."$res_ext"
 		elif [[ $res_ext == "db" ]]; then

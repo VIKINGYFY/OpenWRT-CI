@@ -92,13 +92,13 @@ jobs:
           key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}
           path: |
             ./wrt/.ccache
-            ./wrt/staging_dir
+            ./wrt/staging_dir/host*
+            ./wrt/staging_dir/tool*
 
       - name: Update Caches
         if: env.WRT_CFG == 'false'
         run: |
           if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
-            rm -rf ./wrt/staging_dir/packages* ./wrt/staging_dir/target*
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
             sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
 
