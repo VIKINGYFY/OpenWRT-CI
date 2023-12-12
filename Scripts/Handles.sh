@@ -4,7 +4,7 @@
 if [ -d *"tinyfilemanager"* ]; then
 	PO_FILE="./luci-app-tinyfilemanager/po/zh_Hans/tinyfilemanager.po"
 	sed -i '/msgid "Tiny File Manager"/{n; s/msgstr.*/msgstr "文件管理器"/}' $PO_FILE
-	sed -i 's/启用用户验证/用户验证/g;s/家目录/初始目录/g;s/Favicon 路径/收藏夹图标路径/g' $PO_FILE
+	sed -i 's/启用用户验证/用户验证/g;s/家目录/初始目录/g;s/Favicon 路径/收藏夹图标路径/g;s/存储//g' $PO_FILE
 
 	echo "tinyfilemanager date has been updated!"
 fi
@@ -14,36 +14,36 @@ if [ -d *"homeproxy"* ]; then
 	HP_PATCH="../homeproxy/root/etc/homeproxy/resources"
 
 	UPDATE_RESOURCES() {
-		local res_type=$1
-		local res_repo=$(echo "$2" | tr '[:upper:]' '[:lower:]')
-		local res_branch=$3
-		local res_file=$4
-		local res_depth=${5:-1}
-		local res_ext=${res_file##*.}
+		local RES_TYPE=$1
+		local RES_REPO=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+		local RES_BRANCH=$3
+		local RES_FILE=$4
+		local RES_EXT=${4##*.}
+		local RES_DEPTH=${5:-1}
 
-		git clone -q --depth=$res_depth --single-branch --branch $res_branch "https://github.com/$res_repo.git" ./$res_type/
+		git clone -q --depth=$RES_DEPTH --single-branch --branch $RES_BRANCH "https://github.com/$RES_REPO.git" ./$RES_TYPE/
 
-		cd ./$res_type/
+		cd ./$RES_TYPE/
 
-		if [[ $res_ext == "txt" ]]; then
-			echo $(git log -1 --pretty=format:'%s' -- $res_file | grep -o "[0-9]*") > "$res_type".ver
-			mv -f $res_file "$res_type"."$res_ext"
-		elif [[ $res_ext == "zip" ]]; then
-			local repo_id=$(echo -n "$res_repo" | md5sum | cut -d ' ' -f 1)
-			local repo_ver=$(git log -1 --pretty=format:'%s' | cut -d ' ' -f 1)
-			echo "{ \"$repo_id\": { \"repo\": \"$(echo $res_repo | sed 's/\//\\\//g')\", \"version\": \"$repo_ver\" } }" > "$res_type".ver
-			curl -sfL -O "https://github.com/$res_repo/archive/$res_file"
-			mv -f $res_file $HP_PATCH/"${res_repo//\//_}"."$res_ext"
-		elif [[ $res_ext == "db" ]]; then
-			local res_ver=$(git tag | tail -n 1)
-			echo $res_ver > "$res_type".ver
-			curl -sfL -O "https://github.com/$res_repo/releases/download/$res_ver/$res_file"
+		if [[ $RES_EXT == "txt" ]]; then
+			echo $(git log -1 --pretty=format:'%s' -- $RES_FILE | grep -o "[0-9]*") > "$RES_TYPE".ver
+			mv -f $RES_FILE "$RES_TYPE"."$RES_EXT"
+		elif [[ $RES_EXT == "zip" ]]; then
+			local REPO_ID=$(echo -n "$RES_REPO" | md5sum | cut -d ' ' -f 1)
+			local REPO_VER=$(git log -1 --pretty=format:'%s' | cut -d ' ' -f 1)
+			echo "{ \"$REPO_ID\": { \"repo\": \"$(echo $RES_REPO | sed 's/\//\\\//g')\", \"version\": \"$REPO_VER\" } }" > "$RES_TYPE".ver
+			curl -sfL -O "https://github.com/$RES_REPO/archive/$RES_FILE"
+			mv -f $RES_FILE $HP_PATCH/"${RES_REPO//\//_}"."$RES_EXT"
+		elif [[ $RES_EXT == "db" ]]; then
+			local RES_VER=$(git tag | tail -n 1)
+			echo $RES_VER > "$RES_TYPE".ver
+			curl -sfL -O "https://github.com/$RES_REPO/releases/download/$RES_VER/$RES_FILE"
 		fi
 
-		cp -f "$res_type".* $HP_PATCH/
-		chmod +x $HP_PATCH/*.*
+		cp -f "$RES_TYPE".* $HP_PATCH/
+		chmod +x $HP_PATCH/*
 
-		cd .. && rm -rf ./$res_type/
+		cd .. && rm -rf ./$RES_TYPE/
 	}
 
 	UPDATE_RESOURCES "china_ip4" "1715173329/IPCIDR-CHINA" "master" "ipv4.txt" "5"

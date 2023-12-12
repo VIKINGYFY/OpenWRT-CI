@@ -2,23 +2,25 @@
 
 #更新软件包
 UPDATE_PACKAGE() {
-	local pkg_name=$1
-	local pkg_repo=$2
-	local pkg_branch=$3
-	local pkg_special=$4
-	local repo_name=$(echo $pkg_repo | cut -d '/' -f 2)
+	local PKG_NAME=$1
+	local PKG_REPO=$2
+	local PKG_BRANCH=$3
+	local PKG_SPECIAL=$4
+	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	rm -rf $(find ../feeds/luci/ -type d -iname "*$pkg_name*" -prune)
+	rm -rf $(find ../feeds/luci/ -type d -iname "*$PKG_NAME*" -prune)
 
-	git clone --depth=1 --single-branch --branch $pkg_branch "https://github.com/$pkg_repo.git"
+	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
-	if [[ $pkg_special == "pkg" ]]; then
-		cp -rf $(find ./$repo_name/ -type d -iname "*$pkg_name*" -prune) ./
-		rm -rf ./$repo_name
-	elif [[ $pkg_special == "name" ]]; then
-		mv -f $repo_name $pkg_name
+	if [[ $PKG_SPECIAL == "pkg" ]]; then
+		cp -rf $(find ./$REPO_NAME/ -type d -iname "*$PKG_NAME*" -prune) ./
+		rm -rf ./$REPO_NAME
+	elif [[ $PKG_SPECIAL == "name" ]]; then
+		mv -f $REPO_NAME $PKG_NAME
 	fi
 }
+
+UPDATE_PACKAGE "tinyfilemanager" "muink/luci-app-tinyfilemanager" "master"
 
 UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $WRT_URL == *"lede"* ]] && echo "main" || echo "js")"
 UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
@@ -38,22 +40,22 @@ fi
 
 #更新软件包版本
 UPDATE_VERSION() {
-	local pkg_name=$1
-	local new_ver=$2
-	local new_hash=$3
-	local pkg_file=$(find ../feeds/packages/*/$pkg_name/ -type f -name "Makefile" 2>/dev/null)
+	local PKG_NAME=$1
+	local NEW_VER=$2
+	local NEW_HASH=$3
+	local PKG_FILE=$(find ../feeds/packages/*/$PKG_NAME/ -type f -name "Makefile" 2>/dev/null)
 
-	if [ -f "$pkg_file" ]; then
-		local old_ver=$(grep -Po "PKG_VERSION:=\K.*" $pkg_file)
-		if dpkg --compare-versions "$old_ver" lt "$new_ver"; then
-			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$new_ver/g" $pkg_file
-			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$new_hash/g" $pkg_file
-			echo "$pkg_name ver has updated!"
+	if [ -f "$PKG_FILE" ]; then
+		local OLD_VER=$(grep -Po "PKG_VERSION:=\K.*" $PKG_FILE)
+		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
+			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$NEW_VER/g" $PKG_FILE
+			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/g" $PKG_FILE
+			echo "$PKG_NAME ver has updated!"
 		else
-			echo "$pkg_name ver is latest!"
+			echo "$PKG_NAME ver is latest!"
 		fi
 	else
-		echo "$pkg_name not found!"
+		echo "$PKG_NAME not found!"
 	fi
 }
 

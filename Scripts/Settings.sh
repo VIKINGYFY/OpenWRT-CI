@@ -4,6 +4,7 @@
 sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 #添加编译日期标识
 #sed -i "s/DISTRIB_TARGET='\(.*\)'/DISTRIB_TARGET='\1 $WRT_REPO-$WRT_DATE'/g" ./package/base-files/files/etc/openwrt_release
+sed -i "s/luciversion = \"\(.*\)\"/luciversion = \"\1 $WRT_REPO-$WRT_DATE\"/g" ./feeds/luci/modules/luci-lua-runtime/src/mkversion.sh
 
 CFG_FILE="./package/base-files/files/bin/config_generate"
 #修改默认IP地址
