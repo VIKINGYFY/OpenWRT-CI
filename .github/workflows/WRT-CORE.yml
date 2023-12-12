@@ -173,12 +173,14 @@ jobs:
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
           if [[ $WRT_CFG == 'false' ]]; then
-            for var in $WRT_TYPE ; do
-              for file in $(find ./bin/targets/ -type f -iname "*$var*.*") ; do
-                ext=$(basename $file | cut -d '.' -f 2-)
-                name=$(basename $file | cut -d '.' -f 1 | grep -io "\($var\).*")
-                new_file="$WRT_SOURCE"_"$name"_"$WRT_DATE"."$ext"
-                mv -f $file ./upload/$new_file
+            rm -rf $(find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$")
+
+            for TYPE in $WRT_TYPE ; do
+              for FILE in $(find ./bin/targets/ -type f -iname "*$TYPE*.*") ; do
+                EXT=$(basename $FILE | cut -d '.' -f 2-)
+                NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($TYPE\).*")
+                NEW_FILE="$WRT_SOURCE"_"$NAME"_"$WRT_DATE"."$EXT"
+                mv -f $FILE ./upload/$NEW_FILE
               done
             done
           fi
