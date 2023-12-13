@@ -35,4 +35,11 @@ elif [[ $WRT_URL == *"immortalwrt"* ]] ; then
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
+
+	if [ -d ./package/*"tinyfilemanager"* ]; then
+		echo "CONFIG_PACKAGE_bash=y" >> ./.config
+		echo "CONFIG_PACKAGE_php8=y" >> ./.config
+		echo "CONFIG_PACKAGE_zoneinfo-asia=y" >> ./.config
+		echo "CONFIG_PACKAGE_coreutils-stat=y" >> ./.config
+	fi
 fi
