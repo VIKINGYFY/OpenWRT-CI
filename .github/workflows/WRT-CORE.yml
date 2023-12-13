@@ -16,6 +16,9 @@ on:
       WRT_NAME:
         required: true
         type: string
+      WRT_WIFI:
+        required: true
+        type: string
       WRT_URL:
         required: true
         type: string
@@ -36,6 +39,7 @@ env:
   WRT_TARGET: ${{inputs.WRT_TARGET}}
   WRT_THEME: ${{inputs.WRT_THEME}}
   WRT_NAME: ${{inputs.WRT_NAME}}
+  WRT_WIFI: ${{inputs.WRT_WIFI}}
   WRT_URL: ${{inputs.WRT_URL}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
