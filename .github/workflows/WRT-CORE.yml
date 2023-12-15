@@ -84,6 +84,8 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_URL ./wrt/
 
+          cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
+
       - name: Check Scripts
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
@@ -93,7 +95,7 @@ jobs:
         id: check-cache
         uses: actions/cache@main
         with:
-          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}
+          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
           path: |
             ./wrt/.ccache
             ./wrt/staging_dir/host*
