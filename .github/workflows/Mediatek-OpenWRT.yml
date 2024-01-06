@@ -1,7 +1,10 @@
 #CI项目名
-name: WRT-TEST
+name: Mediatek-Immortal
 
 on:
+  #自动编译：每天早上4点
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
 
@@ -30,5 +33,3 @@ jobs:
       WRT_URL: https://github.com/openwrt/openwrt.git
       #默认分支
       WRT_BRANCH: master
-      #仅输出配置文件，可选参数
-      WRT_CFG: true
