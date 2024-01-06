@@ -29,6 +29,6 @@ jobs:
       #默认源码
       WRT_URL: https://github.com/openwrt/openwrt.git
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: main
       #仅输出配置文件，可选参数
       WRT_CFG: true

@@ -1,5 +1,5 @@
 #CI项目名
-name: Mediatek-Immortal
+name: Mediatek-OpenWRT
 
 on:
   #自动编译：每天早上4点
@@ -32,4 +32,4 @@ jobs:
       #默认源码
       WRT_URL: https://github.com/openwrt/openwrt.git
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: main
