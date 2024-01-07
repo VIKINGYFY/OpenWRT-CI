@@ -33,7 +33,7 @@ UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
 UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
-if [[ $WRT_URL != *"lede"* ]]; then
+if [[ $WRT_URL == *"immortalwrt"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
@@ -58,4 +58,4 @@ UPDATE_VERSION() {
 	fi
 }
 
-UPDATE_VERSION "sing-box" "1.7.8" "cea8c155699098d8de831a85bacac9c64f5a30eb8b6f36d656ebdd7fe3cc4581"
+UPDATE_VERSION "sing-box" "1.8.0" "80ae2a860fc77d961c578999e5fcfe964f969c81d9ccac156b2fef1340eca12f"
