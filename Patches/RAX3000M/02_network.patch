@@ -1,0 +1,23 @@
+--- ./rax/02_network	2024-01-10 15:25:04.116316700 +0800
++++ ./imm/02_network	2024-01-10 16:47:10.085797700 +0800
+@@ -13,8 +13,6 @@
+ 		;;
+ 	abt,asr3000-ubootmod|\
+ 	cmcc,rax3000m|\
+-	cmcc,rax3000m-emmc-ubootmod|\
+-	cmcc,rax3000m-nand-ubootmod|\
+ 	h3c,magic-nx30-pro|\
+ 	h3c,magic-nx30-pro-nmbm|\
+ 	imou,lc-hx3001-ubootmod|\
+@@ -138,11 +136,6 @@
+ 		;;
+ 		esac
+ 		;;
+-	cmcc,rax3000m-emmc-ubootmod)
+-		wan_mac=$(mmc_get_mac_binary factory 0x2a)
+-		lan_mac=$(mmc_get_mac_binary factory 0x24)
+-		label_mac=$wan_mac
+-		;;
+ 	glinet,gl-mt2500)
+ 		label_mac="$(get_mac_binary "/dev/mmcblk0boot1" 0xA)"
+ 		wan_mac="$label_mac"
