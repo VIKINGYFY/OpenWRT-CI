@@ -90,6 +90,15 @@ jobs:
         run: |
           find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
+      - name: Check Patches
+        run: |
+          if [ -f "$GITHUB_WORKSPACE/Scripts/Patches.sh" ]; then
+            $GITHUB_WORKSPACE/Scripts/Patches.sh
+            echo "patchs installation done!"
+          else
+            echo "no patchs installed!"
+          fi
+
       - name: Check Caches
         if: env.WRT_CFG == 'false'
         id: check-cache
