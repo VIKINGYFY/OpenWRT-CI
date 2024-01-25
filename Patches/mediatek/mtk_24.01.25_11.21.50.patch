@@ -48,8 +48,8 @@ Only in imm/package/boot/uboot-envtools/files: kirkwood
 Only in imm/package/boot/uboot-envtools/files: lantiq
 Only in imm/package/boot/uboot-envtools/files: layerscape
 diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot/uboot-envtools/files/mediatek_filogic
---- mtk/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-21 09:54:32.106644976 +0800
-+++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-21 10:38:20.316724442 +0800
+--- mtk/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-25 11:15:20.269609367 +0800
++++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-25 11:07:48.889714968 +0800
 @@ -43,7 +43,6 @@
  	;;
  cetron,ct3003-stock|\
@@ -77,10 +77,12 @@ diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot
 +livinet,zr-3020-ubootmod)
  	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x20000" "1"
  	;;
- jdcloud,re-cp-03)
-@@ -124,7 +119,6 @@
+ mercusys,mr90x-v1|\
+@@ -117,9 +112,7 @@
+ 	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x80000" "0x10000"
+ 	;;
  xiaomi,mi-router-ax3000t|\
- xiaomi,mi-router-wr30u-112m-nmbm|\
+-xiaomi,mi-router-wr30u-112m-nmbm|\
  xiaomi,mi-router-wr30u-stock|\
 -xiaomi,redmi-router-ax6000|\
  xiaomi,redmi-router-ax6000-stock)
@@ -217,7 +219,7 @@ Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-ax3000t-ubootmod
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-ax3000t.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-ax3000t.dtsi
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-common.dtsi
-Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-wr30u-112m-nmbm.dts
+Only in mtk/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-wr30u-112m-nmbm.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-wr30u-stock.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-wr30u-ubootmod.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-xiaomi-mi-router-wr30u.dtsi
@@ -257,8 +259,13 @@ Only in imm/target/linux/mediatek: files-5.15
 Only in imm/target/linux/mediatek: files-6.1
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
 --- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-01-18 01:00:18.159731935 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-01-21 10:38:20.696724474 +0800
-@@ -58,7 +58,6 @@
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-01-25 11:07:49.259714689 +0800
+@@ -53,12 +53,10 @@
+ 	ucidef_set_led_netdev "wan" "wan" "blue:wan" "wan" "link tx rx"
+ 	ucidef_set_led_netdev "wan-off" "wan-off" "red:wan" "wan" "link"
+ 	;;
+-xiaomi,mi-router-wr30u-112m-nmbm|\
+ xiaomi,mi-router-wr30u-stock|\
  xiaomi,mi-router-wr30u-ubootmod)
  	ucidef_set_led_netdev "wan" "wan" "blue:wan" "wan" "link tx rx"
  	;;
@@ -268,7 +275,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/ta
  	ucidef_set_led_netdev "wan" "wan" "rgb:network" "wan" "link"
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 --- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-01-18 01:01:00.359732317 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-01-21 10:38:20.696724474 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-01-25 11:07:49.259714689 +0800
 @@ -13,8 +13,6 @@
  		;;
  	abt,asr3000-ubootmod|\
@@ -286,15 +293,18 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	routerich,ax3000)
  		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
  		;;
-@@ -94,7 +91,6 @@
- 	xiaomi,mi-router-wr30u-112m-nmbm|\
+@@ -91,10 +88,8 @@
+ 		;;
+ 	xiaomi,mi-router-ax3000t|\
+ 	xiaomi,mi-router-ax3000t-ubootmod|\
+-	xiaomi,mi-router-wr30u-112m-nmbm|\
  	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
 -	xiaomi,redmi-router-ax6000|\
  	xiaomi,redmi-router-ax6000-stock|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ucidef_set_interfaces_lan_wan "lan2 lan3 lan4" wan
-@@ -137,11 +133,6 @@
+@@ -137,11 +132,6 @@
  		;;
  		esac
  		;;
@@ -306,8 +316,11 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	glinet,gl-mt2500)
  		label_mac="$(get_mac_binary "/dev/mmcblk0boot1" 0xA)"
  		wan_mac="$label_mac"
-@@ -194,7 +185,6 @@
- 	xiaomi,mi-router-wr30u-112m-nmbm|\
+@@ -191,10 +181,8 @@
+ 		;;
+ 	xiaomi,mi-router-ax3000t|\
+ 	xiaomi,mi-router-ax3000t-ubootmod|\
+-	xiaomi,mi-router-wr30u-112m-nmbm|\
  	xiaomi,mi-router-wr30u-stock|\
  	xiaomi,mi-router-wr30u-ubootmod|\
 -	xiaomi,redmi-router-ax6000|\
@@ -318,7 +331,7 @@ Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 03_gpio_switch
 Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 05_compat-version
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
 --- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-01-07 10:26:23.234780000 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-01-21 10:38:20.696724474 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-01-25 11:07:49.259714689 +0800
 @@ -31,7 +31,6 @@
  			;;
  		esac
@@ -329,7 +342,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-
  		;;
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 --- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-01-18 01:03:04.459735711 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-01-21 10:38:20.696724474 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-01-25 11:07:49.259714689 +0800
 @@ -58,8 +58,7 @@
  		[ "$PHYNBR" = "0" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
  		[ "$PHYNBR" = "1" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
@@ -367,7 +380,7 @@ Only in imm/target/linux/mediatek/filogic/base-files/etc: uci-defaults
 Only in imm/target/linux/mediatek/filogic/base-files/lib: preinit
 diff -ru mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 --- mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-01-18 00:45:16.669695928 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-01-21 10:38:20.696724474 +0800
++++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-01-25 11:07:49.259714689 +0800
 @@ -116,7 +116,6 @@
  	yuncore,ax835)
  		default_do_upgrade "$1"
@@ -389,8 +402,8 @@ Only in imm/target/linux/mediatek/filogic: config-6.1
 Only in imm/target/linux/mediatek/filogic: target.mk
 Only in imm/target/linux/mediatek/image: Makefile
 diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/image/filogic.mk
---- mtk/target/linux/mediatek/image/filogic.mk	2024-01-18 01:05:13.289735614 +0800
-+++ imm/target/linux/mediatek/image/filogic.mk	2024-01-21 10:38:20.696724474 +0800
+--- mtk/target/linux/mediatek/image/filogic.mk	2024-01-25 11:12:35.999639659 +0800
++++ imm/target/linux/mediatek/image/filogic.mk	2024-01-25 11:07:49.259714689 +0800
 @@ -391,7 +391,6 @@
  define Device/cmcc_rax3000m
    DEVICE_VENDOR := CMCC
@@ -482,7 +495,36 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
  define Device/routerich_ax3000
    DEVICE_VENDOR := Routerich
    DEVICE_MODEL := AX3000
-@@ -1119,25 +1056,6 @@
+@@ -1052,28 +989,6 @@
+ endef
+ TARGET_DEVICES += xiaomi_mi-router-ax3000t-ubootmod
+ 
+-define Device/xiaomi_mi-router-wr30u-112m-nmbm
+-  DEVICE_VENDOR := Xiaomi
+-  DEVICE_MODEL := Mi Router WR30U
+-  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_DTS := mt7981b-xiaomi-mi-router-wr30u-112m-nmbm
+-  DEVICE_DTS_DIR := ../dts
+-  UBINIZE_OPTS := -E 5
+-  BLOCKSIZE := 128k
+-  PAGESIZE := 2048
+-  IMAGE_SIZE := 114688k
+-  KERNEL_IN_UBI := 1
+-  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware
+-ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
+-  ARTIFACTS := initramfs-factory.ubi
+-  ARTIFACT/initramfs-factory.ubi := append-image-stage initramfs-kernel.bin | ubinize-kernel
+-endif
+-  IMAGES += factory.bin
+-  IMAGE/factory.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
+-  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+-endef
+-TARGET_DEVICES += xiaomi_mi-router-wr30u-112m-nmbm
+-
+ define Device/xiaomi_mi-router-wr30u-stock
+   DEVICE_VENDOR := Xiaomi
+   DEVICE_MODEL := Mi Router WR30U
+@@ -1121,25 +1036,6 @@
  endef
  TARGET_DEVICES += xiaomi_mi-router-wr30u-ubootmod
  
