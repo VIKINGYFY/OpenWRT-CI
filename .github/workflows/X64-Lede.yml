@@ -16,6 +16,7 @@ jobs:
   wrt_config:
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
+    secrets: inherit
     with:
       #编译平台，X64包含X86
       WRT_TARGET: X64
