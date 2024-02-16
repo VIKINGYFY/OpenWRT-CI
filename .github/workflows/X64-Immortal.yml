@@ -2,9 +2,9 @@
 name: X64-Immortal
 
 on:
-  #自动编译：每天早上6点
+  #自动编译：每天早上4点
   schedule:
-    - cron: 0 22 * * *
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
 
