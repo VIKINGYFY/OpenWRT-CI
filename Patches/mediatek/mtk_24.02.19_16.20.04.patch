@@ -48,9 +48,9 @@ Only in imm/package/boot/uboot-envtools/files: kirkwood
 Only in imm/package/boot/uboot-envtools/files: lantiq
 Only in imm/package/boot/uboot-envtools/files: layerscape
 diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot/uboot-envtools/files/mediatek_filogic
---- mtk/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-25 11:15:20.269609367 +0800
-+++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-01-25 11:07:48.889714968 +0800
-@@ -43,7 +43,6 @@
+--- mtk/package/boot/uboot-envtools/files/mediatek_filogic	2024-02-19 16:05:53.206244951 +0800
++++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-02-19 15:55:46.916467476 +0800
+@@ -56,7 +56,6 @@
  	;;
  cetron,ct3003-stock|\
  cetron,ct3003-ubootmod|\
@@ -58,18 +58,18 @@ diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot
  h3c,magic-nx30-pro-nmbm|\
  netgear,wax220|\
  zbtlink,zbt-z8102ax|\
-@@ -67,9 +66,6 @@
+@@ -73,9 +72,6 @@
  		;;
  	esac
  	;;
 -cmcc,rax3000m-emmc-ubootmod)
 -	ubootenv_add_uci_config "/dev/mmcblk0p1" "0x0" "0x80000" "0x80000"
 -	;;
- glinet,gl-mt2500|\
- glinet,gl-mt6000)
- 	local envdev=$(find_mmc_part "u-boot-env")
-@@ -104,8 +100,7 @@
- 	ubootenv_add_uci_config "$envdev" "0x40000" "0x40000" "0x40000" "1"
+ comfast,cf-e393ax)
+ 	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x80000"
+ 	;;
+@@ -106,8 +102,7 @@
+ 	ubootenv_add_mmc_default
  	;;
  livinet,zr-3020|\
 -livinet,zr-3020-ubootmod|\
@@ -78,7 +78,7 @@ diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot
  	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x20000" "0x20000" "1"
  	;;
  mercusys,mr90x-v1|\
-@@ -117,9 +112,7 @@
+@@ -119,9 +114,7 @@
  	ubootenv_add_uci_config "/dev/mtd1" "0x0" "0x80000" "0x10000"
  	;;
  xiaomi,mi-router-ax3000t|\
@@ -191,6 +191,7 @@ Only in imm/target/linux/mediatek/dts: mt7623a-unielec-u7623-02.dtsi
 Only in imm/target/linux/mediatek/dts: mt7629-iptime-a6004mx.dts
 Only in imm/target/linux/mediatek/dts: mt7629-netgear-ex6250-v2.dts
 Only in imm/target/linux/mediatek/dts: mt7629-tplink_eap225-v5.dts
+Only in imm/target/linux/mediatek/dts: mt7981a-comfast-cf-e393ax.dts
 Only in imm/target/linux/mediatek/dts: mt7981a-ubnt-unifi-6-plus.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-abt-asr3000-ubootmod.dts
 Only in imm/target/linux/mediatek/dts: mt7981b-cetron-ct3003-stock.dts
@@ -255,12 +256,11 @@ Only in imm/target/linux/mediatek/dts: mt7986a-zyxel-ex5700-telenor.dts
 Only in imm/target/linux/mediatek/dts: mt7986b-mercusys-mr90x-v1.dts
 Only in imm/target/linux/mediatek/dts: mt7986b-netgear-wax220.dts
 Only in imm/target/linux/mediatek: files
-Only in imm/target/linux/mediatek: files-5.15
 Only in imm/target/linux/mediatek: files-6.1
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
---- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-01-18 01:00:18.159731935 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-01-25 11:07:49.259714689 +0800
-@@ -53,12 +53,10 @@
+--- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-02-19 15:57:20.196430818 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-02-19 15:55:47.316467377 +0800
+@@ -63,12 +63,10 @@
  	ucidef_set_led_netdev "wan" "wan" "blue:wan" "wan" "link tx rx"
  	ucidef_set_led_netdev "wan-off" "wan-off" "red:wan" "wan" "link"
  	;;
@@ -274,8 +274,8 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/ta
  xiaomi,redmi-router-ax6000-ubootmod)
  	ucidef_set_led_netdev "wan" "wan" "rgb:network" "wan" "link"
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
---- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-01-18 01:01:00.359732317 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-01-25 11:07:49.259714689 +0800
+--- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-19 16:08:06.886197329 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-19 15:55:47.316467377 +0800
 @@ -13,8 +13,6 @@
  		;;
  	abt,asr3000-ubootmod|\
@@ -293,7 +293,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	routerich,ax3000)
  		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
  		;;
-@@ -91,10 +88,8 @@
+@@ -98,10 +95,8 @@
  		;;
  	xiaomi,mi-router-ax3000t|\
  	xiaomi,mi-router-ax3000t-ubootmod|\
@@ -304,7 +304,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	xiaomi,redmi-router-ax6000-stock|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ucidef_set_interfaces_lan_wan "lan2 lan3 lan4" wan
-@@ -137,11 +132,6 @@
+@@ -144,11 +139,6 @@
  		;;
  		esac
  		;;
@@ -313,10 +313,10 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
 -		lan_mac=$(mmc_get_mac_binary factory 0x24)
 -		label_mac=$wan_mac
 -		;;
- 	glinet,gl-mt2500)
- 		label_mac="$(get_mac_binary "/dev/mmcblk0boot1" 0xA)"
- 		wan_mac="$label_mac"
-@@ -191,10 +181,8 @@
+ 	h3c,magic-nx30-pro|\
+ 	h3c,magic-nx30-pro-nmbm)
+ 		wan_mac=$(mtd_get_mac_ascii pdt_data_1 ethaddr)
+@@ -188,10 +178,8 @@
  		;;
  	xiaomi,mi-router-ax3000t|\
  	xiaomi,mi-router-ax3000t-ubootmod|\
@@ -330,8 +330,8 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
 Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 03_gpio_switches
 Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 05_compat-version
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
---- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-01-07 10:26:23.234780000 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-01-25 11:07:49.259714689 +0800
+--- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-02-19 16:13:11.336093791 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-02-19 15:55:47.316467377 +0800
 @@ -31,7 +31,6 @@
  			;;
  		esac
@@ -341,8 +341,8 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-
  		caldata_extract_mmc "factory" 0x0 0x1000
  		;;
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
---- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-01-18 01:03:04.459735711 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-01-25 11:07:49.259714689 +0800
+--- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-02-19 16:10:00.726158327 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-02-19 15:55:47.316467377 +0800
 @@ -58,8 +58,7 @@
  		[ "$PHYNBR" = "0" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
  		[ "$PHYNBR" = "1" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
@@ -353,17 +353,15 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11
  		[ "$PHYNBR" = "1" ] && mtd_get_mac_binary Factory 0xa > /sys${DEVPATH}/macaddress
  		;;
  	cmcc,rax3000m)
-@@ -73,9 +72,6 @@
- 		esac
- 		[ "$PHYNBR" = "1" ] && echo "$addr" > /sys${DEVPATH}/macaddress
+@@ -107,7 +106,6 @@
+ 		# addresses on multiple VIFs with the other radio. Use label mac to set LA bit.
+ 		[ "$PHYNBR" = "1" ] && macaddr_setbit_la $(get_mac_label) > /sys${DEVPATH}/macaddress
  		;;
--	cmcc,rax3000m-emmc-ubootmod)
--		[ "$PHYNBR" = "1" ] && mmc_get_mac_binary factory 0xa > /sys${DEVPATH}/macaddress
--		;;
- 	cudy,wr3000-v1)
- 		addr=$(mtd_get_mac_binary bdinfo 0xde00)
- 		# Originally, phy0 is phy1 mac with LA bit set. However, this would conflict
-@@ -129,11 +125,6 @@
+-	cmcc,rax3000m-emmc-ubootmod|\
+ 	jdcloud,re-cp-03)
+ 		[ "$PHYNBR" = "1" ] && mmc_get_mac_binary factory 0xa > /sys${DEVPATH}/macaddress
+ 		;;
+@@ -131,11 +129,6 @@
  		[ "$PHYNBR" = "0" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
  		[ "$PHYNBR" = "1" ] && macaddr_add $addr 3 > /sys${DEVPATH}/macaddress
  		;;
@@ -379,9 +377,9 @@ Only in imm/target/linux/mediatek/filogic/base-files/etc: init.d
 Only in imm/target/linux/mediatek/filogic/base-files/etc: uci-defaults
 Only in imm/target/linux/mediatek/filogic/base-files/lib: preinit
 diff -ru mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
---- mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-01-18 00:45:16.669695928 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-01-25 11:07:49.259714689 +0800
-@@ -116,7 +116,6 @@
+--- mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-02-19 16:00:39.886354895 +0800
++++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-02-19 15:55:47.316467377 +0800
+@@ -132,7 +132,6 @@
  	yuncore,ax835)
  		default_do_upgrade "$1"
  		;;
@@ -389,7 +387,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh im
  	glinet,gl-mt2500|\
  	glinet,gl-mt6000)
  		CI_KERNPART="kernel"
-@@ -197,7 +196,6 @@
+@@ -213,7 +212,6 @@
  platform_copy_config() {
  	case "$(board_name)" in
  	acer,predator-w6|\
@@ -397,14 +395,13 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh im
  	glinet,gl-mt2500|\
  	glinet,gl-mt6000|\
  	jdcloud,re-cp-03|\
-Only in imm/target/linux/mediatek/filogic: config-5.15
 Only in imm/target/linux/mediatek/filogic: config-6.1
 Only in imm/target/linux/mediatek/filogic: target.mk
 Only in imm/target/linux/mediatek/image: Makefile
 diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/image/filogic.mk
---- mtk/target/linux/mediatek/image/filogic.mk	2024-01-25 11:12:35.999639659 +0800
-+++ imm/target/linux/mediatek/image/filogic.mk	2024-01-25 11:07:49.259714689 +0800
-@@ -391,7 +391,6 @@
+--- mtk/target/linux/mediatek/image/filogic.mk	2024-02-19 16:03:42.136298979 +0800
++++ imm/target/linux/mediatek/image/filogic.mk	2024-02-19 15:55:47.316467377 +0800
+@@ -453,7 +453,6 @@
  define Device/cmcc_rax3000m
    DEVICE_VENDOR := CMCC
    DEVICE_MODEL := RAX3000M
@@ -412,7 +409,7 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
    DEVICE_DTS := mt7981b-cmcc-rax3000m
    DEVICE_DTS_OVERLAY := mt7981b-cmcc-rax3000m-emmc mt7981b-cmcc-rax3000m-nand
    DEVICE_DTS_DIR := ../dts
-@@ -422,44 +421,6 @@
+@@ -484,44 +483,6 @@
  endef
  TARGET_DEVICES += cmcc_rax3000m
  
@@ -454,10 +451,10 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
 -endef
 -TARGET_DEVICES += cmcc_rax3000m-nand-ubootmod
 -
- define Device/confiabits_mt7981
-   DEVICE_VENDOR := Confiabits
-   DEVICE_MODEL := MT7981
-@@ -895,7 +856,6 @@
+ define Device/comfast_cf-e393ax
+   DEVICE_VENDOR := Comfast
+   DEVICE_MODEL := CF-E393AX
+@@ -981,7 +942,6 @@
  define Device/qihoo_360t7
    DEVICE_VENDOR := Qihoo
    DEVICE_MODEL := 360T7
@@ -465,7 +462,7 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
    DEVICE_DTS := mt7981b-qihoo-360t7
    DEVICE_DTS_DIR := ../dts
    UBINIZE_OPTS := -E 5
-@@ -917,29 +877,6 @@
+@@ -1003,29 +963,6 @@
  endef
  TARGET_DEVICES += qihoo_360t7
  
@@ -495,7 +492,7 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
  define Device/routerich_ax3000
    DEVICE_VENDOR := Routerich
    DEVICE_MODEL := AX3000
-@@ -1052,28 +989,6 @@
+@@ -1138,28 +1075,6 @@
  endef
  TARGET_DEVICES += xiaomi_mi-router-ax3000t-ubootmod
  
@@ -524,7 +521,7 @@ diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/im
  define Device/xiaomi_mi-router-wr30u-stock
    DEVICE_VENDOR := Xiaomi
    DEVICE_MODEL := Mi Router WR30U
-@@ -1121,25 +1036,6 @@
+@@ -1207,25 +1122,6 @@
  endef
  TARGET_DEVICES += xiaomi_mi-router-wr30u-ubootmod
  
@@ -558,7 +555,6 @@ Only in imm/target/linux/mediatek: modules.mk
 Only in imm/target/linux/mediatek: mt7622
 Only in imm/target/linux/mediatek: mt7623
 Only in imm/target/linux/mediatek: mt7629
-Only in imm/target/linux/mediatek: patches-5.15
 Only in imm/target/linux/mediatek: patches-6.1
 Only in imm/target/linux: mpc85xx
 Only in imm/target/linux: mvebu
