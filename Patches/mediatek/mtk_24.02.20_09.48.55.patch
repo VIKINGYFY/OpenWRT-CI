@@ -49,7 +49,7 @@ Only in imm/package/boot/uboot-envtools/files: lantiq
 Only in imm/package/boot/uboot-envtools/files: layerscape
 diff -ru mtk/package/boot/uboot-envtools/files/mediatek_filogic imm/package/boot/uboot-envtools/files/mediatek_filogic
 --- mtk/package/boot/uboot-envtools/files/mediatek_filogic	2024-02-19 16:05:53.206244951 +0800
-+++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-02-19 15:55:46.916467476 +0800
++++ imm/package/boot/uboot-envtools/files/mediatek_filogic	2024-02-20 09:43:03.678129644 +0800
 @@ -56,7 +56,6 @@
  	;;
  cetron,ct3003-stock|\
@@ -259,7 +259,7 @@ Only in imm/target/linux/mediatek: files
 Only in imm/target/linux/mediatek: files-6.1
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
 --- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-02-19 15:57:20.196430818 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-02-19 15:55:47.316467377 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds	2024-02-20 09:43:04.058129474 +0800
 @@ -63,12 +63,10 @@
  	ucidef_set_led_netdev "wan" "wan" "blue:wan" "wan" "link tx rx"
  	ucidef_set_led_netdev "wan-off" "wan-off" "red:wan" "wan" "link"
@@ -274,8 +274,8 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds imm/ta
  xiaomi,redmi-router-ax6000-ubootmod)
  	ucidef_set_led_netdev "wan" "wan" "rgb:network" "wan" "link"
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
---- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-19 16:08:06.886197329 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-19 15:55:47.316467377 +0800
+--- mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-20 09:45:04.398070102 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/board.d/02_network	2024-02-20 09:43:04.058129474 +0800
 @@ -13,8 +13,6 @@
  		;;
  	abt,asr3000-ubootmod|\
@@ -293,7 +293,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	routerich,ax3000)
  		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
  		;;
-@@ -98,10 +95,8 @@
+@@ -97,10 +94,8 @@
  		;;
  	xiaomi,mi-router-ax3000t|\
  	xiaomi,mi-router-ax3000t-ubootmod|\
@@ -304,7 +304,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	xiaomi,redmi-router-ax6000-stock|\
  	xiaomi,redmi-router-ax6000-ubootmod)
  		ucidef_set_interfaces_lan_wan "lan2 lan3 lan4" wan
-@@ -144,11 +139,6 @@
+@@ -143,11 +138,6 @@
  		;;
  		esac
  		;;
@@ -316,7 +316,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/board.d/02_network imm
  	h3c,magic-nx30-pro|\
  	h3c,magic-nx30-pro-nmbm)
  		wan_mac=$(mtd_get_mac_ascii pdt_data_1 ethaddr)
-@@ -188,10 +178,8 @@
+@@ -187,10 +177,8 @@
  		;;
  	xiaomi,mi-router-ax3000t|\
  	xiaomi,mi-router-ax3000t-ubootmod|\
@@ -331,7 +331,7 @@ Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 03_gpio_switch
 Only in imm/target/linux/mediatek/filogic/base-files/etc/board.d: 05_compat-version
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata
 --- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-02-19 16:13:11.336093791 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-02-19 15:55:47.316467377 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-mt76-caldata	2024-02-20 09:43:04.068129472 +0800
 @@ -31,7 +31,6 @@
  			;;
  		esac
@@ -342,7 +342,7 @@ diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/firmware/11-
  		;;
 diff -ru mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
 --- mtk/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-02-19 16:10:00.726158327 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-02-19 15:55:47.316467377 +0800
++++ imm/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-02-20 09:43:04.068129472 +0800
 @@ -58,8 +58,7 @@
  		[ "$PHYNBR" = "0" ] && macaddr_add $addr 1 > /sys${DEVPATH}/macaddress
  		[ "$PHYNBR" = "1" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
@@ -378,7 +378,7 @@ Only in imm/target/linux/mediatek/filogic/base-files/etc: uci-defaults
 Only in imm/target/linux/mediatek/filogic/base-files/lib: preinit
 diff -ru mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh
 --- mtk/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-02-19 16:00:39.886354895 +0800
-+++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-02-19 15:55:47.316467377 +0800
++++ imm/target/linux/mediatek/filogic/base-files/lib/upgrade/platform.sh	2024-02-20 09:43:04.068129472 +0800
 @@ -132,7 +132,6 @@
  	yuncore,ax835)
  		default_do_upgrade "$1"
@@ -400,7 +400,7 @@ Only in imm/target/linux/mediatek/filogic: target.mk
 Only in imm/target/linux/mediatek/image: Makefile
 diff -ru mtk/target/linux/mediatek/image/filogic.mk imm/target/linux/mediatek/image/filogic.mk
 --- mtk/target/linux/mediatek/image/filogic.mk	2024-02-19 16:03:42.136298979 +0800
-+++ imm/target/linux/mediatek/image/filogic.mk	2024-02-19 15:55:47.316467377 +0800
++++ imm/target/linux/mediatek/image/filogic.mk	2024-02-20 09:43:04.068129472 +0800
 @@ -453,7 +453,6 @@
  define Device/cmcc_rax3000m
    DEVICE_VENDOR := CMCC
