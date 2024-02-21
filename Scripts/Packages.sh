@@ -20,8 +20,6 @@ UPDATE_PACKAGE() {
 	fi
 }
 
-UPDATE_PACKAGE "tinyfilemanager" "muink/luci-app-tinyfilemanager" "master"
-
 UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $WRT_URL == *"lede"* ]] && echo "main" || echo "js")"
 UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
