@@ -3,8 +3,8 @@ name: Mediatek-Lede
 
 on:
   #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
 
@@ -22,9 +22,9 @@ jobs:
       #默认主题
       WRT_THEME: design
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: H3MKL
       #默认WIFI名
-      WRT_WIFI: OWRT
+      WRT_WIFI: H3MKL
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #默认地址
