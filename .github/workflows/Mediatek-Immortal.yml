@@ -3,8 +3,8 @@ name: Mediatek-Immortal
 
 on:
   #自动编译：每天早上4点
-  schedule:
-    - cron: 0 20 * * *
+  #schedule:
+    #- cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
 
@@ -22,13 +22,13 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: OpenWrt
       #默认WIFI名
       WRT_WIFI: OWRT
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 10.0.0.77
       #默认源码
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
       #默认分支

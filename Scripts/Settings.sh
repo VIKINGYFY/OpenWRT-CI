@@ -11,6 +11,10 @@ sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 #修改默认时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" $CFG_FILE
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" $CFG_FILE
+#设置密码为空
+sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
+#x86只显示CPU型号
+sed -i 's/${g}.*/${a}${b}${c}${d}${e}${f}${hydrid}/g' package/lean/autocore/files/x86/autocore
 
 if [[ $WRT_URL == *"lede"* ]]; then
 	LEDE_FILE=$(find ./package/lean/autocore/ -type f -name "index.htm")
@@ -33,8 +37,31 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 if [[ $WRT_URL == *"lede"* ]]; then
-	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
+#	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_Nftables_Transparent_Proxy=y" >> ./.config
+#	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Brook=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Hysteria=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_NaiveProxy=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Server=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Simple_Obfs=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_SingBox=y" >> ./.config
+#	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_GO=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_tuic_client=y" >> ./.config
+#	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_IPT2Socks=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Geodata=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray_Plugin=y" >> ./.config
 elif [[ $WRT_URL == *"immortalwrt"* ]]; then
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config

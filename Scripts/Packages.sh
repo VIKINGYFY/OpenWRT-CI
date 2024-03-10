@@ -8,7 +8,7 @@ UPDATE_PACKAGE() {
 	local PKG_SPECIAL=$4
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	rm -rf $(find ../feeds/luci/ -type d -iname "*$PKG_NAME*" -prune)
+	rm -rf $(find ../feeds/ -type d -iname "*$PKG_NAME*" -prune)
 
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
@@ -20,11 +20,16 @@ UPDATE_PACKAGE() {
 	fi
 }
 
+#更新主题
 UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $WRT_URL == *"lede"* ]] && echo "main" || echo "js")"
 UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 
+#科学上网
+UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
+#UPDATE_PACKAGE "passwall2" "xiaorouji/openwrt-passwall2" "main"
+UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
 UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
@@ -32,6 +37,34 @@ if [[ $WRT_URL == *"immortalwrt"* ]]; then
 	#UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "dev"
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
+
+#MosDNS
+UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
+UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
+#git clone --depth=1 --single-branch https://github.com/sbwml/luci-app-mosdns.git
+#git clone --depth=1 --single-branch https://github.com/sbwml/v2ray-geodata.git
+
+#SmartDNS
+UPDATE_PACKAGE "smartdns" "pymumu/openwrt-smartdns" "master"
+UPDATE_PACKAGE "luci-app-smartdns" "pymumu/luci-app-smartdns" "lede"
+#git clone --depth=1 --single-branch --branch "lede" https://github.com/pymumu/luci-app-smartdns.git
+#git clone --depth=1 --single-branch https://github.com/pymumu/openwrt-smartdns
+
+#Netdata
+UPDATE_PACKAGE "luci-app-netdata" "Jason6111/luci-app-netdata" "main"
+#git clone --depth=1 --single-branch https://github.com/Jason6111/luci-app-netdata
+
+#Poweroff
+UPDATE_PACKAGE "luci-app-poweroff" "esirplayground/luci-app-poweroff" "master"
+#git clone --depth=1 --single-branch https://github.com/esirplayground/luci-app-poweroff
+
+#OpenAppFilter
+UPDATE_PACKAGE "OpenAppFilter" "destan19/OpenAppFilter" "master"
+#git clone --depth=1 --single-branch https://github.com/destan19/OpenAppFilter
+
+#Fileassistant
+UPDATE_PACKAGE "luci-app-fileassistant" "kenzok78/luci-app-fileassistant" "main"
+#git clone --depth=1 --single-branch https://github.com/kenzok78/luci-app-fileassistant
 
 #更新软件包版本
 UPDATE_VERSION() {
@@ -54,4 +87,4 @@ UPDATE_VERSION() {
 	fi
 }
 
-UPDATE_VERSION "sing-box" "1.8.5" "0d5e6a7198c3a18491ac35807170715118df2c7b77fd02d16d7cfb5791e368ce"
+#UPDATE_VERSION "sing-box" "1.8.5" "0d5e6a7198c3a18491ac35807170715118df2c7b77fd02d16d7cfb5791e368ce"
