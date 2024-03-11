@@ -27,7 +27,7 @@ UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]
 UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 
 #科学上网
-UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
+UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "luci-smartdns-dev"
 #UPDATE_PACKAGE "passwall2" "xiaorouji/openwrt-passwall2" "main"
 UPDATE_PACKAGE "passwall-packages" "xiaorouji/openwrt-passwall-packages" "main"
 UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
@@ -39,8 +39,10 @@ if [[ $WRT_URL == *"immortalwrt"* ]]; then
 fi
 
 #MosDNS
-UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
-UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
+#rm -rf $(find ../feeds/ -type d -iname "*v2ray-geodata*" -prune)
+#UPDATE_PACKAGE "mosdns" "QiuSimons/openwrt-mos" "master"
+#UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
+#UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
 #git clone --depth=1 --single-branch https://github.com/sbwml/luci-app-mosdns.git
 #git clone --depth=1 --single-branch https://github.com/sbwml/v2ray-geodata.git
 
