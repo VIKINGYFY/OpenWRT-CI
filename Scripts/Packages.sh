@@ -39,12 +39,14 @@ if [[ $WRT_URL == *"immortalwrt"* ]]; then
 fi
 
 #MosDNS
-#rm -rf $(find ../feeds/ -type d -iname "*v2ray-geodata*" -prune)
+find ../feeds/ | grep Makefile | grep mosdns | xargs rm -f
+find ../feeds/ | grep Makefile | grep v2dat | xargs rm -f
+find ../feeds/ | grep Makefile | grep v2ray-geodata | xargs rm -f
 #UPDATE_PACKAGE "mosdns" "QiuSimons/openwrt-mos" "master"
 #UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
 #UPDATE_PACKAGE "v2ray-geodata" "sbwml/v2ray-geodata" "master"
-#git clone --depth=1 --single-branch https://github.com/sbwml/luci-app-mosdns.git
-#git clone --depth=1 --single-branch https://github.com/sbwml/v2ray-geodata.git
+git clone --depth=1 --single-branch --branch "v5" https://github.com/sbwml/luci-app-mosdns.git
+git clone --depth=1 --single-branch https://github.com/sbwml/v2ray-geodata.git
 
 #SmartDNS
 UPDATE_PACKAGE "smartdns" "pymumu/openwrt-smartdns" "master"
