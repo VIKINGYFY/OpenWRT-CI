@@ -1,0 +1,32 @@
+name: Build OpenWrt ImageBuilder Official
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up OpenWrt
+        run: |
+          git clone https://github.com/openwrt/openwrt.git
+          cd openwrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          cp ../.config .config
+
+      - name: Build ImageBuilder
+        run: |
+          make image PROFILE=x86_64 PACKAGES=""
+
+      - name: Release
+        uses: softprops/action-gh-release@master
+        with:
+          tag_name: official
+          files: bin/targets/x86_64/
+          body: |
+            OpenWrt Official
