@@ -1,0 +1,206 @@
+#
+# ROOter
+#
+
+#
+# Basic Applications
+#
+# CONFIG_PACKAGE_arc-storage is not set
+# CONFIG_PACKAGE_ext-command is not set
+# CONFIG_PACKAGE_ext-extra is not set
+# CONFIG_PACKAGE_ext-p910nd is not set
+# CONFIG_PACKAGE_luci-app-guestwifi is not set
+# CONFIG_PACKAGE_usb-storage is not set
+# end of Basic Applications
+
+#
+# Basic Support
+#
+# CONFIG_PACKAGE_ext-buttons is not set
+# CONFIG_PACKAGE_ext-rooter-basic is not set
+# CONFIG_PACKAGE_ext-sms is not set
+# end of Basic Support
+
+#
+# BuildSections
+#
+# CONFIG_PACKAGE_build-admin is not set
+# CONFIG_PACKAGE_build-iphone is not set
+# CONFIG_PACKAGE_build-luci is not set
+# CONFIG_PACKAGE_build-mwan3 is not set
+# CONFIG_PACKAGE_build-openvpn is not set
+# CONFIG_PACKAGE_build-themes is not set
+# CONFIG_PACKAGE_build-usb is not set
+# CONFIG_PACKAGE_build-utils is not set
+# CONFIG_PACKAGE_build-wifi is not set
+# CONFIG_PACKAGE_ext-custom-basic is not set
+# CONFIG_PACKAGE_ext-lte is not set
+# end of BuildSections
+
+#
+# CustomBuilds
+#
+# CONFIG_PACKAGE_ext-custom-level0 is not set
+# CONFIG_PACKAGE_ext-custom-level1 is not set
+# CONFIG_PACKAGE_ext-custom-level2 is not set
+# CONFIG_PACKAGE_ext-custom-level3 is not set
+# CONFIG_PACKAGE_ext-custom-level4 is not set
+# CONFIG_PACKAGE_ext-custom-level5 is not set
+# CONFIG_PACKAGE_ext-custom-multi is not set
+# CONFIG_PACKAGE_ext-custom-multi-openvpn is not set
+# end of CustomBuilds
+
+#
+# CustomBuilds16
+#
+# CONFIG_PACKAGE_ext-custom-level016 is not set
+# CONFIG_PACKAGE_ext-custom-level116 is not set
+# CONFIG_PACKAGE_ext-custom-level216 is not set
+# CONFIG_PACKAGE_ext-custom-level316 is not set
+# CONFIG_PACKAGE_ext-custom-level416 is not set
+# CONFIG_PACKAGE_ext-custom-level516 is not set
+# end of CustomBuilds16
+
+#
+# Drivers
+#
+# CONFIG_PACKAGE_rmbim is not set
+# CONFIG_PACKAGE_rqmi is not set
+# end of Drivers
+
+#
+# Mesh Support
+#
+# CONFIG_PACKAGE_mesh-mesh is not set
+# CONFIG_PACKAGE_mesh-wpad is not set
+# CONFIG_PACKAGE_meshs is not set
+# end of Mesh Support
+
+#
+# Optional Applications
+#
+# CONFIG_PACKAGE_bwallocate is not set
+# CONFIG_PACKAGE_bwmon is not set
+# CONFIG_PACKAGE_ext-autoapn is not set
+# CONFIG_PACKAGE_ext-basicmenu is not set
+# CONFIG_PACKAGE_ext-blacklist is not set
+# CONFIG_PACKAGE_ext-blockport is not set
+# CONFIG_PACKAGE_ext-domain is not set
+# CONFIG_PACKAGE_ext-flash is not set
+# CONFIG_PACKAGE_ext-gps is not set
+# CONFIG_PACKAGE_ext-hotspot is not set
+# CONFIG_PACKAGE_ext-logo is not set
+# CONFIG_PACKAGE_ext-menu is not set
+# CONFIG_PACKAGE_ext-netselect is not set
+# CONFIG_PACKAGE_ext-openwisp is not set
+# CONFIG_PACKAGE_ext-ota is not set
+# CONFIG_PACKAGE_ext-repeater is not set
+# CONFIG_PACKAGE_ext-rspeedtest is not set
+# CONFIG_PACKAGE_ext-simpin is not set
+# CONFIG_PACKAGE_ext-simplegps is not set
+# CONFIG_PACKAGE_ext-speedtest is not set
+# CONFIG_PACKAGE_ext-texting is not set
+# CONFIG_PACKAGE_ext-throttle is not set
+# CONFIG_PACKAGE_ext-wireguard is not set
+# CONFIG_PACKAGE_ext-wizard is not set
+# CONFIG_PACKAGE_ext-zerotier is not set
+# CONFIG_PACKAGE_extramenu is not set
+# CONFIG_PACKAGE_multi-wifi is not set
+# CONFIG_PACKAGE_netrestart is not set
+# CONFIG_PACKAGE_pingtest is not set
+# CONFIG_PACKAGE_qlog is not set
+# CONFIG_PACKAGE_quec_upload is not set
+# CONFIG_PACKAGE_udp-tunnel is not set
+# CONFIG_PACKAGE_webconsole is not set
+# end of Optional Applications
+
+#
+# Protocols
+#
+# CONFIG_PACKAGE_luci-proto-3x is not set
+# end of Protocols
+
+#
+# Router Specific
+#
+# CONFIG_PACKAGE_alix2d13 is not set
+# CONFIG_PACKAGE_apu2c4 is not set
+# CONFIG_PACKAGE_b1300 is not set
+# CONFIG_PACKAGE_d240 is not set
+# CONFIG_PACKAGE_dir860l is not set
+# CONFIG_PACKAGE_ext-omnia is not set
+# CONFIG_PACKAGE_ext-ssh is not set
+# CONFIG_PACKAGE_fscheck is not set
+# CONFIG_PACKAGE_h721 is not set
+# CONFIG_PACKAGE_mesh1608 is not set
+# CONFIG_PACKAGE_mt1300 is not set
+# CONFIG_PACKAGE_rbm11g is not set
+# CONFIG_PACKAGE_rbm33g is not set
+# CONFIG_PACKAGE_rbsxtr is not set
+# CONFIG_PACKAGE_rd05a1 is not set
+# CONFIG_PACKAGE_vpnpolicy is not set
+# CONFIG_PACKAGE_we826 is not set
+# CONFIG_PACKAGE_we826q is not set
+# CONFIG_PACKAGE_wg1602 is not set
+# CONFIG_PACKAGE_wg1608 is not set
+# CONFIG_PACKAGE_wg209 is not set
+# CONFIG_PACKAGE_wg259 is not set
+# CONFIG_PACKAGE_wg3526 is not set
+# CONFIG_PACKAGE_wg827 is not set
+# CONFIG_PACKAGE_wififix is not set
+# CONFIG_PACKAGE_wrt1900 is not set
+# CONFIG_PACKAGE_ws1208v2 is not set
+# CONFIG_PACKAGE_x750 is not set
+# CONFIG_PACKAGE_z8102 is not set
+# end of Router Specific
+
+#
+# Splash Screens
+#
+# CONFIG_PACKAGE_ext-splash is not set
+# CONFIG_PACKAGE_ext-splashconfig is not set
+# CONFIG_PACKAGE_splash is not set
+# CONFIG_PACKAGE_status is not set
+# end of Splash Screens
+
+#
+# Themes
+#
+# CONFIG_PACKAGE_ext-login is not set
+# CONFIG_PACKAGE_ext-theme is not set
+# CONFIG_PACKAGE_luci-theme-argondark is not set
+CONFIG_PACKAGE_luci-theme-material=y
+# CONFIG_PACKAGE_luci-theme-materialgrey is not set
+# CONFIG_PACKAGE_luci-theme-tomato is not set
+# CONFIG_PACKAGE_theme-data is not set
+# end of Themes
+
+#
+# Wifi
+#
+CONFIG_PACKAGE_extra-wifi=y
+# end of Wifi
+
+# CONFIG_PACKAGE_ext-ex is not set
+# CONFIG_PACKAGE_ext-fcc is not set
+# CONFIG_PACKAGE_ext-fccm is not set
+# CONFIG_PACKAGE_ext-freedom is not set
+# CONFIG_PACKAGE_ext-h721 is not set
+# CONFIG_PACKAGE_ext-huasifei is not set
+# CONFIG_PACKAGE_ext-huasifei16 is not set
+# CONFIG_PACKAGE_ext-indro is not set
+# CONFIG_PACKAGE_ext-lte16 is not set
+# CONFIG_PACKAGE_ext-ltetest is not set
+# CONFIG_PACKAGE_ext-mesh-master is not set
+# CONFIG_PACKAGE_ext-mesh-node is not set
+# CONFIG_PACKAGE_ext-rbsxtr is not set
+# CONFIG_PACKAGE_ext-rooter-lite is not set
+# CONFIG_PACKAGE_ext-rooter16 is not set
+# CONFIG_PACKAGE_ext-rooter4 is not set
+# CONFIG_PACKAGE_ext-rooter8-vpn is not set
+# CONFIG_PACKAGE_ext-rooterbcm16 is not set
+# CONFIG_PACKAGE_ext-sky is not set
+# CONFIG_PACKAGE_ext-wifirepeat is not set
+# CONFIG_PACKAGE_ext-world is not set
+# CONFIG_PACKAGE_ext-world16 is not set
+# end of ROOter
