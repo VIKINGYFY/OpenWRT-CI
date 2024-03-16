@@ -229,12 +229,12 @@ jobs:
           tag_name: ${{env.WRT_TARGET}}_${{env.WRT_SOURCE}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，更就完事了！
+            This is a platform firmware package that contains multiple devices!
+            Please pay attention to select the device firmware you need!
+            Don’t ask, it’s done!
 
-            源码：${{env.WRT_SOURCE}}
-            平台：${{env.WRT_TARGET}}
-            设备：${{env.WRT_TYPE}}
-            密码：${{env.WRT_PW}}
-            地址：${{env.WRT_IP}}
+            Source code: ${{env.WRT_SOURCE}}
+            Platform: ${{env.WRT_TARGET}}
+            Device: ${{env.WRT_TYPE}}
+            Password: ${{env.WRT_PW}}
+            Address: ${{env.WRT_IP}}
