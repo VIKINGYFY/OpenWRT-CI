@@ -4,6 +4,9 @@ name: WRT-CORE
 on:
   workflow_call:
     inputs:
+      WRT_BASE:
+        required: true
+        type: string
       WRT_BRANCH:
         required: true
         type: string
@@ -35,6 +38,7 @@ on:
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  WRT_BASE: ${{inputs.WRT_BASE}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
   WRT_TARGET: ${{inputs.WRT_TARGET}}
   WRT_THEME: ${{inputs.WRT_THEME}}
@@ -166,6 +170,9 @@ jobs:
           rm -rf ./tmp* ./.config*
 
           cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
+          if [[ $WRT_BASE == 'rooter' ]]; then
+            cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/Rooter.txt >> .config
+          fi
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
