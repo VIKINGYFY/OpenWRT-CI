@@ -11,13 +11,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Setup
+        run: |
+          sudo apt -y install build-essential libncurses5-dev python unzip gawk git curl jshon
+
       - name: Set up OpenWrt
         run: |
-          git clone https://github.com/openwrt/openwrt.git
+          git clone https://github.com/ofmodemsandmen/ROOterSource2305 openwrt
           cd openwrt
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-          cp ../.config .config
+          mkdir -p ./images
+          ./build X86-64
 
       - name: Build ImageBuilder
         run: |
@@ -27,6 +30,6 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: official
-          files: bin/targets/x86_64/
+          files: ./images
           body: |
             OpenWrt Official
