@@ -18,6 +18,6 @@ jobs:
       WRT_WIFI: OWRT
       WRT_PW: password
       WRT_IP: 192.168.1.1
-      WRT_BASE: rooter
+      WRT_BASE: ROOterSource2305
       WRT_URL: https://github.com/ofmodemsandmen/ROOterSource2305
       WRT_BRANCH: main
