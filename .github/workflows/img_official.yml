@@ -13,7 +13,9 @@ jobs:
 
       - name: Setup
         run: |
-          sudo apt -y install build-essential libncurses5-dev python unzip gawk git curl jshon
+          sudo apt-get -qq update
+          sudo apt-get -qq install build-essential libncurses5-dev libncursesw5-dev zlib1g-dev gawk git gettext libssl-dev xsltproc rsync wget unzip tar gzip qemu-utils mkisofs
+          sudo apt -y install build-essential libncurses5-dev unzip gawk git curl jshon
 
       - name: Set up OpenWrt
         run: |
