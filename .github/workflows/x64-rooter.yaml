@@ -1,0 +1,22 @@
+name: X64-Rooter
+
+on:
+  schedule:
+    - cron: 0 20 * * *
+  workflow_dispatch:
+
+permissions: write-all
+
+#CI任务
+jobs:
+  wrt_config:
+    uses: ./.github/workflows/WRT-CORE.yml
+    with:
+      WRT_TARGET: X64
+      WRT_THEME: argon
+      WRT_NAME: OWRT
+      WRT_WIFI: OWRT
+      WRT_PW: password
+      WRT_IP: 192.168.1.1
+      WRT_URL: https://github.com/ofmodemsandmen/ROOterSource2305
+      WRT_BRANCH: main
