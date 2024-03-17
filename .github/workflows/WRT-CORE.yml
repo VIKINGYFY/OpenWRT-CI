@@ -170,9 +170,6 @@ jobs:
           rm -rf ./tmp* ./.config*
 
           cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/General.txt >> .config
-          if [[ $WRT_BASE == 'rooter' ]]; then
-            cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/Rooter.txt >> .config
-          fi
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
