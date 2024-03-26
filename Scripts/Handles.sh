@@ -54,6 +54,8 @@ if [ -d *"homeproxy"* ]; then
 	#UPDATE_RESOURCES "geosite" "1715173329/sing-geosite" "master" "geosite.db"
 	#UPDATE_RESOURCES "clash_dashboard" "MetaCubeX/metacubexd" "gh-pages" "gh-pages.zip"
 
+	sed -i -e "s/full://g" -e "/:/d" "$HP_PATCH/china_list.txt"
+
 	echo "homeproxy date has been updated!"
 fi
 
