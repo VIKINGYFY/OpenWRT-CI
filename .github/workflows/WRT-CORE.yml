@@ -60,7 +60,7 @@ jobs:
           remove_haskell: true
           remove_tool_cache: true
           remove_swap: true
-          remove_packages: "android* azure* dotnet* firefox* ghc* golang* google* libgl1* lld* llvm* \
+          remove_packages: "android* azure* clang* dotnet* firefox* ghc* golang* google* libclang* libgl1* lld* llvm* \
             microsoft* mongodb* mono* mysql* nodejs* openjdk* php* postgresql* powershell* snap* temurin* yarn* zulu*"
           remove_packages_one_command: true
           remove_folders: "/etc/apt/sources.list.d* /etc/mono* /etc/mysql* /usr/include/linux/android* /usr/lib/llvm* /usr/lib/mono* \
