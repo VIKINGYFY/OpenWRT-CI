@@ -29,7 +29,6 @@ UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
 if [[ $WRT_URL == *"immortalwrt"* ]]; then
-	#UPDATE_PACKAGE "homeproxy" "muink/homeproxy" "dev"
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
