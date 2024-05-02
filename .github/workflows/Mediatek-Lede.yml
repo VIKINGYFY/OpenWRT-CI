@@ -22,7 +22,7 @@ jobs:
       #默认主题
       WRT_THEME: design
       #默认主机名
-      WRT_NAME: OWPENRT
+      WRT_NAME: OPENWRT
       #默认WIFI名
       WRT_WIFI: ASUS
       #默认密码，仅作提示，修改无用
