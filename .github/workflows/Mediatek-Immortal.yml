@@ -13,6 +13,37 @@ permissions: write-all
 
 #CI任务
 jobs:
+  Upsing:
+    #自动在每次构建前检查sing-box是否有更新
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Update sing-box version
+        run: |
+          chmod +x ./Scripts/Upsing.sh
+          ./Scripts/Upsing.sh
+
+      - name: Commit changes
+        id: commit-changes
+        run: |
+          if [ -n "$(git status --porcelain ./Scripts/Packages.sh)" ]; then
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Update sing-box version"
+          echo "singupdated=true" >> $GITHUB_OUTPUT
+          else
+            echo "No sing update"
+          fi     
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        if: ${{ steps.commit-changes.outputs.singupdated == 'true' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
   wrt_config:
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
