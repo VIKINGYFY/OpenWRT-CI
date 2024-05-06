@@ -8,4 +8,6 @@ singsha=$(sha256sum ./$singver | cut -b -64)
 
 rm ./$singver
 
-sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singver\" \"$singsha\"" ./Scripts/Packages.sh
+singer=$(echo $singver | cut -c2-)
+
+sed -i "/^UPDATE_VERSION\s/c\UPDATE_VERSION \"sing-box\" \"$singer\" \"$singsha\"" ./Scripts/Packages.sh
