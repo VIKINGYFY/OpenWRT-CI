@@ -53,4 +53,4 @@ UPDATE_VERSION() {
 	fi
 }
 
-UPDATE_VERSION "sing-box" "1.9.0-rc.14" "9fa23bcd8953a43d5ebb8bc881c861ab9b922272e1aa47b2fc76b032b8a27067"
+UPDATE_VERSION "sing-box" "1.9.0-rc.15" "58e8c8f7f1c3b93fa0803e15ab6da4a7c181bde60dfc23f5647f80f98f8798ba"
