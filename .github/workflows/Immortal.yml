@@ -13,6 +13,7 @@ permissions: write-all
 
 #CI任务
 jobs:
+  #自动更新 sing-box
   Upsing:
     runs-on: ubuntu-latest
     steps:
