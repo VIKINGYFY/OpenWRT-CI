@@ -35,12 +35,14 @@ fi
 #更新软件包版本
 UPDATE_VERSION() {
 	local PKG_NAME=$1
-	local NEW_VER=$2
-	local NEW_HASH=$3
+	local PKG_REPO=$2
 	local PKG_FILE=$(find ../feeds/packages/*/$PKG_NAME/ -type f -name "Makefile" 2>/dev/null)
 
 	if [ -f "$PKG_FILE" ]; then
 		local OLD_VER=$(grep -Po "PKG_VERSION:=\K.*" $PKG_FILE)
+		local NEW_VER=$(git ls-remote --tags --sort="version:refname" "https://github.com/$PKG_REPO.git" | tail -n 1 | sed "s/.*\/v//")
+		local NEW_HASH=$(curl -sfL "https://codeload.github.com/$PKG_REPO/tar.gz/v$NEW_VER" | sha256sum | cut -b -64)
+
 		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$NEW_VER/g" $PKG_FILE
 			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/g" $PKG_FILE
@@ -53,4 +55,4 @@ UPDATE_VERSION() {
 	fi
 }
 
-UPDATE_VERSION "sing-box" "1.9.0-rc.16" "0700fe5274c4aceebd02c0c3689e390bac0b04df8dbac1896524ad534c23dfd4"
+UPDATE_VERSION "sing-box" "SagerNet/sing-box"
