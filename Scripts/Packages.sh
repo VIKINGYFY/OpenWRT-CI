@@ -46,12 +46,12 @@ UPDATE_VERSION() {
 		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$NEW_VER/g" $PKG_FILE
 			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/g" $PKG_FILE
-			echo "$PKG_NAME ver has updated!"
+			echo "$PKG_NAME ver has been updated!"
 		else
-			echo "$PKG_NAME ver is latest!"
+			echo "$PKG_NAME ver is already the latest!"
 		fi
 	else
-		echo "$PKG_NAME not found!"
+		echo "$PKG_NAME is not found!"
 	fi
 }
 
