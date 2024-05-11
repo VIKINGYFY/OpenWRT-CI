@@ -109,7 +109,9 @@ jobs:
 
       - name: Check Patches
         run: |
-          [ -f "$GITHUB_WORKSPACE/Scripts/Patches.sh" ] && $GITHUB_WORKSPACE/Scripts/Patches.sh
+          if [ -f "$GITHUB_WORKSPACE/Scripts/Patches.sh" ]; then
+            $GITHUB_WORKSPACE/Scripts/Patches.sh
+          fi
 
       - name: Check Caches
         if: env.WRT_CFG == 'false'
