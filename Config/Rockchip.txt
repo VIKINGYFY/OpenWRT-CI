@@ -1,4 +1,4 @@
-#T4 T6 R2C R2S R4S R5C R5S R6C R6S R66S R68S
+#T4 T6 R2C R2S R4S R5C R5S R6C R6S R66S R68S ORANGEPI-5-PLUS ORANGEPI-5
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_rockchip=y
 CONFIG_TARGET_rockchip_armv8=y
@@ -14,8 +14,8 @@ CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r6c=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_friendlyarm_nanopi-r6s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_lunzn_fastrhino-r66s=y
 CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_lunzn_fastrhino-r68s=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r66s=y
-CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_fastrhino_r68s=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_xunlong_orangepi-5-plus=y
+CONFIG_TARGET_DEVICE_rockchip_armv8_DEVICE_xunlong_orangepi-5=y
 #WIFI驱动
 CONFIG_DRIVER_11AC_SUPPORT=y
 CONFIG_DRIVER_11AX_SUPPORT=y
