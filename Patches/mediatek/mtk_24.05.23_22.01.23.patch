@@ -166,7 +166,7 @@
  	glinet,gl-mt2500|\
  	glinet,gl-mt6000|\
  	glinet,gl-x3000|\
---- mtk/target/linux/mediatek/image/filogic.mk	2024-05-23 18:43:23.520266085 +0800
+--- mtk/target/linux/mediatek/image/filogic.mk	2024-05-23 22:00:25.169743413 +0800
 +++ imm/target/linux/mediatek/image/filogic.mk	2024-05-23 18:40:20.950303434 +0800
 @@ -496,44 +496,6 @@
  endef
@@ -175,7 +175,7 @@
 -define Device/cmcc_rax3000m-emmc-ubootmod
 -  DEVICE_VENDOR := CMCC
 -  DEVICE_MODEL := RAX3000M eMMC version
--  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_VARIANT := (Custom U-Boot layout)
 -  DEVICE_DTS := mt7981b-cmcc-rax3000m-emmc-ubootmod
 -  DEVICE_DTS_DIR := ../dts
 -  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 \
@@ -190,7 +190,7 @@
 -define Device/cmcc_rax3000m-nand-ubootmod
 -  DEVICE_VENDOR := CMCC
 -  DEVICE_MODEL := RAX3000M NAND version
--  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_VARIANT := (Custom U-Boot layout)
 -  DEVICE_DTS := mt7981b-cmcc-rax3000m-nand-ubootmod
 -  DEVICE_DTS_DIR := ../dts
 -  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware kmod-usb3 \
@@ -220,7 +220,7 @@
 -define Device/qihoo_360t7-ubootmod
 -  DEVICE_VENDOR := Qihoo
 -  DEVICE_MODEL := 360T7
--  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_VARIANT := (Custom U-Boot layout)
 -  DEVICE_DTS := mt7981b-qihoo-360t7-ubootmod
 -  DEVICE_DTS_DIR := ../dts
 -  DEVICE_PACKAGES := kmod-mt7981-firmware mt7981-wo-firmware
@@ -250,7 +250,7 @@
 -define Device/xiaomi_mi-router-wr30u-112m-nmbm
 -  DEVICE_VENDOR := Xiaomi
 -  DEVICE_MODEL := Mi Router WR30U
--  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_VARIANT := (Custom U-Boot layout)
 -  DEVICE_DTS := mt7981b-xiaomi-mi-router-wr30u-112m-nmbm
 -  DEVICE_DTS_DIR := ../dts
 -  UBINIZE_OPTS := -E 5
@@ -279,7 +279,7 @@
 -define Device/xiaomi_redmi-router-ax6000
 -  DEVICE_VENDOR := Xiaomi
 -  DEVICE_MODEL := Redmi Router AX6000
--  DEVICE_VARIANT := (custom U-Boot layout)
+-  DEVICE_VARIANT := (Custom U-Boot layout)
 -  DEVICE_DTS := mt7986a-xiaomi-redmi-router-ax6000
 -  DEVICE_DTS_DIR := ../dts
 -  DEVICE_PACKAGES := kmod-leds-ws2812b kmod-mt7986-firmware mt7986-wo-firmware
