@@ -22,8 +22,13 @@ CONFIG_PACKAGE_ip6tables-extra=y
 CONFIG_PACKAGE_ip6tables-mod-nat=y
 CONFIG_PACKAGE_luci-compat=y
 CONFIG_PACKAGE_luci-lib-ipkg=y
-CONFIG_PACKAGE_nginx-full=y
+CONFIG_PACKAGE_nginx=y
+CONFIG_PACKAGE_nginx-ssl=y
+CONFIG_PACKAGE_luci-nginx=y
+CONFIG_PACKAGE_nginx-mod-luci=y
 CONFIG_PACKAGE_uwsgi=y
+CONFIG_PACKAGE_uhttpd=n
+CONFIG_PACKAGE_uhttpd-mod-ubus=n
 #增加插件，科学上网插件请在Scripts/Settings.sh调整
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-diskman=y
