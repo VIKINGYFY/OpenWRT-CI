@@ -39,6 +39,7 @@ on:
         options:
         - true
         - false
+
 #CI权限
 permissions: write-all
 
