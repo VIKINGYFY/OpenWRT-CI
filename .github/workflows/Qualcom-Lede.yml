@@ -1,7 +1,10 @@
 #CI项目名
-name: WRT-TEST
+name: Qualcom-Lede
 
 on:
+  #自动编译：每天早上4点
+  #schedule:
+    #- cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
 
@@ -17,7 +20,7 @@ jobs:
       #编译平台
       WRT_TARGET: Qualcom
       #默认主题
-      WRT_THEME: argon
+      WRT_THEME: design
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -30,5 +33,3 @@ jobs:
       WRT_URL: https://github.com/coolsnowwolf/lede.git
       #默认分支
       WRT_BRANCH: master
-      #仅输出配置文件，可选参数
-      WRT_CFG: true
