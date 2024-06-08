@@ -4,7 +4,41 @@ name: WRT-TEST
 on:
   #手动编译
   workflow_dispatch:
-
+    inputs:
+      URL:
+        default: 'https://github.com/immortalwrt/immortalwrt.git'
+        required: true
+        type: choice
+        options:
+        - https://github.com/immortalwrt/immortalwrt.git
+        - https://github.com/coolsnowwolf/lede.git
+      BRANCH:
+        default: 'master'
+        required: true
+        type: string
+      TARGET:
+        default: 'Mediatek'
+        required: true
+        type: choice
+        options:
+        - Mediatek
+        - Qualcom
+        - Rockchip
+        - X64
+      THEME:
+        default: 'argon'
+        required: true
+        type: choice
+        options:
+        - argon
+        - design
+      TEST:
+        default: 'true'
+        required: true
+        type: choice
+        options:
+        - true
+        - false
 #CI权限
 permissions: write-all
 
@@ -15,9 +49,9 @@ jobs:
     uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: Qualcom
+      WRT_TARGET: ${{inputs.TARGET}}
       #默认主题
-      WRT_THEME: argon
+      WRT_THEME: ${{inputs.THEME}}
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -27,8 +61,8 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/coolsnowwolf/lede.git
+      WRT_URL: ${{inputs.URL}}
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: ${{inputs.BRANCH}}
       #仅输出配置文件，可选参数
-      WRT_CFG: true
+      WRT_TEST: ${{inputs.TEST}}

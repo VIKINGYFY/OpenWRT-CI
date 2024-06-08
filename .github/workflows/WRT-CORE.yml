@@ -28,7 +28,7 @@ on:
       WRT_PW:
         required: true
         type: string
-      WRT_CFG:
+      WRT_TEST:
         required: false
         default: 'false'
         type: string
@@ -43,7 +43,7 @@ env:
   WRT_URL: ${{inputs.WRT_URL}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
-  WRT_CFG: ${{inputs.WRT_CFG}}
+  WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
   wrt_core:
@@ -116,7 +116,7 @@ jobs:
           fi
 
       - name: Check Caches
-        if: env.WRT_CFG == 'false'
+        if: env.WRT_TEST == 'false'
         id: check-cache
         uses: actions/cache@main
         with:
@@ -127,7 +127,7 @@ jobs:
             ./wrt/staging_dir/tool*
 
       - name: Update Caches
-        if: env.WRT_CFG == 'false'
+        if: env.WRT_TEST == 'false'
         run: |
           if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
@@ -172,14 +172,14 @@ jobs:
           make defconfig
 
       - name: Download Packages
-        if: env.WRT_CFG == 'false'
+        if: env.WRT_TEST == 'false'
         run: |
           cd ./wrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
-        if: env.WRT_CFG == 'false'
+        if: env.WRT_TEST == 'false'
         run: |
           cd ./wrt/
 
@@ -203,7 +203,7 @@ jobs:
 
           cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
-          if [[ $WRT_CFG == 'false' ]]; then
+          if [[ $WRT_TEST == 'false' ]]; then
             rm -rf $(find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$")
 
             for TYPE in $WRT_TYPE ; do
