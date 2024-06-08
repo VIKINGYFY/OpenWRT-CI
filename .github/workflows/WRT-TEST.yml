@@ -6,12 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       URL:
-        default: 'https://github.com/immortalwrt/immortalwrt.git'
+        default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
         options:
-        - https://github.com/immortalwrt/immortalwrt.git
-        - https://github.com/coolsnowwolf/lede.git
+        - immortalwrt/immortalwrt
+        - coolsnowwolf/lede
       BRANCH:
         default: 'master'
         required: true
@@ -33,12 +33,10 @@ on:
         - argon
         - design
       TEST:
+        description: '仅输出配置文件，不编译固件。'
         default: 'true'
         required: true
-        type: choice
-        options:
-        - true
-        - false
+        type: boolean
 
 #CI权限
 permissions: write-all
@@ -62,8 +60,8 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: ${{inputs.URL}}
+      WRT_URL: https://github.com/${{inputs.URL}}.git
       #默认分支
       WRT_BRANCH: ${{inputs.BRANCH}}
-      #仅输出配置文件，可选参数
+      #仅输出配置文件
       WRT_TEST: ${{inputs.TEST}}
