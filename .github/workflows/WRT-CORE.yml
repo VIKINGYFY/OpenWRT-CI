@@ -201,7 +201,7 @@ jobs:
         run: |
           cd ./wrt/ && mkdir ./upload/
 
-          cp -rf ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
+          cp -f ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
           if [[ $WRT_TEST == 'false' ]]; then
             rm -rf $(find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$")
@@ -214,6 +214,8 @@ jobs:
                 mv -f $FILE ./upload/$NEW_FILE
               done
             done
+
+            find ./bin/targets/ -type f -exec cp -f {} ./upload/ \;
           fi
 
       - name: Release Firmware
