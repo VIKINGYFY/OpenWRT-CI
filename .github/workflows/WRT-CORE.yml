@@ -29,8 +29,8 @@ on:
         required: true
         type: string
       WRT_TEST:
-        required: false
         default: 'false'
+        required: false
         type: string
 
 env:
