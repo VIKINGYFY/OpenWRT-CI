@@ -1,11 +1,12 @@
-#CI项目名
+#CI项目
 name: WRT-TEST
 
+#CI计划
 on:
   #手动编译
   workflow_dispatch:
     inputs:
-      URL:
+      SOURCE:
         default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
@@ -60,7 +61,7 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/${{inputs.URL}}.git
+      WRT_URL: https://github.com/${{inputs.SOURCE}}.git
       #默认分支
       WRT_BRANCH: ${{inputs.BRANCH}}
       #仅输出配置文件
