@@ -27,6 +27,7 @@ jobs:
       max-parallel: 3
       matrix:
         TARGET: [Mediatek, Rockchip, X64]
+        SOURCE: [immortalwrt/immortalwrt]
         include:
           - SOURCE: immortalwrt/immortalwrt
             BRANCH: master
