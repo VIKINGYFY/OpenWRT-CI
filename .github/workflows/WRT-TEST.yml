@@ -10,9 +10,7 @@ on:
         default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
-        options:
-        - immortalwrt/immortalwrt
-        - coolsnowwolf/lede
+        options: [immortalwrt/immortalwrt, coolsnowwolf/lede]
       BRANCH:
         default: 'master'
         required: true
@@ -21,18 +19,12 @@ on:
         default: 'Mediatek'
         required: true
         type: choice
-        options:
-        - Mediatek
-        - Qualcom
-        - Rockchip
-        - X64
+        options: [Mediatek, Qualcom, Rockchip, X64]
       THEME:
         default: 'argon'
         required: true
         type: choice
-        options:
-        - argon
-        - design
+        options: [argon, design]
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'true'

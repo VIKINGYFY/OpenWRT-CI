@@ -25,11 +25,12 @@ jobs:
     strategy:
       matrix:
         TARGET: [Mediatek, Rockchip, X64]
-        SOURCE: [immortalwrt/immortalwrt]
         include:
           - SOURCE: immortalwrt/immortalwrt
+            BRANCH: master
             THEME: argon
           #- SOURCE: coolsnowwolf/lede
+            #BRANCH: master
             #THEME: design
 
     #调用公用编译核心WRT-CORE.yml
@@ -50,6 +51,6 @@ jobs:
       #默认源码
       WRT_URL: https://github.com/${{matrix.SOURCE}}.git
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: ${{matrix.BRANCH}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST}}
