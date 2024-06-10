@@ -8,6 +8,12 @@ on:
     - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
+    inputs:
+      TEST:
+        description: '仅输出配置文件，不编译固件。'
+        default: 'false'
+        required: true
+        type: boolean
 
 #CI权限
 permissions: write-all
@@ -20,6 +26,11 @@ jobs:
       matrix:
         TARGET: [Mediatek, Rockchip, X64]
         SOURCE: [immortalwrt/immortalwrt]
+        include:
+          - SOURCE: immortalwrt/immortalwrt
+            THEME: argon
+          - SOURCE: coolsnowwolf/lede
+            THEME: design
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -27,7 +38,7 @@ jobs:
       #编译平台
       WRT_TARGET: ${{matrix.TARGET}}
       #默认主题
-      WRT_THEME: argon
+      WRT_THEME: ${{matrix.THEME}}
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -41,4 +52,4 @@ jobs:
       #默认分支
       WRT_BRANCH: master
       #仅输出配置文件
-      WRT_TEST: false
+      WRT_TEST: ${{inputs.TEST}}

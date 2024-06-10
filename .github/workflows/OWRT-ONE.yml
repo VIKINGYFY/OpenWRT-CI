@@ -8,6 +8,12 @@ on:
     #- cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
+    inputs:
+      TEST:
+        description: '仅输出配置文件，不编译固件。'
+        default: 'false'
+        required: true
+        type: boolean
 
 #CI权限
 permissions: write-all
@@ -35,4 +41,4 @@ jobs:
       #默认分支
       WRT_BRANCH: master
       #仅输出配置文件
-      WRT_TEST: false
+      WRT_TEST: ${{inputs.TEST}}
