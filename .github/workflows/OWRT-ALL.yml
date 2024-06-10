@@ -29,8 +29,8 @@ jobs:
         include:
           - SOURCE: immortalwrt/immortalwrt
             THEME: argon
-          - SOURCE: coolsnowwolf/lede
-            THEME: design
+          #- SOURCE: coolsnowwolf/lede
+            #THEME: design
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
