@@ -129,7 +129,7 @@ jobs:
       - name: Update Caches
         if: env.WRT_TEST != 'true'
         run: |
-          if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
+          if ${{steps.check-cache.outputs.cache-hit}} == 'true'; then
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
             sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
 
