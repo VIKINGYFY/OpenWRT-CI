@@ -215,7 +215,7 @@ jobs:
               done
             done
 
-            find ./bin/targets/ -type f -exec cp -f {} ./upload/ \;
+            find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
           fi
 
       - name: Release Firmware
