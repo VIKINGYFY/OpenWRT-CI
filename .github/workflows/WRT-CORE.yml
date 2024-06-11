@@ -116,7 +116,7 @@ jobs:
           fi
 
       - name: Check Caches
-        if: env.WRT_TEST == 'false'
+        if: env.WRT_TEST != 'true'
         id: check-cache
         uses: actions/cache@main
         with:
@@ -127,9 +127,9 @@ jobs:
             ./wrt/staging_dir/tool*
 
       - name: Update Caches
-        if: env.WRT_TEST == 'false'
+        if: env.WRT_TEST != 'true'
         run: |
-          if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
+          if steps.check-cache.outputs.cache-hit == 'true'; then
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
             sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
 
@@ -172,14 +172,14 @@ jobs:
           make defconfig
 
       - name: Download Packages
-        if: env.WRT_TEST == 'false'
+        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
-        if: env.WRT_TEST == 'false'
+        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
