@@ -5,14 +5,14 @@ name: OWRT-ALL
 on:
   #自动编译：每天早上4点
   schedule:
-    - cron: 0 20 * * *
+    - cron: 16 1 * * *
   #手动编译
   workflow_dispatch:
     inputs:
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'false'
-        required: true
+        required: false
         type: boolean
 
 #CI权限
