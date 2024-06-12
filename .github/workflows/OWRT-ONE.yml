@@ -41,4 +41,4 @@ jobs:
       #默认分支
       WRT_BRANCH: master
       #仅输出配置文件
-      WRT_TEST: ${{inputs.TEST}}
+      WRT_TEST: ${{inputs.TEST || 'false'}}
