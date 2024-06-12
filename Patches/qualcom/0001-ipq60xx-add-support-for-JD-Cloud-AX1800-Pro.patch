@@ -210,7 +210,7 @@ index 0000000000..855cf26155
 +		led-running = &status_green;
 +		led-upgrade = &status_green;
 +		label-mac-device = &dp2;
-+		
++
 +		ethernet1 = &dp2;
 +		ethernet2 = &dp3;
 +		ethernet3 = &dp4;
@@ -413,7 +413,7 @@ index 0000000000..855cf26155
 +		compatible = "ethernet-phy-ieee802.3-c22";
 +		reg = <3>;
 +	};
-+	
++
 +	qca8075_4: ethernet-phy@4 {
 +		compatible = "ethernet-phy-ieee802.3-c22";
 +		reg = <4>;
@@ -515,7 +515,7 @@ index 6ef006faf6..43fd077124 100644
 @@ -61,6 +61,20 @@ define Device/glinet_gl-axt1800
  endef
  TARGET_DEVICES += glinet_gl-axt1800
- 
+
 +define Device/jdc_ax1800-pro
 +	$(call Device/FitImage)
 +	$(call Device/EmmcImage)
@@ -552,7 +552,7 @@ index ead1fb8f0f..6dd9df517e 100644
 --- a/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/02_network
 +++ b/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/02_network
 @@ -12,6 +12,7 @@ ipq60xx_setup_interfaces()
- 
+
  	case "$board" in
  	cmiot,ax18|\
 +	jdc,ax1800-pro|\
@@ -1718,6 +1718,6 @@ index 0000000000..ebeab8bdea
 ++MODULE_DESCRIPTION("QTI ipq6000 pinctrl driver");
 ++MODULE_LICENSE("GPL v2");
 ++MODULE_DEVICE_TABLE(of, ipq6018_pinctrl_of_match);
--- 
+--
 2.43.2
 
