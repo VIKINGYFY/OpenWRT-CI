@@ -7,3 +7,9 @@ if [[ $WRT_URL == *"immortalwrt"* && $WRT_TARGET == "Mediatek" ]]; then
 
 	echo "$WRT_TARGET patch has been installed!"
 fi
+
+if [[ $WRT_URL == *"lede"* && $WRT_TARGET == "Qualcom" ]]; then
+	git apply ./Patches/qualcom/*.patch
+
+	echo "$WRT_TARGET patch has been installed!"
+fi
