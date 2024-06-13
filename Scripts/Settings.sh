@@ -20,7 +20,7 @@ if [[ $WRT_URL == *"lede"* ]]; then
 	sed -i "s/(\(<%=pcdata(ver.luciversion)%>\))/\1 \/ $WRT_REPO-$WRT_DATE/" $LEDE_FILE
 	#修改默认WIFI名
 	sed -i "s/ssid=.*/ssid=$WRT_WIFI/g" ./package/kernel/mac80211/files/lib/wifi/mac80211.sh
-elif [[ $WRT_URL == *"immortalwrt"* ]]; then
+elif [[ $WRT_URL != *"lede"* ]]; then
 	#添加编译日期标识
 	VER_FILE=$(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 	awk -v wrt_repo="$WRT_REPO" -v wrt_date="$WRT_DATE" '{ gsub(/(\(luciversion \|\| \047\047\))/, "& + (\047 / "wrt_repo"-"wrt_date"\047)") } 1' $VER_FILE > temp.js && mv -f temp.js $VER_FILE
@@ -35,7 +35,7 @@ echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 if [[ $WRT_URL == *"lede"* ]]; then
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
-elif [[ $WRT_URL == *"immortalwrt"* || $WRT_URL == *"openwrt-6.x"* ]]; then
+elif [[ $WRT_URL != *"lede"* ]]; then
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config

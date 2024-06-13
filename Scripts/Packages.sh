@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#更新软件包
+#安装和更新软件包
 UPDATE_PACKAGE() {
 	local PKG_NAME=$1
 	local PKG_REPO=$2
@@ -28,7 +28,7 @@ UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL =
 UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
-if [[ $WRT_URL == *"immortalwrt"* ]]; then
+if [[ $WRT_URL != *"lede"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
 fi
 
