@@ -37,8 +37,8 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/breeze303/openwrt-6.x.git
+      WRT_URL: https://github.com/coolsnowwolf/lede.git
       #默认分支
-      WRT_BRANCH: main
+      WRT_BRANCH: master
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}
