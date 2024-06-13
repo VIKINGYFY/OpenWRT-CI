@@ -7,6 +7,9 @@ https://github.com/coolsnowwolf/lede
 IMMORTALWRT源码：
 https://github.com/immortalwrt/immortalwrt
 
+OPENWRT-6.X源码：
+https://github.com/breeze303/openwrt-6.x
+
 # 固件简要说明：
 
 固件每天早上4点自动编译。
