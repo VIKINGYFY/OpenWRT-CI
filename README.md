@@ -10,9 +10,6 @@ https://github.com/immortalwrt/immortalwrt.git
 OPENWRT-6.X源码：
 https://github.com/breeze303/openwrt-6.x.git
 
-X-WRT源码：
-https://github.com/x-wrt/x-wrt.git
-
 # 固件简要说明：
 
 固件每天早上4点自动编译。
