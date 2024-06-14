@@ -1,11 +1,11 @@
 #CI项目
-name: OWRT-ONE
+name: QCA-ALL
 
 #CI计划
 on:
   #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
@@ -21,13 +21,28 @@ permissions: write-all
 #CI任务
 jobs:
   wrt_config:
+    name: ${{matrix.TARGET}}_${{matrix.SOURCE}}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        TARGET: [Qualcom]
+        SOURCE: [coolsnowwolf/lede, breeze303/openwrt-6.x]
+        include:
+          - SOURCE: coolsnowwolf/lede
+            BRANCH: master
+            THEME: design
+          - SOURCE: breeze303/openwrt-6.x
+            BRANCH: main
+            THEME: argon
+
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: Qualcom
+      WRT_TARGET: ${{matrix.TARGET}}
       #默认主题
-      WRT_THEME: design
+      WRT_THEME: ${{matrix.THEME}}
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -37,8 +52,8 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/coolsnowwolf/lede.git
+      WRT_URL: https://github.com/${{matrix.SOURCE}}.git
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: ${{matrix.BRANCH}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}
