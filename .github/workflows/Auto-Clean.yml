@@ -6,6 +6,11 @@ on:
     - cron: 0 23 * * *
   #手动清理
   workflow_dispatch:
+    inputs:
+      NUMBER:
+        default: '5'
+        required: false
+        type: string
 
 permissions: write-all
 
@@ -19,7 +24,7 @@ jobs:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
         with:
-          keep_latest: 5
+          keep_latest: ${{inputs.NUMBER || '5'}}
           delete_tags: true
 
       - name: Delete Old Workflows
