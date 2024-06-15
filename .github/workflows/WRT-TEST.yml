@@ -19,7 +19,7 @@ on:
         default: 'Mediatek'
         required: true
         type: choice
-        options: [Mediatek, Qualcom, Rockchip, X64]
+        options: [Mediatek, Qualcom, Rockchip, X86]
       THEME:
         default: 'argon'
         required: true
