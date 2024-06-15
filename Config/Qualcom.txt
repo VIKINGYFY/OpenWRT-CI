@@ -8,6 +8,7 @@ CONFIG_ATH11K_MEM_PROFILE_1G=n
 CONFIG_ATH11K_MEM_PROFILE_512M=y
 #WIFI驱动
 CONFIG_PACKAGE_wpad-openssl=y
+CONFIG_PACKAGE_wpad-basic-mbedtls=m
 #NSS驱动
 CONFIG_PACKAGE_kmod-qca-nss-dp=y
 CONFIG_PACKAGE_kmod-qca-nss-drv=y
