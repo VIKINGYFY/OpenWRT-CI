@@ -4,8 +4,8 @@ name: OWRT-ONE
 #CI计划
 on:
   #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
@@ -27,7 +27,7 @@ jobs:
       #编译平台
       WRT_TARGET: Qualcom
       #默认主题
-      WRT_THEME: design
+      WRT_THEME: argon
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -37,8 +37,8 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/coolsnowwolf/lede.git
+      WRT_URL: https://github.com/breeze303/openwrt-6.x.git
       #默认分支
-      WRT_BRANCH: master
+      WRT_BRANCH: main
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}
