@@ -1,5 +1,5 @@
 --- qcam/package/boot/uboot-envtools/files/qualcommax	2024-06-13 23:07:49.344866096 +0800
-+++ lede/package/boot/uboot-envtools/files/qualcommax	2024-06-15 22:07:37.974828716 +0800
++++ lede/package/boot/uboot-envtools/files/qualcommax	2024-06-16 09:34:52.576166536 +0800
 @@ -48,7 +48,6 @@
  	[ -n "$idx" ] && \
  		ubootenv_add_uci_config "/dev/mtd$idx" "0x0" "0x20000" "0x20000" "1"
@@ -9,7 +9,7 @@
  	mmcpart="$(find_mmc_part 0:APPSBLENV)"
  	[ -n "$mmcpart" ] && \
 --- qcam/package/firmware/ipq-wifi/Makefile	2024-06-13 23:07:49.344866096 +0800
-+++ lede/package/firmware/ipq-wifi/Makefile	2024-06-15 22:07:37.994828720 +0800
++++ lede/package/firmware/ipq-wifi/Makefile	2024-06-16 09:34:52.596166535 +0800
 @@ -36,7 +36,6 @@
  	edimax_cax1800 \
  	glinet_gl-ax1800 \
@@ -27,7 +27,7 @@
  $(eval $(call generate-ipq-wifi-package,linksys_mx4200,Linksys MX4200))
  $(eval $(call generate-ipq-wifi-package,linksys_mx5300,Linksys MX5300))
 --- qcam/target/linux/qualcommax/image/ipq60xx.mk	2024-06-14 18:09:57.657927693 +0800
-+++ lede/target/linux/qualcommax/image/ipq60xx.mk	2024-06-15 22:07:38.854828894 +0800
++++ lede/target/linux/qualcommax/image/ipq60xx.mk	2024-06-16 09:34:53.496166193 +0800
 @@ -61,20 +61,6 @@
  endef
  TARGET_DEVICES += glinet_gl-axt1800
@@ -50,7 +50,7 @@
  	$(call Device/FitImage)
  	DEVICE_VENDOR := Linksys
 --- qcam/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/01_leds	2024-06-13 23:26:55.595054861 +0800
-+++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/01_leds	2024-06-15 22:07:38.854828894 +0800
++++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/01_leds	2024-06-16 09:34:53.496166193 +0800
 @@ -11,9 +11,6 @@
  	ucidef_set_led_netdev "wlan2g" "WLAN2G" "blue:wlan2g" "wlan1"
  	ucidef_set_led_netdev "wlan5g" "WLAN5G" "blue:wlan5g" "wlan0"
@@ -62,7 +62,7 @@
  xiaomi,rm1800)
  	ucidef_set_led_netdev "internet" "Internet" "blue:network" "wan"
 --- qcam/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/02_network	2024-06-13 23:07:49.344866096 +0800
-+++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/02_network	2024-06-15 22:07:38.854828894 +0800
++++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/board.d/02_network	2024-06-16 09:34:53.496166193 +0800
 @@ -12,7 +12,6 @@
  
  	case "$board" in
@@ -71,10 +71,10 @@
  	qihoo,360v6|\
  	redmi,ax5-*|\
  	xiaomi,rm1800)
---- qcam/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/firmware/11-ath11k-caldata	2024-06-13 23:07:49.344866096 +0800
-+++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/firmware/11-ath11k-caldata	2024-06-15 22:07:38.854828894 +0800
-@@ -15,7 +15,6 @@
- 	qihoo,360v6)
+--- qcam/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/firmware/11-ath11k-caldata	2024-06-16 09:39:40.276058787 +0800
++++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/firmware/11-ath11k-caldata	2024-06-16 09:34:53.496166193 +0800
+@@ -16,7 +16,6 @@
+ 	xiaomi,rm1800)
  		caldata_extract "0:art" 0x1000 0x10000
  		;;
 -	jdc,ax1800-pro|\
@@ -82,7 +82,7 @@
  		caldata_extract_mmc "0:ART" 0x1000 0x10000
  		;;
 --- qcam/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-06-13 23:07:49.344866096 +0800
-+++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-06-15 22:07:38.854828894 +0800
++++ lede/target/linux/qualcommax/ipq60xx/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac	2024-06-16 09:34:53.496166193 +0800
 @@ -15,10 +15,6 @@
  		[ "$PHYNBR" = "0" ] && macaddr_add $(get_mac_label) 3 > /sys${DEVPATH}/macaddress
  		[ "$PHYNBR" = "1" ] && macaddr_add $(get_mac_label) 2 > /sys${DEVPATH}/macaddress
@@ -95,7 +95,7 @@
  		addr=$(mtd_get_mac_ascii devinfo hw_mac_addr)
  		[ "$PHYNBR" = "0" ] && macaddr_add $addr 2 > /sys${DEVPATH}/macaddress
 --- qcam/target/linux/qualcommax/ipq60xx/base-files/lib/upgrade/platform.sh	2024-06-14 18:15:48.697986594 +0800
-+++ lede/target/linux/qualcommax/ipq60xx/base-files/lib/upgrade/platform.sh	2024-06-15 22:07:38.854828894 +0800
++++ lede/target/linux/qualcommax/ipq60xx/base-files/lib/upgrade/platform.sh	2024-06-16 09:34:53.496166193 +0800
 @@ -31,7 +31,6 @@
  		fw_setenv auto_recovery yes
  		nand_do_upgrade "$1"
