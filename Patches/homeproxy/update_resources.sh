@@ -95,11 +95,11 @@ case "$1" in
 	;;
 "gfw_list")
 	check_list_update "$1" "Loyalsoldier/surge-rules" "release" "gfw.txt" && \
-		sed -i "s/^\.//" "$RESOURCES_DIR/gfw_list.txt"
+		sed -i "s/^\.//g" "$RESOURCES_DIR/gfw_list.txt"
 	;;
 "china_list")
 	check_list_update "$1" "Loyalsoldier/surge-rules" "release" "direct.txt" && \
-		sed -i "s/^\.//" "$RESOURCES_DIR/china_list.txt"
+		sed -i "s/^\.//g" "$RESOURCES_DIR/china_list.txt"
 	;;
 *)
 	echo -e "Usage: $0 <china_ip4 / china_ip6 / gfw_list / china_list>"

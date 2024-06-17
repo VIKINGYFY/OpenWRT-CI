@@ -40,7 +40,7 @@ UPDATE_VERSION() {
 
 	if [ -f "$PKG_FILE" ]; then
 		local OLD_VER=$(grep -Po "PKG_VERSION:=\K.*" $PKG_FILE)
-		local NEW_VER=$(git ls-remote --tags --sort="version:refname" "https://github.com/$PKG_REPO.git" | tail -n 1 | sed "s/.*v//")
+		local NEW_VER=$(git ls-remote --tags --sort="version:refname" "https://github.com/$PKG_REPO.git" | tail -n 1 | sed "s/.*v//g")
 		local NEW_HASH=$(curl -sfL "https://codeload.github.com/$PKG_REPO/tar.gz/v$NEW_VER" | sha256sum | cut -b -64)
 
 		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then

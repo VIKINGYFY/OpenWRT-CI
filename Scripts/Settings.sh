@@ -17,7 +17,7 @@ if [[ $WRT_URL == *"lede"* ]]; then
 	#修改默认时间格式
 	sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $LEDE_FILE
 	#添加编译日期标识
-	sed -i "s/(\(<%=pcdata(ver.luciversion)%>\))/\1 \/ $WRT_REPO-$WRT_DATE/" $LEDE_FILE
+	sed -i "s/(\(<%=pcdata(ver.luciversion)%>\))/\1 \/ $WRT_REPO-$WRT_DATE/g" $LEDE_FILE
 	#修改默认WIFI名
 	sed -i "s/ssid=.*/ssid=$WRT_WIFI/g" ./package/kernel/mac80211/files/lib/wifi/mac80211.sh
 else
@@ -26,7 +26,7 @@ else
 	#修改immortalwrt.lan关联IP
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
-	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
+	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 fi
 
 #配置文件修改
@@ -41,6 +41,6 @@ else
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
 	if [[ $WRT_TARGET == "Qualcom" ]]; then
-		sed -i "s/CONFIG_PACKAGE_autosamba=y/CONFIG_PACKAGE_autosamba=n/" ./.config
+		sed -i "s/CONFIG_PACKAGE_autosamba=y/CONFIG_PACKAGE_autosamba=n/g" ./.config
 	fi
 fi
