@@ -228,6 +228,8 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
+            MTK和QCA全系带开源硬件加速，别问了！
+
             源码：${{env.WRT_SOURCE}}
             平台：${{env.WRT_TARGET}}
             设备：${{env.WRT_TYPE}}
