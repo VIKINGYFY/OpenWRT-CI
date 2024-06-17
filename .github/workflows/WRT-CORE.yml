@@ -105,7 +105,7 @@ jobs:
 
       - name: Check Scripts
         run: |
-          find ./ -maxdepth 2 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+          find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
       - name: Check Patches
         run: |
