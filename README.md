@@ -7,8 +7,8 @@ https://github.com/coolsnowwolf/lede.git
 IMMORTALWRT源码：
 https://github.com/immortalwrt/immortalwrt.git
 
-OPENWRT-6.X源码：
-https://github.com/breeze303/openwrt-6.x.git
+OPENWRT-IPQ60XX源码：
+https://github.com/openwrt-ipq60xx/openwrt.git
 
 # 固件简要说明：
 

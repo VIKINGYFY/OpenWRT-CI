@@ -18,3 +18,10 @@ if [[ $WRT_URL == *"lede"* && $WRT_TARGET == "Qualcom" ]]; then
 
 	echo "$WRT_TARGET patch has been installed!"
 fi
+
+if [[ $WRT_URL == *"openwrt-ipq60xx"* && $WRT_TARGET == "Qualcom" ]]; then
+	sed -i "s|\(src-git packages\).*|\1 https://github.com/immortalwrt/packages.git|g" ./wrt/feeds.conf.default
+	sed -i "s|\(src-git luci\).*|\1 https://github.com/immortalwrt/luci.git|g" ./wrt/feeds.conf.default
+
+	echo "$WRT_TARGET patch has been installed!"
+fi
