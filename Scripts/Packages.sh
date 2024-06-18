@@ -37,25 +37,34 @@ fi
 UPDATE_VERSION() {
 	local PKG_NAME=$1
 	local PKG_REPO=$2
+	local PKG_MARK=${3:-not}
 	local PKG_FILE=$(find ../feeds/packages/*/$PKG_NAME/ -type f -name "Makefile" 2>/dev/null)
 
 	if [ -f "$PKG_FILE" ]; then
+		echo "$PKG_NAME version update has started!"
+
 		local OLD_VER=$(grep -Po "PKG_VERSION:=\K.*" $PKG_FILE)
-		local NEW_VER=$(git ls-remote --tags --sort="version:refname" "https://github.com/$PKG_REPO.git" | tail -n 1 | sed "s/.*v//g")
-		local NEW_HASH=$(curl -sfL "https://codeload.github.com/$PKG_REPO/tar.gz/v$NEW_VER" | sha256sum | cut -b -64)
+		local PKG_VER=$(curl -sL "https://api.github.com/repos/$PKG_REPO/releases" | jq -r "map(select(.prerelease|$PKG_MARK)) | first | .tag_name")
+		local NEW_VER=$(echo $PKG_VER | sed "s/.*v//g; s/_/./g")
+		local NEW_HASH=$(curl -sL "https://codeload.github.com/$PKG_REPO/tar.gz/$PKG_VER" | sha256sum | cut -b -64)
+
+		echo "$OLD_VER $PKG_VER $NEW_VER $NEW_HASH"
 
 		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$NEW_VER/g" $PKG_FILE
 			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/g" $PKG_FILE
-			echo "$PKG_NAME ver has been updated!"
+			echo "$PKG_NAME version has been updated!"
 		else
-			echo "$PKG_NAME ver is already the latest!"
+			echo "$PKG_NAME version is already the latest!"
 		fi
+
+		echo " "
 	else
-		echo "$PKG_NAME is not found!"
+		echo "$PKG_NAME not found!"
 	fi
 }
 
+#UPDATE_VERSION "软件包名" "项目地址" "测试版true（可选，默认为否）"
 UPDATE_VERSION "brook" "txthinking/brook"
 UPDATE_VERSION "chinadns-ng" "zfl9/chinadns-ng"
 UPDATE_VERSION "dns2tcp" "zfl9/dns2tcp"
@@ -64,7 +73,7 @@ UPDATE_VERSION "ipt2socks" "zfl9/ipt2socks"
 UPDATE_VERSION "microsocks" "rofl0r/microsocks"
 UPDATE_VERSION "naiveproxy" "klzgrad/naiveproxy"
 UPDATE_VERSION "shadowsocks-rust" "shadowsocks/shadowsocks-rust"
-UPDATE_VERSION "sing-box" "SagerNet/sing-box"
+UPDATE_VERSION "sing-box" "SagerNet/sing-box" "true"
 UPDATE_VERSION "trojan-go" "p4gefau1t/trojan-go"
 UPDATE_VERSION "trojan" "trojan-gfw/trojan"
 UPDATE_VERSION "v2ray-core" "v2fly/v2ray-core"
