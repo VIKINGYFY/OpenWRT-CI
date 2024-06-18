@@ -18,7 +18,7 @@ if [ -d *"homeproxy"* ]; then
 	echo $RES_VER | tee china_ip4.ver china_ip6.ver china_list.ver gfw_list.ver
 	awk -F, '/^IP-CIDR,/{print $2 > "china_ip4.txt"} /^IP-CIDR6,/{print $2 > "china_ip6.txt"}' cncidr.txt
 	sed 's/^\.//g' direct.txt > china_list.txt ; sed 's/^\.//g' gfw.txt > gfw_list.txt
-	mv -f ./{china_*,gfw_list}.{ver,txt} ../$HP_PATCH/resources/
+	mv -f ./{china_*, gfw_list}.{ver, txt} ../$HP_PATCH/resources/
 
 	cd .. && rm -rf ./$HP_RULES/
 
