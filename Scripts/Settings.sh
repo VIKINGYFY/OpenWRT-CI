@@ -27,10 +27,6 @@ else
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
 	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
-	#修复高通NSS启动失败
-	if [[ $WRT_TARGET == "Qualcom" ]]; then
-		sed -i "s/-retail//g" ./feeds/nss_packages/firmware/nss-firmware/Makefile
-	fi
 fi
 
 #配置文件修改
@@ -38,8 +34,9 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 if [[ $WRT_URL == *"lede"* ]]; then
+	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> ./.config
 else
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
