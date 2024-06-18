@@ -27,7 +27,7 @@ jobs:
       max-parallel: 3
       matrix:
         TARGET: [Qualcom]
-        SOURCE: [coolsnowwolf/lede, openwrt-ipq60xx/openwrt]
+        SOURCE: [coolsnowwolf/lede, breeze303/openwrt-6.x]
         include:
           - SOURCE: coolsnowwolf/lede
             BRANCH: master
