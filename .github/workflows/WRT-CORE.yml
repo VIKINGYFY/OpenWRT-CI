@@ -34,7 +34,7 @@ on:
         type: string
 
 env:
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  GITHUB_TOKEN: ${{secrets.MY_TOKEN || secrets.GITHUB_TOKEN}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
   WRT_TARGET: ${{inputs.WRT_TARGET}}
   WRT_THEME: ${{inputs.WRT_THEME}}
