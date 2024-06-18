@@ -27,14 +27,11 @@ jobs:
       max-parallel: 3
       matrix:
         TARGET: [Qualcom]
-        SOURCE: [coolsnowwolf/lede, LiBwrt/openwrt-6.x, King-Of-Knights/openwrt-6.x]
+        SOURCE: [coolsnowwolf/lede, King-Of-Knights/openwrt-6.x]
         include:
           - SOURCE: coolsnowwolf/lede
             BRANCH: master
             THEME: design
-          - SOURCE: LiBwrt/openwrt-6.x
-            BRANCH: main
-            THEME: argon
           - SOURCE: King-Of-Knights/openwrt-6.x
             BRANCH: main
             THEME: argon
