@@ -37,7 +37,7 @@ jobs:
       #默认地址
       WRT_IP: 192.168.10.1
       #默认源码
-      WRT_URL: https://github.com/King-Of-Knights/openwrt-6.x.git
+      WRT_URL: https://github.com/LiBwrt/openwrt-6.x.git
       #默认分支
       WRT_BRANCH: main
       #仅输出配置文件

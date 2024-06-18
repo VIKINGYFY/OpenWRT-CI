@@ -10,7 +10,7 @@ on:
         default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
-        options: [immortalwrt/immortalwrt, coolsnowwolf/lede, King-Of-Knights/openwrt-6.x]
+        options: [immortalwrt/immortalwrt, coolsnowwolf/lede, LiBwrt/openwrt-6.x, King-Of-Knights/openwrt-6.x]
       BRANCH:
         default: 'master'
         required: true
