@@ -29,7 +29,7 @@ else
 	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 	#修复高通NSS启动失败
 	if [[ $WRT_TARGET == "Qualcom" ]]; then
-		sed -i "s/-retail//g" ./feeds/nss-packages/firmware/nss-firmware/Makefile
+		sed -i "s/-retail//g" ./feeds/nss_packages/firmware/nss-firmware/Makefile
 	fi
 fi
 
