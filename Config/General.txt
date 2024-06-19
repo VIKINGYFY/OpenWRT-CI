@@ -1,4 +1,6 @@
-#USB驱动
+#内核驱动
+CONFIG_PACKAGE_kmod-fuse=y
+CONFIG_PACKAGE_kmod-usb-net=y
 CONFIG_PACKAGE_kmod-usb2=y
 CONFIG_PACKAGE_kmod-usb3=y
 CONFIG_PACKAGE_kmod-usb-core=y
