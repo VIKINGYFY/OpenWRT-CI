@@ -45,7 +45,7 @@ check_list_update() {
 
 	set_lock "set" "$LIST_FILE"
 
-	local NEW_VER=$(git ls-remote --tags --sort="version:refname" "https://github.com/$REPO_NAME.git" | tail -n 1 | sed "s/.*tags\///g; s/\^.*//g")
+	local NEW_VER=$(curl -sL "https://api.github.com/repos/$REPO_NAME/releases" | jsonfilter -e '@[0].tag_name')
 	if [ -z "$NEW_VER" ]; then
 		log "[$(to_upper "$LIST_FILE")] Failed to get the latest version, please retry later."
 
