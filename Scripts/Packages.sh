@@ -66,7 +66,6 @@ UPDATE_VERSION() {
 
 #UPDATE_VERSION "软件包名" "项目地址" "测试版true（可选，默认为否）"
 UPDATE_VERSION "brook" "txthinking/brook"
-UPDATE_VERSION "chinadns-ng" "zfl9/chinadns-ng"
 UPDATE_VERSION "dns2tcp" "zfl9/dns2tcp"
 UPDATE_VERSION "hysteria" "apernet/hysteria"
 UPDATE_VERSION "ipt2socks" "zfl9/ipt2socks"
