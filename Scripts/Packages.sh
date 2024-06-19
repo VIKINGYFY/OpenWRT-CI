@@ -26,9 +26,9 @@ UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]
 UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
 
 UPDATE_PACKAGE "helloworld" "fw876/helloworld" "master"
+UPDATE_PACKAGE "mihomo" "morytyann/OpenWrt-mihomo" "main"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
-UPDATE_PACKAGE "mihomo" "morytyann/OpenWrt-mihomo" "main"
 
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
 
