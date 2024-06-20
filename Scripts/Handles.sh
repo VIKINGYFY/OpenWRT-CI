@@ -62,4 +62,6 @@ if [ -d *"passwall" ]; then
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client/,/default y/d' $PW_FILE
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server/,/default n/d' $PW_FILE
 	sed -i '/ShadowsocksR/d' $PW_FILE
+
+	echo "passwall has been fixed!"
 fi
