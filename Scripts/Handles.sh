@@ -57,7 +57,7 @@ if [ -d *"OpenClash"* ]; then
 fi
 
 #删除passwall中作废的组件
-if [ -d *"passwall" ]; then
+if [ -d *"passwall"* ]; then
 	PW_FILE="./openwrt-passwall/luci-app-passwall/Makefile"
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Client/,/default y/d' $PW_FILE
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR_Libev_Server/,/default n/d' $PW_FILE
