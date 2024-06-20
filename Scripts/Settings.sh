@@ -31,10 +31,11 @@ else
 	mv -f ../Patches/chinadns-ng/Makefile ./feeds/packages/net/chinadns-ng/
 fi
 
-#配置文件修改
+#默认主题修改
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
+#科学插件设置
 if [[ $WRT_URL == *"lede"* ]]; then
 	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
@@ -43,4 +44,9 @@ else
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
+fi
+
+#取消高通平台的autosamba
+if [[ $WRT_TARGET == "Qualcom" ]]; then
+	sed -i "s/CONFIG_PACKAGE_autosamba=y/CONFIG_PACKAGE_autosamba=n/g" ./.config
 fi
