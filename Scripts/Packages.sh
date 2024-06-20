@@ -30,6 +30,7 @@ UPDATE_PACKAGE "mihomo" "morytyann/OpenWrt-mihomo" "main"
 UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "dev"
 
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
+UPDATE_PACKAGE "tinyfilemanager" "muink/luci-app-tinyfilemanager" "master"
 
 if [[ $WRT_URL != *"lede"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
