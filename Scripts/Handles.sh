@@ -26,7 +26,7 @@ if [ -d *"homeproxy"* ]; then
 fi
 
 #预置OpenClash内核和数据
-if [ -d *"OpenClash"* ]; then
+if [ -d *"openclash"* ]; then
 	CORE_VER="https://raw.githubusercontent.com/vernesong/OpenClash/core/dev/core_version"
 	CORE_TYPE=$(echo $WRT_TARGET | egrep -iq "64|86" && echo "amd64" || echo "arm64")
 	CORE_TUN_VER=$(curl -sL $CORE_VER | sed -n "2{s/\r$//;p;q}")
@@ -39,7 +39,7 @@ if [ -d *"OpenClash"* ]; then
 	GEO_SITE="https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat"
 	GEO_IP="https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat"
 
-	cd ./OpenClash/luci-app-openclash/root/etc/openclash/
+	cd ./luci-app-openclash/root/etc/openclash/
 
 	curl -sL -o Country.mmdb $GEO_MMDB && echo "Country.mmdb done!"
 	curl -sL -o GeoSite.dat $GEO_SITE && echo "GeoSite.dat done!"
@@ -54,4 +54,21 @@ if [ -d *"OpenClash"* ]; then
 	chmod +x ./clash* && rm -rf ./*.gz
 
 	echo "openclash date has been updated!"
+fi
+
+#移除ShadowsocksR组件
+if [ -d *"passwall"* ]; then
+	PW_FILE="./luci-app-passwall/Makefile"
+	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default n/d' $PW_FILE
+	sed -i '/ShadowsocksR/d' $PW_FILE
+
+	echo "passwall has been fixed!"
+fi
+
+if [ -d *"ssr-plus"* ]; then
+	SP_FILE="./luci-app-ssr-plus/Makefile"
+	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default y if i386||x86_64||arm/d' $SP_FILE
+	sed -i '/ShadowsocksR/d' $SP_FILE
+
+	echo "ssr-plus has been fixed!"
 fi
