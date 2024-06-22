@@ -42,7 +42,7 @@ UPDATE_VERSION() {
 	local PKG_NAME=$1
 	local PKG_REPO=$2
 	local PKG_MARK=${3:-not}
-	local PKG_FILE=$(find ../feeds/packages/*/$PKG_NAME/ -type f -name "Makefile" 2>/dev/null)
+	local PKG_FILE=$(find ./*/$PKG_NAME/ ../feeds/packages/*/$PKG_NAME/ -type f -name "Makefile" 2>/dev/null)
 
 	if [ -f "$PKG_FILE" ]; then
 		echo "$PKG_NAME version update has started!"
