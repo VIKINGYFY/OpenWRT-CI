@@ -54,7 +54,7 @@ UPDATE_VERSION() {
 
 		echo "$OLD_VER $PKG_VER $NEW_VER $NEW_HASH"
 
-		if dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
+		if [[ $NEW_VER == "^[0-9]+(\.[0-9]+)+.*" ]] && dpkg --compare-versions "$OLD_VER" lt "$NEW_VER"; then
 			sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$NEW_VER/g" $PKG_FILE
 			sed -i "s/PKG_HASH:=.*/PKG_HASH:=$NEW_HASH/g" $PKG_FILE
 			echo "$PKG_NAME version has been updated!"
@@ -82,8 +82,8 @@ UPDATE_VERSION "sing-box" "SagerNet/sing-box" "true"
 UPDATE_VERSION "tcping" "Mattraks/tcping"
 UPDATE_VERSION "trojan-go" "p4gefau1t/trojan-go"
 UPDATE_VERSION "trojan" "trojan-gfw/trojan"
-#UPDATE_VERSION "v2ray-core" "v2fly/v2ray-core"
-#UPDATE_VERSION "v2ray-plugin" "teddysun/v2ray-plugin"
-#UPDATE_VERSION "v2rayA" "v2rayA/v2rayA"
-#UPDATE_VERSION "xray-core" "XTLS/Xray-core"
-#UPDATE_VERSION "xray-plugin" "teddysun/xray-plugin"
+UPDATE_VERSION "v2ray-core" "v2fly/v2ray-core"
+UPDATE_VERSION "v2ray-plugin" "teddysun/v2ray-plugin"
+UPDATE_VERSION "v2rayA" "v2rayA/v2rayA"
+UPDATE_VERSION "xray-core" "XTLS/Xray-core"
+UPDATE_VERSION "xray-plugin" "teddysun/xray-plugin"
