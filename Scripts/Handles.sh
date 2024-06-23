@@ -57,15 +57,16 @@ if [ -d *"openclash"* ]; then
 fi
 
 #移除ShadowsocksR组件
-if [ -d *"passwall"* ]; then
-	PW_FILE="./luci-app-passwall/Makefile"
+PW_FILE=$(find ./*/*passwall/ -type f -name "Makefile")
+if [ -f $PW_FILE ]; then
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default n/d' $PW_FILE
 	sed -i '/ShadowsocksR/d' $PW_FILE
 
 	echo "passwall has been fixed!"
 fi
 
-if [ -d *"ssr-plus"* ]; then
+SP_FILE=$(find ./*/*ssr-plus/ -type f -name "Makefile")
+if [ -f $SP_FILE ]; then
 	SP_FILE="./luci-app-ssr-plus/Makefile"
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default y if i386||x86_64||arm/d' $SP_FILE
 	sed -i '/ShadowsocksR/d' $SP_FILE
