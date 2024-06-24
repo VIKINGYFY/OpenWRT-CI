@@ -46,8 +46,3 @@ else
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
 fi
-
-#取消高通平台的autosamba
-if [[ $WRT_TARGET == "Qualcom" ]]; then
-	sed -i "s/CONFIG_PACKAGE_autosamba=y/CONFIG_PACKAGE_autosamba=n/g" ./.config
-fi
