@@ -8,12 +8,12 @@ UPDATE_PACKAGE() {
 	local PKG_SPECIAL=$4
 	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
 
-	rm -rf $(find ../feeds/luci/ -type d -iname "*$PKG_NAME*" -prune)
+	rm -rf $(find ../feeds/luci/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune)
 
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
 	if [[ $PKG_SPECIAL == "pkg" ]]; then
-		cp -rf $(find ./$REPO_NAME/*/ -type d -iname "*$PKG_NAME*" -prune) ./
+		cp -rf $(find ./$REPO_NAME/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune) ./
 		rm -rf ./$REPO_NAME/
 	elif [[ $PKG_SPECIAL == "name" ]]; then
 		mv -f $REPO_NAME $PKG_NAME
@@ -30,6 +30,7 @@ UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main"
 UPDATE_PACKAGE "ssr-plus" "fw876/helloworld" "master"
 
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
+UPDATE_PACKAGE "turboacc" "chenmozhijin/turboacc" "luci"
 
 if [[ $WRT_URL != *"lede"* ]]; then
 	UPDATE_PACKAGE "homeproxy" "immortalwrt/homeproxy" "dev"
@@ -42,6 +43,8 @@ UPDATE_VERSION() {
 	local PKG_REPO=$2
 	local PKG_MARK=${3:-not}
 	local PKG_FILES=$(find ./ ../feeds/packages/ -maxdepth 3 -type f -wholename "*/$PKG_NAME/Makefile")
+
+    echo " "
 
     if [ -z "$PKG_FILES" ]; then
         echo "$PKG_NAME not found!"
@@ -67,8 +70,6 @@ UPDATE_VERSION() {
             echo "$PKG_FILE version is already the latest!"
         fi
     done
-
-    echo " "
 }
 
 #UPDATE_VERSION "软件包名" "项目地址" "测试版true（可选，默认为否）"
