@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
+
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
 	HP_RULES="surge"
@@ -22,7 +24,7 @@ if [ -d *"homeproxy"* ]; then
 
 	cd .. && rm -rf ./$HP_RULES/
 
-	echo "homeproxy date has been updated!"
+	cd $PKG_PATCH && echo "homeproxy date has been updated!"
 fi
 
 #预置OpenClash内核和数据
@@ -53,7 +55,7 @@ if [ -d *"openclash"* ]; then
 
 	chmod +x ./clash* && rm -rf ./*.gz
 
-	echo "openclash date has been updated!"
+	cd $PKG_PATCH && echo "openclash date has been updated!"
 fi
 
 #移除ShadowsocksR组件
@@ -62,7 +64,7 @@ if [ -f "$PW_FILE" ]; then
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default n/d' $PW_FILE
 	sed -i '/ShadowsocksR/d' $PW_FILE
 
-	echo "passwall has been fixed!"
+	cd $PKG_PATCH && echo "passwall has been fixed!"
 fi
 
 SP_FILE=$(find ./ -maxdepth 3 -type f -wholename "*/luci-app-ssr-plus/Makefile")
@@ -70,5 +72,5 @@ if [ -f "$SP_FILE" ]; then
 	sed -i '/config PACKAGE_$(PKG_NAME)_INCLUDE_ShadowsocksR/,/default y if i386||x86_64||arm/d' $SP_FILE
 	sed -i '/ShadowsocksR/d' $SP_FILE
 
-	echo "ssr-plus has been fixed!"
+	cd $PKG_PATCH && echo "ssr-plus has been fixed!"
 fi
