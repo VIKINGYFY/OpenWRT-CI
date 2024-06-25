@@ -27,8 +27,6 @@ else
 	sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js")
 	#添加编译日期标识
 	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
-	#替换chinadns-ng/Makefile
-	mv -f ../Patches/chinadns-ng/Makefile ./feeds/packages/net/chinadns-ng/
 fi
 
 #默认主题修改
