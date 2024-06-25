@@ -14,6 +14,10 @@ on:
         default: 'false'
         required: false
         type: boolean
+      PACKAGE:
+        description: '手动调整插件包，仅限一个。'
+        required: false
+        type: string
 
 #CI权限
 permissions: write-all
@@ -40,5 +44,7 @@ jobs:
       WRT_URL: https://github.com/King-Of-Knights/openwrt-6.x.git
       #默认分支
       WRT_BRANCH: main
+      #插件调整
+      WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}
