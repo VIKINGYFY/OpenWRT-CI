@@ -237,5 +237,5 @@ jobs:
             源码：${{env.WRT_SOURCE}}
             平台：${{env.WRT_TARGET}}
             设备：${{env.WRT_TYPE}}
-            密码：${{env.WRT_PW}}
             地址：${{env.WRT_IP}}
+            密码：${{env.WRT_PW}}
