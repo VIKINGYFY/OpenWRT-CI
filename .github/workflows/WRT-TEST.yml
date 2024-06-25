@@ -15,6 +15,10 @@ on:
         default: 'master'
         required: true
         type: string
+      PACKAGE:
+        default: 'CONFIG_PACKAGE_luci-app-dockerman=y'
+        required: true
+        type: string
       TARGET:
         default: 'Mediatek'
         required: true
