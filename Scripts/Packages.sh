@@ -52,7 +52,7 @@ UPDATE_VERSION() {
 
     echo "$PKG_NAME version update has started!"
 
-    local PKG_VER=$(curl -sL "https://api.github.com/repos/$PKG_REPO/releases/latest" | jq -r "map(select(.prerelease|$PKG_MARK)) | first | .tag_name")
+    local PKG_VER=$(curl -sL "https://api.github.com/repos/$PKG_REPO/releases" | jq -r "map(select(.prerelease|$PKG_MARK)) | first | .tag_name")
     local NEW_VER=$(echo $PKG_VER | sed "s/.*v//g; s/_/./g")
     local NEW_HASH=$(curl -sL "https://codeload.github.com/$PKG_REPO/tar.gz/$PKG_VER" | sha256sum | cut -b -64)
 
