@@ -20,6 +20,7 @@ UPDATE_PACKAGE() {
 	fi
 }
 
+#UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "design" "gngpp/luci-theme-design" "$([[ $WRT_URL == *"lede"* ]] && echo "main" || echo "js")"
 UPDATE_PACKAGE "design-config" "gngpp/luci-app-design-config" "master"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "$([[ $WRT_URL == *"lede"* ]] && echo "18.06" || echo "master")"
@@ -71,7 +72,7 @@ UPDATE_VERSION() {
     done
 }
 
-#UPDATE_VERSION "软件包名" "项目地址" "测试版true（可选，默认为否）"
+#UPDATE_VERSION "软件包名" "项目地址" "测试版，true，可选，默认为否"
 UPDATE_VERSION "brook" "txthinking/brook"
 UPDATE_VERSION "dns2tcp" "zfl9/dns2tcp"
 UPDATE_VERSION "hysteria" "apernet/hysteria"

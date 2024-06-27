@@ -11,7 +11,7 @@ if [ -d *"homeproxy"* ]; then
 	rm -rf ./$HP_PATCH/resources/*
 
 	git clone -q --depth=1 --single-branch --branch "release" "https://github.com/Loyalsoldier/surge-rules.git" ./$HP_RULES/
-	cd ./$HP_RULES/ && RES_VER=$(git log -1 --pretty=format:'%s' -- $RES_FILE | grep -o "[0-9]*")
+	cd ./$HP_RULES/ && RES_VER=$(git log -1 --pretty=format:'%s' | grep -o "[0-9]*")
 
 	echo $RES_VER | tee china_ip4.ver china_ip6.ver china_list.ver gfw_list.ver
 	awk -F, '/^IP-CIDR,/{print $2 > "china_ip4.txt"} /^IP-CIDR6,/{print $2 > "china_ip6.txt"}' cncidr.txt
@@ -49,7 +49,7 @@ if [ -d *"openclash"* ]; then
 	curl -sL -o tun.gz $CORE_TUN && gzip -d tun.gz && mv -f tun clash_tun && echo "tun done!"
 	curl -sL -o dev.tar.gz $CORE_DEV && tar -zxf dev.tar.gz && echo "dev done!"
 
-	chmod +x ./clash* && rm -rf ./*.gz
+	chmod +x ./* && rm -rf ./*.gz
 
 	cd $PKG_PATCH && echo "openclash date has been updated!"
 fi
