@@ -23,5 +23,6 @@ CONFIG_ATH11K_MEM_PROFILE_512M=y
 CONFIG_PACKAGE_kmod-ath11k=y
 CONFIG_PACKAGE_kmod-ath11k-ahb=y
 CONFIG_PACKAGE_kmod-ath11k-pci=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-wifi-meshmgr=y
 CONFIG_PACKAGE_ath11k-firmware-ipq6018=y
 CONFIG_PACKAGE_ath11k-firmware-qcn9074=y
