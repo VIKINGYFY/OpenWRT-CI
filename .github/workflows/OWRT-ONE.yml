@@ -29,7 +29,7 @@ jobs:
     uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: QCA-IPQ60xx
+      WRT_TARGET: Qualcommax
       #默认主题
       WRT_THEME: argon
       #默认主机名

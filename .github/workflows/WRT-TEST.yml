@@ -19,7 +19,7 @@ on:
         default: 'Mediatek'
         required: true
         type: choice
-        options: [Mediatek, Rockchip, X86, QCA-IPQ60xx, QCA-IPQ807x]
+        options: [Mediatek, Rockchip, X86, Qualcommax]
       THEME:
         default: 'argon'
         required: true

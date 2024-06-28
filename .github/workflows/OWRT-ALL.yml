@@ -28,7 +28,7 @@ jobs:
     name: ${{matrix.TARGET}}_${{matrix.SOURCE}}
     strategy:
       fail-fast: false
-      max-parallel: 3
+      #max-parallel: 3
       matrix:
         TARGET: [Mediatek, Rockchip, X86]
         SOURCE: [immortalwrt/immortalwrt]
