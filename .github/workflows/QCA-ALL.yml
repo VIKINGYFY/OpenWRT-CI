@@ -30,8 +30,8 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        TARGET: [Qualcom]
-        SOURCE: [coolsnowwolf/lede, King-Of-Knights/openwrt-6.x]
+        TARGET: [QCA-IPQ60xx, QCA-IPQ807x]
+        SOURCE: [King-Of-Knights/openwrt-6.x, coolsnowwolf/lede]
         include:
           - SOURCE: coolsnowwolf/lede
             BRANCH: master

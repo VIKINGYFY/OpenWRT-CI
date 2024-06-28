@@ -10,20 +10,16 @@ on:
         default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
-        options: [immortalwrt/immortalwrt, coolsnowwolf/lede, LiBwrt/openwrt-6.x, King-Of-Knights/openwrt-6.x]
+        options: [immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, coolsnowwolf/lede]
       BRANCH:
         default: 'master'
-        required: true
-        type: string
-      PACKAGE:
-        default: 'CONFIG_PACKAGE_luci-app-dockerman=y'
         required: true
         type: string
       TARGET:
         default: 'Mediatek'
         required: true
         type: choice
-        options: [Mediatek, Qualcom, Rockchip, X86]
+        options: [Mediatek, Rockchip, X86, QCA-IPQ60xx, QCA-IPQ807x]
       THEME:
         default: 'argon'
         required: true
@@ -34,6 +30,9 @@ on:
         default: 'true'
         required: true
         type: boolean
+      PACKAGE:
+        required: false
+        type: string
 
 #CI权限
 permissions: write-all
