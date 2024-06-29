@@ -4,8 +4,8 @@ name: QCA-ALL
 #CI计划
 on:
   #自动编译：每天早上4点
-  schedule:
-    - cron: 0 20 * * *
+  #schedule:
+    #- cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
@@ -31,11 +31,8 @@ jobs:
       #max-parallel: 4
       matrix:
         TARGET: [Qualcommax]
-        SOURCE: [King-Of-Knights/openwrt-6.x, coolsnowwolf/lede]
+        SOURCE: [King-Of-Knights/openwrt-6.x]
         include:
-          - SOURCE: coolsnowwolf/lede
-            BRANCH: master
-            THEME: design
           - SOURCE: King-Of-Knights/openwrt-6.x
             BRANCH: main
             THEME: argon

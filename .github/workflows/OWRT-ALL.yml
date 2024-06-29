@@ -36,9 +36,6 @@ jobs:
           - SOURCE: immortalwrt/immortalwrt
             BRANCH: master
             THEME: argon
-          #- SOURCE: coolsnowwolf/lede
-            #BRANCH: master
-            #THEME: design
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
