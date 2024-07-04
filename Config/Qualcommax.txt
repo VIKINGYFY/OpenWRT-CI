@@ -19,7 +19,6 @@ CONFIG_TARGET_DEVICE_PACKAGES_qualcommax_ipq60xx_DEVICE_zn_m2="ipq-wifi-zn_m2"
 #组件调整
 CONFIG_ATH11K_MEM_PROFILE_1G=n
 CONFIG_ATH11K_MEM_PROFILE_512M=y
-CONFIG_PACKAGE_kmod-qca-nss-drv-wifi-meshmgr=y
 #WIFI驱动
 CONFIG_PACKAGE_kmod-ath11k=y
 CONFIG_PACKAGE_kmod-ath11k-ahb=y
