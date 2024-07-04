@@ -17,7 +17,7 @@ on:
         required: true
         type: string
       WRT_WIFI:
-        required: true
+        required: false
         type: string
       WRT_URL:
         required: true
