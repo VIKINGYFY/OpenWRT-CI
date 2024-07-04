@@ -3,9 +3,7 @@ name: OWRT-ALL
 
 #CI计划
 on:
-  #自动编译：每天早上4点
-  schedule:
-    - cron: 0 20 * * *
+  
   #手动编译
   workflow_dispatch:
     inputs:
