@@ -173,20 +173,20 @@ jobs:
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
-          #make defconfig
+          make defconfig
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
+         
           make download -j$(nproc)
 
       - name: Compile Firmware
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
+          cat .config
           make -j$(nproc) || make -j1 V=s
 
       - name: Machine Information
