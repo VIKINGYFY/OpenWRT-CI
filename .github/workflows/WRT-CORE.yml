@@ -124,7 +124,7 @@ jobs:
         id: check-cache
         uses: actions/cache@main
         with:
-          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}-${{env.WRT_HASH}}
+          key: ${{env.WRT_TARGET}}-${{env.WRT_SOURCE}}
           path: |
             ./wrt/.ccache
             ./wrt/staging_dir/host*
