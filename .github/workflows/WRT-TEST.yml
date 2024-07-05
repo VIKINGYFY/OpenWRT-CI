@@ -10,7 +10,7 @@ on:
         default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
-        options: [immortalwrt/immortalwrt, breeze303/openwrt-6.x, King-Of-Knights/openwrt-6.x, coolsnowwolf/lede]
+        options: [immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, breeze303/openwrt-6.x, coolsnowwolf/lede]
       BRANCH:
         default: 'master'
         required: true
@@ -19,20 +19,20 @@ on:
         default: 'Mediatek'
         required: true
         type: choice
-        options: [Mediatek, Rockchip, X86, Qualcommax]
-      THEME:
-        default: 'argon'
+        options: [Mediatek, Rockchip, X86, QCA-WIFI-YES, QCA-WIFI-NO]
+      PACKAGE:
+        required: false
+        type: string
+      SHRINK:
+        description: '内存低占用模式，仅限高通。'
+        default: 'true'
         required: true
-        type: choice
-        options: [argon, design]
+        type: boolean
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'true'
         required: true
         type: boolean
-      PACKAGE:
-        required: false
-        type: string
 
 #CI权限
 permissions: write-all
@@ -46,20 +46,22 @@ jobs:
       #编译平台
       WRT_TARGET: ${{inputs.TARGET}}
       #默认主题
-      WRT_THEME: ${{inputs.THEME}}
+      WRT_THEME: argon
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
       WRT_WIFI: OWRT
-      #默认密码，仅作提示，修改无用
-      WRT_PW: 无
       #默认地址
       WRT_IP: 192.168.10.1
+      #默认密码，仅作提示，修改无用
+      WRT_PW: 无
       #默认源码
       WRT_URL: https://github.com/${{inputs.SOURCE}}.git
       #默认分支
       WRT_BRANCH: ${{inputs.BRANCH}}
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
+      #内存低占用模式
+      WRT_SHRINK: ${{inputs.SHRINK || 'true'}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}

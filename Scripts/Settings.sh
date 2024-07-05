@@ -29,9 +29,14 @@ else
 	sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_REPO-$WRT_DATE')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 fi
 
-#默认主题修改
+#配置文件修改
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
+
+if [[ $WRT_TARGET == "QCA" ]]; then
+	echo "CONFIG_ATH11K_MEM_PROFILE_1G=$([[ $WRT_SHRINK == "true" ]] && echo "n" || echo "y")" >> ./.config
+	echo "CONFIG_ATH11K_MEM_PROFILE_512M=$([[ $WRT_SHRINK == "true" ]] && echo "y" || echo "n")" >> ./.config
+fi
 
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then

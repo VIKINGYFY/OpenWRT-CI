@@ -4,20 +4,25 @@ name: QCA-ALL
 #CI计划
 on:
   #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
+      PACKAGE:
+        description: '手动调整插件包，仅限一个。'
+        required: false
+        type: string
+      SHRINK:
+        description: '内存低占用模式，仅限高通。'
+        default: 'true'
+        required: false
+        type: boolean
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'false'
         required: false
         type: boolean
-      PACKAGE:
-        description: '手动调整插件包，仅限一个。'
-        required: false
-        type: string
 
 #CI权限
 permissions: write-all
@@ -30,7 +35,7 @@ jobs:
       fail-fast: false
       #max-parallel: 4
       matrix:
-        TARGET: [Qualcommax]
+        TARGET: [QCA-WIFI-YES, QCA-WIFI-NO]
         SOURCE: [King-Of-Knights/openwrt-6.x]
         include:
           - SOURCE: King-Of-Knights/openwrt-6.x
@@ -48,15 +53,17 @@ jobs:
       WRT_NAME: OWRT
       #默认WIFI名
       WRT_WIFI: OWRT
-      #默认密码，仅作提示，修改无用
-      WRT_PW: 无
       #默认地址
       WRT_IP: 192.168.10.1
+      #默认密码，仅作提示，修改无用
+      WRT_PW: 无
       #默认源码
       WRT_URL: https://github.com/${{matrix.SOURCE}}.git
       #默认分支
       WRT_BRANCH: ${{matrix.BRANCH}}
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
+      #内存低占用模式
+      WRT_SHRINK: ${{inputs.SHRINK || 'true'}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || 'false'}}
