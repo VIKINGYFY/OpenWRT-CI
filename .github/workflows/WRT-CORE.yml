@@ -173,7 +173,7 @@ jobs:
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
-          make defconfig
+          #make defconfig
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
