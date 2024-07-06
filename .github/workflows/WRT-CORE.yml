@@ -123,7 +123,7 @@ jobs:
           fi
 
       - name: Check Caches
-        if: env.WRT_TEST != 'yes'
+        if: env.WRT_TEST != 'true'
         id: check-cache
         uses: actions/cache@main
         with:
@@ -134,9 +134,9 @@ jobs:
             ./wrt/staging_dir/tool*
 
       - name: Update Caches
-        if: env.WRT_TEST != 'yes'
+        if: env.WRT_TEST != 'true'
         run: |
-          if ${{steps.check-cache.outputs.cache-hit == 'yes'}}; then
+          if ${{steps.check-cache.outputs.cache-hit == 'true'}}; then
             sed -i 's/ $(tool.*\/stamp-compile)//g' ./wrt/Makefile
             sed -i 's/ $(tool.*\/stamp-install)//g' ./wrt/Makefile
 
@@ -179,14 +179,14 @@ jobs:
           make defconfig
 
       - name: Download Packages
-        if: env.WRT_TEST != 'yes'
+        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
           make download -j$(nproc)
 
       - name: Compile Firmware
-        if: env.WRT_TEST != 'yes'
+        if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
@@ -210,7 +210,7 @@ jobs:
 
           cp -f ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_SOURCE"_"$WRT_DATE".txt
 
-          if [[ $WRT_TEST != 'yes' ]]; then
+          if [[ $WRT_TEST != 'true' ]]; then
             find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$" -exec rm -rf {} +
 
             for TYPE in $WRT_TYPE ; do
