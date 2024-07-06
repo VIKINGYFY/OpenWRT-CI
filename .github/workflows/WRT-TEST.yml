@@ -24,7 +24,7 @@ on:
         required: false
         type: string
       ADJUST:
-        description: '内存低占用模式，仅限高通。'
+        description: '内存高占用模式，仅限高通。'
         default: 'true'
         required: true
         type: boolean
@@ -61,7 +61,7 @@ jobs:
       WRT_BRANCH: ${{inputs.BRANCH}}
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
-      #内存低占用模式
+      #内存高占用模式
       WRT_ADJUST: ${{inputs.ADJUST}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST}}
