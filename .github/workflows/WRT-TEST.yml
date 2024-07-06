@@ -16,10 +16,10 @@ on:
         required: true
         type: string
       TARGET:
-        default: 'Mediatek'
+        default: 'MEDIATEK'
         required: true
         type: choice
-        options: [Mediatek, Rockchip, X86, QCA-WIFI-YES, QCA-WIFI-NO]
+        options: [MEDIATEK, ROCKCHIP, X86, QCA-WIFI-YES, QCA-WIFI-NO]
       PACKAGE:
         required: false
         type: string
