@@ -16,12 +16,12 @@ on:
       SHRINK:
         description: '内存低占用模式，仅限高通。'
         default: 'true'
-        required: false
+        required: true
         type: boolean
       TEST:
         description: '仅输出配置文件，不编译固件。'
         default: 'false'
-        required: false
+        required: true
         type: boolean
 
 #CI权限
@@ -64,6 +64,6 @@ jobs:
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #内存低占用模式
-      WRT_SHRINK: ${{inputs.SHRINK == '' || 'true'}}
+      WRT_SHRINK: ${{inputs.SHRINK || 'true'}}
       #仅输出配置文件
-      WRT_TEST: ${{inputs.TEST == '' || 'false'}}
+      WRT_TEST: ${{inputs.TEST || 'false'}}
