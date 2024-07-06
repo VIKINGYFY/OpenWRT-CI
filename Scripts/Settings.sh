@@ -33,11 +33,6 @@ fi
 echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
-if [[ $WRT_TARGET == *"QCA"* ]]; then
-	echo "CONFIG_ATH11K_MEM_PROFILE_1G=$([[ $WRT_ADJUST == "true" ]] && echo "y" || echo "n")" >> ./.config
-	echo "CONFIG_ATH11K_MEM_PROFILE_512M=$([[ $WRT_ADJUST == "true" ]] && echo "n" || echo "y")" >> ./.config
-fi
-
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then
 	echo "$WRT_PACKAGE" >> ./.config
