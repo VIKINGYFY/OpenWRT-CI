@@ -23,7 +23,7 @@ on:
       PACKAGE:
         required: false
         type: string
-      SHRINK:
+      ADJUST:
         description: '内存低占用模式，仅限高通。'
         default: 'true'
         required: true
@@ -62,6 +62,6 @@ jobs:
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #内存低占用模式
-      WRT_SHRINK: ${{inputs.SHRINK || 'true'}}
+      WRT_ADJUST: ${{inputs.ADJUST}}
       #仅输出配置文件
-      WRT_TEST: ${{inputs.TEST || 'true'}}
+      WRT_TEST: ${{inputs.TEST}}

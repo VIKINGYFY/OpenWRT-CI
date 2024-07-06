@@ -13,12 +13,14 @@ on:
         description: '手动调整插件包，仅限一个。'
         required: false
         type: string
-      SHRINK:
+      ADJUST:
         description: '内存低占用模式，仅限高通。'
+        default: 'true'
         required: false
         type: boolean
       TEST:
         description: '仅输出配置文件，不编译固件。'
+        default: 'false'
         required: false
         type: boolean
 
@@ -62,6 +64,6 @@ jobs:
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #内存低占用模式
-      WRT_SHRINK: ${{inputs.SHRINK || 'true'}}
+      WRT_ADJUST: ${{inputs.ADJUST}}
       #仅输出配置文件
-      WRT_TEST: ${{inputs.TEST || 'false'}}
+      WRT_TEST: ${{inputs.TEST}}

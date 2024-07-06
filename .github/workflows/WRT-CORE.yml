@@ -31,7 +31,7 @@ on:
       WRT_PACKAGE:
         required: false
         type: string
-      WRT_SHRINK:
+      WRT_ADJUST:
         required: false
         type: string
       WRT_TEST:
@@ -49,7 +49,7 @@ env:
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
-  WRT_SHRINK: ${{inputs.WRT_SHRINK}}
+  WRT_ADJUST: ${{inputs.WRT_ADJUST}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
