@@ -54,15 +54,6 @@ if [ -d *"openclash"* ]; then
 	cd $PKG_PATCH && echo "openclash date has been updated!"
 fi
 
-#移除部分校验
-if [ -d *"advancedplus"* ]; then
-	AP_FILE="./luci-app-advancedplus/root/usr/bin/advancedplusipk"
-	sed -i '/is_vip() {/,/}/c\is_vip() {\n    return 0\n}' $AP_FILE
-	sed -i '/is_free() {/,/}/d' $AP_FILE
-
-	cd $PKG_PATCH && echo "advancedplus has been fixed!"
-fi
-
 #移除ShadowsocksR组件
 PW_FILE=$(find ./ -maxdepth 3 -type f -wholename "*/luci-app-passwall/Makefile")
 if [ -f "$PW_FILE" ]; then
