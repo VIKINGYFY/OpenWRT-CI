@@ -7,12 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       SOURCE:
-        default: 'VIKINGYFY/immortalwrt'
+        default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
         options: [immortalwrt/immortalwrt, King-Of-Knights/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede]
       BRANCH:
-        default: 'main'
+        default: 'master'
         required: true
         type: string
       TARGET:
