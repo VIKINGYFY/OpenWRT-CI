@@ -1,11 +1,11 @@
 #CI项目
-name: MTK-ONE
+name: OWRT-ONE
 
 #CI计划
 on:
   #自动编译：每天早上4点
-  schedule:
-    - cron: 0 20 * * *
+  #schedule:
+    #- cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
@@ -43,7 +43,7 @@ jobs:
       #默认源码
       WRT_URL: https://github.com/immortalwrt/immortalwrt.git
       #默认分支
-      WRT_BRANCH: openwrt-23.05
+      WRT_BRANCH: master
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件

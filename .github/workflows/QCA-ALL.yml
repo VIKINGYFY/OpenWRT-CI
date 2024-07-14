@@ -31,11 +31,7 @@ jobs:
       #max-parallel: 4
       matrix:
         TARGET: [QCA-WIFI-YES, QCA-WIFI-NO]
-        SOURCE: [King-Of-Knights/openwrt-6.x]
-        include:
-          - SOURCE: King-Of-Knights/openwrt-6.x
-            BRANCH: main
-            THEME: argon
+        SOURCE: [King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -43,7 +39,7 @@ jobs:
       #编译平台
       WRT_TARGET: ${{matrix.TARGET}}
       #默认主题
-      WRT_THEME: ${{matrix.THEME}}
+      WRT_THEME: argon
       #默认主机名
       WRT_NAME: OWRT
       #默认WIFI名
@@ -55,7 +51,7 @@ jobs:
       #默认源码
       WRT_URL: https://github.com/${{matrix.SOURCE}}.git
       #默认分支
-      WRT_BRANCH: ${{matrix.BRANCH}}
+      WRT_BRANCH: ${{matrix.BRANCH || 'main'}}
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件

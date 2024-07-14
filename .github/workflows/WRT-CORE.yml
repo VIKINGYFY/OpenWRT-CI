@@ -92,7 +92,7 @@ jobs:
         run: |
           export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           export WRT_REPO=$(basename $GITHUB_WORKSPACE)
-          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 5-)-$WRT_BRANCH
+          export WRT_SOURCE=$(echo $WRT_URL | cut -d '/' -f 4)-$WRT_BRANCH
           export WRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt)
 
           echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
