@@ -50,7 +50,6 @@ env:
 
 jobs:
   wrt_core:
-    name: ${{matrix.SOURCE}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
