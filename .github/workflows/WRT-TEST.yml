@@ -7,16 +7,16 @@ on:
   workflow_dispatch:
     inputs:
       SOURCE:
-        default: 'immortalwrt/immortalwrt'
+        default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, breeze303/openwrt-6.x, coolsnowwolf/lede]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede]
       BRANCH:
-        default: 'master'
+        default: 'main'
         required: true
         type: string
       TARGET:
-        default: 'MEDIATEK'
+        default: 'QCA-WIFI-YES'
         required: true
         type: choice
         options: [MEDIATEK, ROCKCHIP, X86, QCA-WIFI-YES, QCA-WIFI-NO]
