@@ -48,13 +48,12 @@ env:
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
-  WRT_SOURCE: ${{inputs.WRT_SOURCE}}
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
   wrt_core:
-    name: ${{env.WRT_SOURCE}}
+    name: ${{inputs.WRT_SOURCE}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
