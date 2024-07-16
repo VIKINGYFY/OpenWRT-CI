@@ -50,6 +50,7 @@ env:
 
 jobs:
   wrt_core:
+    name: ${{env.WRT_SOURCE}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects

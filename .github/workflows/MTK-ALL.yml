@@ -1,32 +1,22 @@
 #CI项目
-name: WRT-TEST
+name: MTK-ALL
 
 #CI计划
 on:
+  #自动编译：每天早上4点
+  schedule:
+    - cron: 0 20 * * *
   #手动编译
   workflow_dispatch:
     inputs:
-      SOURCE:
-        default: 'VIKINGYFY/immortalwrt'
-        required: true
-        type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede]
-      BRANCH:
-        default: 'main'
-        required: true
-        type: string
-      TARGET:
-        default: 'MEDIATEK'
-        required: true
-        type: choice
-        options: [MEDIATEK, ROCKCHIP, X86, QCA-WIFI-YES, QCA-WIFI-NO]
       PACKAGE:
+        description: '手动调整插件包，仅限一个。'
         required: false
         type: string
       TEST:
         description: '仅输出配置文件，不编译固件。'
-        default: 'true'
-        required: true
+        default: 'false'
+        required: false
         type: boolean
 
 #CI权限
@@ -35,11 +25,24 @@ permissions: write-all
 #CI任务
 jobs:
   wrt_config:
+    name: ${{matrix.TARGET}}
+    strategy:
+      fail-fast: false
+      #max-parallel: 3
+      matrix:
+        include:
+          - TARGET: MEDIATEK
+            SOURCE: immortalwrt/immortalwrt
+            BRANCH: master
+          - TARGET: MEDIATEK
+            SOURCE: immortalwrt/immortalwrt
+            BRANCH: openwrt-23.05
+
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: ${{inputs.TARGET}}
+      WRT_TARGET: ${{matrix.TARGET}}
       #默认主题
       WRT_THEME: argon
       #默认主机名
@@ -51,9 +54,9 @@ jobs:
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #默认源码
-      WRT_URL: https://github.com/${{inputs.SOURCE}}.git
+      WRT_URL: https://github.com/${{matrix.SOURCE}}.git
       #默认分支
-      WRT_BRANCH: ${{inputs.BRANCH}}
+      WRT_BRANCH: ${{matrix.BRANCH || 'main'}}
       #插件调整
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件

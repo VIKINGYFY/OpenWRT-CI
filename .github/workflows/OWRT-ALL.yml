@@ -32,13 +32,6 @@ jobs:
       matrix:
         TARGET: [ROCKCHIP, X86]
         SOURCE: [immortalwrt/immortalwrt]
-        include:
-          - TARGET: MEDIATEK
-            SOURCE: immortalwrt/immortalwrt
-            BRANCH: master
-          - TARGET: MEDIATEK
-            SOURCE: immortalwrt/immortalwrt
-            BRANCH: openwrt-23.05
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
