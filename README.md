@@ -20,8 +20,6 @@ MEDIATEK系列、QUALCOMMAX系列、ROCKCHIP系列、X86系列。
 
 # 目录简要说明：
 
-Depends.txt——环境依赖列表
-
 workflows——自定义CI配置
 
 Scripts——自定义脚本
