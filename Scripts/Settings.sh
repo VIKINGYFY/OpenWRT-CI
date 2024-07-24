@@ -37,7 +37,7 @@ if [ -n "$WRT_PACKAGE" ]; then
 fi
 
 #高通平台锁定512M内存
-if [[ $WRT_TARGET == *"QCA"* ]]; then
+if [[ $WRT_TARGET == *"IPQ"* ]]; then
 	echo "CONFIG_ATH11K_MEM_PROFILE_1G=n" >> ./.config
 	echo "CONFIG_ATH11K_MEM_PROFILE_512M=y" >> ./.config
 fi
