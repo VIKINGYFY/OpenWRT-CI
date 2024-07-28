@@ -33,6 +33,7 @@ CONFIG_PACKAGE_kmod-usb-net-rtl8152=y
 CONFIG_PACKAGE_kmod-usb-storage=y
 CONFIG_PACKAGE_kmod-usb-storage-extras=y
 CONFIG_PACKAGE_kmod-usb-storage-uas=y
+CONFIG_PACKAGE_kmod-nft-socket=y
 #组件调整
 CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_automount=y
