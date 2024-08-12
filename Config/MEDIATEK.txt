@@ -1,13 +1,9 @@
-#ABT BANANAPI CETRON CMCC GLINET H3C IMOU JCG JDCLOUD NETCORE NOKIA QIHOO RUIJIE ZYXEL MI-ROUTER REDMI-ROUTER
+#ABT CETRON CMCC GLINET H3C IMOU JCG JDCLOUD NETCORE NOKIA QIHOO RUIJIE ZYXEL MI-ROUTER REDMI-ROUTER
 CONFIG_TARGET_mediatek=y
 CONFIG_TARGET_mediatek_filogic=y
 #设备列表
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_abt_asr3000-ubootmod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_abt_asr3000=y
-CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r3-mini=y
-CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r3=y
-CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r4-poe=y
-CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_bananapi_bpi-r4=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-mod=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-stock=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_cetron_ct3003-ubootmod=y
