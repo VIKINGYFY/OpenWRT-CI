@@ -2,7 +2,10 @@
 CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq60xx=y
 #设备列表
+CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_ax1800-pro=y
 CONFIG_TARGET_qualcommax_ipq60xx_DEVICE_jdc_ax1800-pro=y
+CONFIG_TARGET_DEVICE_PACKAGES_qualcommax_ipq60xx_DEVICE_jdcloud_ax1800-pro="ipq-wifi-jdcloud_ax1800-pro"
+
 CONFIG_COREMARK_ENABLE_MULTITHREADING=y
 CONFIG_COREMARK_NUMBER_OF_THREADS=16
 CONFIG_COREMARK_OPTIMIZE_O3=y
