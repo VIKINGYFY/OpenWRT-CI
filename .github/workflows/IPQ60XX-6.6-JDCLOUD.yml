@@ -36,8 +36,8 @@ permissions: write-all
 jobs:
   wrt_config:
     name: ${{inputs.TARGET}}
-    #调用公用编译核心WRT-CORE.yml
-    uses: ./.github/workflows/WRT-CORE.yml
+    #调用公用编译核心XX-CORE.yml
+    uses: ./.github/workflows/IPQ60XX-6.6-CORE.yml
     with:
       #编译平台
       WRT_TARGET: ${{inputs.TARGET}}
