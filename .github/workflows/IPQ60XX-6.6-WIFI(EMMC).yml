@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
     inputs:
       TARGET:
-        default: 'IPQ60xx-6.6-WIFI(EMMC)'
+        default: 'IPQ60xx-6.6-WIFI-YES'
         required: true
         type: choice
-        options: [MEDIATEK, ROCKCHIP, X86, IPQ60xx-6.6-WIFI(EMMC), IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
+        options: [MEDIATEK, ROCKCHIP, X86, IPQ60xx-6.6-WIFI-YES, IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
       SOURCE:
         default: 'LiBwrt-op/openwrt-6.x'
         required: true
@@ -25,7 +25,7 @@ on:
         type: string
       TEST:
         description: '仅输出配置文件，不编译固件。'
-        default: 'true'
+        default: 'false'
         required: true
         type: boolean
 
