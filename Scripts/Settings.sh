@@ -48,10 +48,10 @@ fi
 if [[ $WRT_REPO == *"lede"* ]]; then
 	echo "CONFIG_PACKAGE_luci-app-openclash=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-passwall=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
 	echo "CONFIG_PACKAGE_luci-app-turboacc=y" >> ./.config
 else
 	echo "CONFIG_PACKAGE_luci=y" >> ./.config
 	echo "CONFIG_LUCI_LANG_zh_Hans=y" >> ./.config
-	echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
+	echo "CONFIG_PACKAGE_luci-app-ssr-plus=y" >> ./.config
+        echo "CONFIG_PACKAGE_luci-app-homeproxy=y" >> ./.config
 fi
