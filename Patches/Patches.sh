@@ -6,3 +6,18 @@ if [[ $WRT_REPO == *"lede"* ]]; then
 
 	echo "$WRT_REPO patch has been installed!"
 fi
+
+if [[ $WRT_REPO == *"immortalwrt"* ]]; then
+cat <<EOF >> ./wrt/package/network/config/firewall/files/firewall.config
+
+config include 'socat'
+	option type 'script'
+	option path '/var/etc/socat.include'
+
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
+EOF
+
+	echo "$WRT_REPO patch has been installed!"
+fi
