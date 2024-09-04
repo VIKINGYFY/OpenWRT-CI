@@ -33,7 +33,7 @@ jobs:
       #max-parallel: 3
       matrix:
         TARGET: [IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
-        SOURCE: [VIKINGYFY/immortalwrt]
+        SOURCE: [welenwho/immortalwrt]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -43,9 +43,9 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: HWL
       #默认WIFI名
-      WRT_WIFI: OWRT
+      WRT_WIFI: who
       #默认地址
       WRT_IP: 192.168.10.1
       #默认密码，仅作提示，修改无用
