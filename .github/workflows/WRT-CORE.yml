@@ -52,7 +52,7 @@ env:
   WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
-  wrt_core:
+  core:
     name: ${{inputs.WRT_SOURCE}}
     runs-on: ubuntu-latest
     steps:
@@ -184,14 +184,14 @@ jobs:
         run: |
           cd ./wrt/
 
-          make download -j$(nproc)
+          make download
 
       - name: Compile Firmware
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
 
-          make -j$(nproc) || make -j1 V=s
+          make || make V=s
 
       - name: Machine Information
         run: |

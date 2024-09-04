@@ -24,7 +24,7 @@ permissions: write-all
 
 #CI任务
 jobs:
-  wrt_config:
+  config:
     name: ${{matrix.TARGET}}
     strategy:
       fail-fast: false
