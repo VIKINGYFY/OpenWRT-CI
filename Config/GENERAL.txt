@@ -76,6 +76,10 @@ CONFIG_PACKAGE_luci-app-aria2=y
 CONFIG_PACKAGE_luci-app-ttyd=y
 CONFIG_PACKAGE_luci-app-adblock=y
 #删除插件
+CONFIG_PACKAGE_luci-theme-kucat=n
+CONFIG_PACKAGE_luci-theme-design=n
+CONFIG_PACKAGE_luci-theme-alpha=n
+CONFIG_PACKAGE_luci-app-alpha-config=n
 CONFIG_PACKAGE_luci-app-wol=n
 CONFIG_PACKAGE_luci-app-ddns=n
 CONFIG_PACKAGE_luci-app-vlmcsd=n
