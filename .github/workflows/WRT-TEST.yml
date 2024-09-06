@@ -15,7 +15,7 @@ on:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x]
       BRANCH:
         default: 'main'
         required: true
@@ -34,7 +34,7 @@ permissions: write-all
 
 #CI任务
 jobs:
-  wrt_config:
+  config:
     name: ${{inputs.TARGET}}
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
