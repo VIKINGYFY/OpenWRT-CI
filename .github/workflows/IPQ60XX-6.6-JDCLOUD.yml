@@ -13,12 +13,12 @@ on:
         default: 'IPQ60xx-6.6-WIFI-YES'
         required: true
         type: choice
-        options: [MEDIATEK, ROCKCHIP, X86, IPQ60xx-6.6-WIFI-YES, IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
+        options: [IPQ60xx-6.6-WIFI-YES]
       SOURCE:
         default: 'LiBwrt-op/openwrt-6.x'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x]
       BRANCH:
         default: 'main'
         required: true
@@ -37,13 +37,19 @@ permissions: write-all
 
 #CI任务
 jobs:
-  wrt_config:
+  config:
     name: ${{inputs.TARGET}}
+    strategy:
+      fail-fast: false
+      #max-parallel: 3
+      matrix:
+        TARGET: [ IPQ60xx-6.6-WIFI-YES ]
+        SOURCE: [ LiBwrt-op/openwrt-6.x ]
     #调用公用编译核心XX-CORE.yml
     uses: ./.github/workflows/IPQ60XX-6.6-CORE.yml
     with:
       #编译平台
-      WRT_TARGET: ${{inputs.TARGET}}
+      WRT_TARGET: ${{matrix.TARGET}}
       #默认主题
       WRT_THEME: argon
       #默认主机名
@@ -57,7 +63,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{inputs.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{inputs.BRANCH}}
+      WRT_BRANCH: ${{inputs.BRANCH || 'main'}}
       #源码名称
       WRT_SOURCE: ${{inputs.SOURCE}}
       #插件调整

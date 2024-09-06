@@ -52,11 +52,12 @@ env:
   WRT_TEST: ${{inputs.WRT_TEST}}
 
 jobs:
-  wrt_core:
+  core:
     name: ${{inputs.WRT_SOURCE}}
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Check Server Performance
+        run: |
           echo "警告⚠"
           echo "分配的服务器性能有限，若选择的插件过多，务必注意CPU性能！"
           echo "--------------------------CPU信息--------------------------"
@@ -66,8 +67,7 @@ jobs:
           echo "已安装内存详细信息："
           echo -e "$(sudo lshw -short -C memory | grep GiB) \n"
           echo "--------------------------硬盘信息--------------------------"
-          echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
-        name: Check Server Performance
+          echo "硬盘数量：$(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT        
 
       - name: Checkout Projects
         uses: actions/checkout@main
