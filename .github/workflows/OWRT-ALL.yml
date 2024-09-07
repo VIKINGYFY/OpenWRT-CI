@@ -41,11 +41,11 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: lzd
       #默认WIFI名
-      WRT_WIFI: OWRT
+      WRT_WIFI: lzd
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 192.168.1.1
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
