@@ -115,14 +115,6 @@ jobs:
         run: |
           find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
 
-      - name: Check Patches
-        run: |
-          if [ -f "$GITHUB_WORKSPACE/Patches/Patches.sh" ]; then
-            $GITHUB_WORKSPACE/Patches/Patches.sh
-          else
-            echo "No patches need to be installed!"
-          fi
-
       - name: Check Caches
         if: env.WRT_TEST != 'true'
         id: check-cache
@@ -178,6 +170,15 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
           make defconfig -j$(nproc)
+
+      - name: Refresh Patches
+        continue-on-error: true
+        if: env.WRT_TEST != 'true'
+        run: |
+          cd ./wrt/
+
+          make target/linux/refresh -j$(nproc) -k
+          make package/refresh -j$(nproc) -k
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
