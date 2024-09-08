@@ -234,13 +234,10 @@ jobs:
           body: |
             这是老果冻的云编译固件包，不含wifi与usb支持！
             不保证正常使用！
-            如果你不知道这是什么，别刷就完事了！
-
-            MTK和QCA全系带开源硬件加速！
+            如果你不知道这是什么，别刷就完事了！带开源硬件加速！
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
             平台：${{env.WRT_TARGET}}
-            设备：${{env.WRT_TYPE}}
             地址：${{env.WRT_IP}}
             密码：${{env.WRT_PW}}
