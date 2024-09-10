@@ -191,8 +191,9 @@ jobs:
         run: |
           cd ./wrt/
 
-          make target/linux/refresh -j$(nproc) -k
-          make package/refresh -j$(nproc) -k
+          make target/linux/update -j$(nproc) V=s
+          make target/linux/refresh -j$(nproc) -k V=s
+          make package/refresh -j$(nproc) -k V=s
 
       - name: Download Packages
         if: env.WRT_TEST != 'true'
