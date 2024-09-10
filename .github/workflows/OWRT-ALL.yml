@@ -31,7 +31,7 @@ jobs:
       #max-parallel: 3
       matrix:
         TARGET: [MEDIATEK, ROCKCHIP, X86]
-        SOURCE: [immortalwrt/immortalwrt]
+        SOURCE: [VIKINGYFY/immortalwrt]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -51,7 +51,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH || 'master'}}
+      WRT_BRANCH: ${{matrix.BRANCH || 'owrt'}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整
