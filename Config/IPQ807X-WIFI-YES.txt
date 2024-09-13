@@ -19,3 +19,4 @@ CONFIG_PACKAGE_kmod-ath11k=y
 CONFIG_PACKAGE_kmod-ath11k-ahb=y
 CONFIG_PACKAGE_kmod-ath11k-pci=y
 CONFIG_PACKAGE_ath11k-firmware-ipq8074=y
+CONFIG_PACKAGE_ath11k-firmware-qcn9074=y
