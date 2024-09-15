@@ -23,13 +23,17 @@ echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then
+  echo "手动调整的插件$WRT_PACKAGE".
 	echo "$WRT_PACKAGE" >> ./.config
 fi
 
 #高通平台锁定512M内存
 if [[ $WRT_TARGET == *"IPQ"* ]]; then
+  echo "高通平台锁定512M内存".
 	echo "CONFIG_IPQ_MEM_PROFILE_1024=n" >> ./.config
 	echo "CONFIG_IPQ_MEM_PROFILE_512=y" >> ./.config
 	echo "CONFIG_ATH11K_MEM_PROFILE_1G=n" >> ./.config
 	echo "CONFIG_ATH11K_MEM_PROFILE_512M=y" >> ./.config
 fi
+
+echo "init settings end."
