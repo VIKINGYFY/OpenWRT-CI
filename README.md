@@ -5,7 +5,7 @@
 https://github.com/immortalwrt/immortalwrt.git
 
 高通版：
-https://github.com/VIKINGYFY/immortalwrt.git
+https://github.com/welenwho/immortalwrt.git
 
 # 固件简要说明：
 
