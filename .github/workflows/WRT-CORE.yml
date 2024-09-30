@@ -48,6 +48,7 @@ env:
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
   WRT_BRANCH: ${{inputs.WRT_BRANCH}}
+  WRT_SOURCE: ${{inputs.WRT_SOURCE}}
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
 
@@ -89,13 +90,15 @@ jobs:
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix
+          sudo -E apt -yqq install libfuse-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
       - name: Initialization Values
         run: |
-          export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          # export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
+          export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M")
           export WRT_CI=$(basename $GITHUB_WORKSPACE)
           export WRT_VER=$(echo $WRT_REPO | cut -d '/' -f 5-)-$WRT_BRANCH
           export WRT_TYPE=$(sed -n "1{s/^#//;s/\r$//;p;q}" $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt)
@@ -152,6 +155,51 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
+      - name: Source Information
+        run: |
+          author="${WRT_SOURCE%%/*}"
+          # author=$(echo "$author" | awk '{print toupper($0)}')
+          authorS=$(echo "${author:0:2}" | awk '{print tolower($0)}')
+
+          if [[ $WRT_TARGET == *"X86"* ]]; then
+
+            # immortalwrt/immortalwrt, coolsnowwolf/lede, Lienol/openwrt
+            if [[ $WRT_REPO == *"coolsnowwolf"* ]]; then
+              authorS=coolsnowwolf
+              WRT_PW="password"
+              echo "WRT_PW=$WRT_PW" >> $GITHUB_ENV
+              bodyinfo="_**X86_64系列 , $WRT_SOURCE 源码 , luci_v1.x.x 18.06**_<br><br>"
+              bodyinfo+="$author的源码为luci1版本 , 内核非X86平台更新较慢 , 会打包进闭源的组件"
+            elif [[ $WRT_REPO == *"immortalwrt"* ]]; then
+              authorS=imm
+              bodyinfo="_**X86_64系列 , $WRT_SOURCE 源码 , luci_v2.x.x master**_<br><br>"
+              bodyinfo+="$author的源码为luci2版本 , 内核同步更新 , 基本是开源的 , 主要针对国人用户开发"
+            else
+              bodyinfo="_**X86_64系列 , $WRT_SOURCE 源码**_<br><br>"
+            fi
+
+          else
+          
+            # VIKINGYFY/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x, coolsnowwolf/lede
+            bodyinfo="_**JDC-AX1800PRO系列 , $WRT_SOURCE 源码 , 带开源硬件加速<br><br>如固件超60M ，需要先刷入大分区后再刷**_<br><br>"
+            bodyinfo+="$author的源码基于"
+
+            if [[ $WRT_REPO == *"VIKINGYFY"* ]]; then
+              bodyinfo+="immortalwrt合并nss等库"
+            elif [[ $WRT_REPO == *"King-Of-Knights"* ]]; then
+              authorS=king
+              bodyinfo+="openwrt官方库 , 目前只同步上游"
+            elif [[ $WRT_REPO == *"LiBwrt-op"* ]]; then
+              authorS=lib
+              bodyinfo+="openwrt官方库 , 持续新增更多功能和适配"
+            fi
+            
+          fi
+          
+          echo "author=$author" >> $GITHUB_ENV
+          echo "authorS=$authorS" >> $GITHUB_ENV
+          echo "bodyinfo=$bodyinfo" >> $GITHUB_ENV
+          
       - name: Custom Packages
         run: |
           cd ./wrt/package/
@@ -164,8 +212,25 @@ jobs:
           cd ./wrt/
 
           rm -rf ./tmp* ./.config*
+          if [[ $WRT_TARGET == *"X86"* ]]; then
+            if [[ $WRT_REPO == *"lede"* ]]; then
+              cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/GENERAL-Learn.txt >> .config
 
-          cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
+              echo "lede config update done!"
+            else
+              cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/GENERAL-X86.txt >> .config
+
+              echo "X86 config update done!"
+            fi
+          elif [[ $WRT_TARGET == *"AX1800PRO"* ]]; then
+            cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/GENERAL-AX1800PRO.txt >> .config
+
+            echo "ax1800pro config update done!"
+          else
+            cat $GITHUB_WORKSPACE/Config/$WRT_TARGET.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
+
+            echo "general config update done!"
+          fi
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
@@ -182,8 +247,7 @@ jobs:
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
-          make -j$(nproc) || make -j$(nproc) V=s
+          make -j$(nproc) || make -j1 || make -j1 V=s
 
       - name: Machine Information
         run: |
@@ -210,7 +274,8 @@ jobs:
               for FILE in $(find ./bin/targets/ -type f -iname "*$TYPE*.*") ; do
                 EXT=$(basename $FILE | cut -d '.' -f 2-)
                 NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($TYPE\).*")
-                NEW_FILE="$WRT_VER"_"$NAME"_"$WRT_DATE"."$EXT"
+                # NEW_FILE="$WRT_VER"_"$NAME"_"$WRT_DATE"."$EXT"
+                NEW_FILE="$authorS"_"$WRT_VER"_"$NAME"_"$WRT_DATE"."$EXT"
                 mv -f $FILE ./upload/$NEW_FILE
               done
             done
@@ -221,14 +286,11 @@ jobs:
       - name: Release Firmware
         uses: softprops/action-gh-release@master
         with:
-          tag_name: ${{env.WRT_TARGET}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
+          tag_name: ${{env.author}}_${{env.WRT_TARGET}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，刷就完事了！
 
-            MTK和QCA全系带开源硬件加速，别问了！
+            ${{env.bodyinfo}}
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}

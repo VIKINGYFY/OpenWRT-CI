@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
+REPO_PATCH="$GITHUB_WORKSPACE/wrt/"
 
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
@@ -72,3 +73,9 @@ if [ -f "$SP_FILE" ]; then
 
 	cd $PKG_PATCH && echo "ssr-plus has been fixed!"
 fi
+
+#替换成最新版的golang
+cd $REPO_PATCH
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+cd $PKG_PATCH && echo "golang update done!"

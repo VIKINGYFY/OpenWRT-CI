@@ -4,10 +4,10 @@ name: QCA-ALL
 #CI计划
 on:
   #自动编译：当Auto-Clean运行完成后
-  workflow_run:
-    workflows: ["Auto-Clean"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["Auto-Clean"]
+  #   types:
+  #     - completed
   #手动编译
   workflow_dispatch:
     inputs:

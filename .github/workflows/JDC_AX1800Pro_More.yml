@@ -1,13 +1,13 @@
 #CI项目
-name: OWRT-ALL
+name: JDC_AX1800Pro_More
 
 #CI计划
 on:
   #自动编译：当Auto-Clean运行完成后
-  # workflow_run:
-  #   workflows: ["Auto-Clean"]
-  #   types:
-  #     - completed
+  workflow_run:
+    workflows: ["Auto-Clean"]
+    types:
+      - completed
   #手动编译
   workflow_dispatch:
     inputs:
@@ -32,8 +32,8 @@ jobs:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        TARGET: [MEDIATEK, ROCKCHIP, X86]
-        SOURCE: [VIKINGYFY/immortalwrt]
+        TARGET: [JDC-AX1800PRO-WIFI-YES]
+        SOURCE: [King-Of-Knights/openwrt-6.x, VIKINGYFY/immortalwrt, LiBwrt-op/openwrt-6.x]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
@@ -43,17 +43,17 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: 
       #默认WIFI名
-      WRT_WIFI: OWRT
+      WRT_WIFI: 
       #默认地址
-      WRT_IP: 192.168.10.1
+      WRT_IP: 10.10.10.18
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH || 'owrt'}}
+      WRT_BRANCH: ${{matrix.BRANCH || 'main'}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整

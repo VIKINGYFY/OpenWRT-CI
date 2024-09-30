@@ -1,0 +1,12 @@
+#JDCLOUD AX1800-PRO
+CONFIG_TARGET_qualcommax=y
+CONFIG_TARGET_qualcommax_ipq60xx=y
+#设备列表
+CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_ax1800-pro=y
+CONFIG_TARGET_DEVICE_PACKAGES_qualcommax_ipq60xx_DEVICE_jdcloud_ax1800-pro="ipq-wifi-jdcloud_ax1800-pro"
+#WIFI驱动
+CONFIG_PACKAGE_kmod-ath11k=y
+CONFIG_PACKAGE_kmod-ath11k-ahb=y
+CONFIG_PACKAGE_kmod-ath11k-pci=y
+CONFIG_PACKAGE_ath11k-firmware-ipq6018=y
+CONFIG_PACKAGE_ath11k-firmware-qcn9074=n
