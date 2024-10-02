@@ -72,54 +72,31 @@ CONFIG_PACKAGE_ip6tables-mod-nat=y
 CONFIG_PACKAGE_kmod-ip6-tunnel=y
 CONFIG_PACKAGE_kmod-qca-nss-drv-tunipip6=y
 #科学插件调整
-CONFIG_PACKAGE_luci-app-homeproxy=n
+CONFIG_PACKAGE_luci-app-homeproxy=y
 CONFIG_PACKAGE_luci-app-openclash=n
-CONFIG_PACKAGE_luci-app-passwall=y
-#
-# Configuration
-#
-CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=n
-CONFIG_PACKAGE_luci-app-passwall_Nftables_Transparent_Proxy=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Haproxy=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Hysteria=n
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_NaiveProxy=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client=n
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server=n
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client is not set
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Server is not set
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client=n
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Server is not set
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Simple_Obfs=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_SingBox=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_tuic_client is not set
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Geodata is not set
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Plugin=y
-CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray=y
-# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray_Plugin is not set
-# end of Configuration
+CONFIG_PACKAGE_luci-app-passwall=n
 #增加插件
 CONFIG_PACKAGE_luci-app-upnp=n
-CONFIG_PACKAGE_luci-app-samba4=n
+CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-diskman=n
-CONFIG_PACKAGE_luci-app-wolplus=n
-CONFIG_PACKAGE_luci-app-tailscale=n
-CONFIG_PACKAGE_luci-app-autoreboot=n
+CONFIG_PACKAGE_luci-app-wolplus=y
+CONFIG_PACKAGE_luci-app-tailscale=y
+CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-advancedplus=n
 CONFIG_PACKAGE_luci-theme-kucat=n
-CONFIG_PACKAGE_luci-app-msd_lite=n
+CONFIG_PACKAGE_luci-app-msd_lite=y
 CONFIG_PACKAGE_luci-app-ttyd=y
-CONFIG_PACKAGE_luci-app-usb-printer=n
-CONFIG_PACKAGE_luci-app-zerotier=n
-CONFIG_PACKAGE_luci-app-frpc=n
+CONFIG_PACKAGE_luci-app-usb-printer=y
+CONFIG_PACKAGE_luci-app-zerotier=y
+CONFIG_PACKAGE_luci-app-frpc=y
 CONFIG_PACKAGE_luci-app-xfrpc=n
-CONFIG_PACKAGE_luci-app-openvpn=n
+CONFIG_PACKAGE_luci-app-openvpn=y
 CONFIG_PACKAGE_luci-app-alist=n
 CONFIG_PACKAGE_luci-app-ddns=n
-CONFIG_PACKAGE_luci-app-cloudflared=n
-CONFIG_PACKAGE_cloudflared=n
-CONFIG_PACKAGE_luci-app-ddns-go=n
-CONFIG_PACKAGE_ddns-go=n
+CONFIG_PACKAGE_luci-app-cloudflared=y
+CONFIG_PACKAGE_cloudflared=y
+CONFIG_PACKAGE_luci-app-ddns-go=y
+CONFIG_PACKAGE_ddns-go=y
 CONFIG_PACKAGE_luci-app-mosdns=n
 #删除插件
 CONFIG_PACKAGE_luci-app-wol=n
