@@ -19,7 +19,7 @@ permissions: write-all
 
 jobs:
   auto_clean:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Delete Old Releases
         uses: dev-drprasad/delete-older-releases@master
