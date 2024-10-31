@@ -14,3 +14,6 @@ CONFIG_PACKAGE_kmod-ath11k-ahb=n
 CONFIG_PACKAGE_kmod-ath11k-pci=n
 CONFIG_PACKAGE_ath11k-firmware-ipq8074=n
 CONFIG_PACKAGE_ath11k-firmware-qcn9074=n
+CONFIG_PACKAGE_kmod-ath10k=n
+CONFIG_PACKAGE_kmod-ath10k-smallbuffers=n
+CONFIG_PACKAGE_ath10k-firmware-qca9887=n
