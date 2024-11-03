@@ -14,8 +14,6 @@ CFG_FILE="./package/base-files/files/bin/config_generate"
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
-#修改默认时区
-sed -i "s/timezone='.*'/timezone='Asia\/Shanghai'/g" $CFG_FILE
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config

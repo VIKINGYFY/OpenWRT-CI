@@ -35,7 +35,9 @@ UPDATE_PACKAGE "luci-app-advancedplus" "VIKINGYFY/luci-app-advancedplus" "main"
 UPDATE_PACKAGE "luci-app-gecoosac" "lwb1978/openwrt-gecoosac" "main"
 UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/luci-app-wolplus" "main"
+UPDATE_PACKAGE "alist" "sbwml/luci-app-alist" "main"
 UPDATE_PACKAGE "easytier" "lazyoop/networking-artifact" "main" "pkg"
+UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "main"
 UPDATE_PACKAGE "vnt" "lazyoop/networking-artifact" "main" "pkg"
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
