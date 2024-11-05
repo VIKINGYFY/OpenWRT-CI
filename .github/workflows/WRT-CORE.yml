@@ -230,6 +230,8 @@ jobs:
 
             MTK和QCA全系带开源硬件加速，别问了！
 
+            WIFI密码：12345678
+
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
             平台：${{env.WRT_TARGET}}
