@@ -72,3 +72,11 @@ if [ -f "$SP_FILE" ]; then
 
 	cd $PKG_PATCH && echo "ssr-plus has been fixed!"
 fi
+
+#修复TailScale配置文件冲突
+TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
+if [ -f "$TS_FILE" ]; then
+	sed -i '/\/files/d' $TS_FILE
+
+	cd $PKG_PATCH && echo "tailscale has been fixed!"
+fi
