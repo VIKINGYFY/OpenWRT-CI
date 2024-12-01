@@ -13,7 +13,10 @@ on:
       WRT_NAME:
         required: true
         type: string
-      WRT_WIFI:
+      WRT_SSID:
+        required: true
+        type: string
+      WRT_WORD:
         required: true
         type: string
       WRT_IP:
@@ -43,7 +46,8 @@ env:
   WRT_TARGET: ${{inputs.WRT_TARGET}}
   WRT_THEME: ${{inputs.WRT_THEME}}
   WRT_NAME: ${{inputs.WRT_NAME}}
-  WRT_WIFI: ${{inputs.WRT_WIFI}}
+  WRT_SSID: ${{inputs.WRT_SSID}}
+  WRT_WORD: ${{inputs.WRT_WORD}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
@@ -228,9 +232,10 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
-            MTK和QCA全系带开源硬件加速，别问了！
+            全系带开源硬件加速，别问了！
 
-            WIFI密码：12345678
+            WIFI名称：${{env.WRT_SSID}}
+            WIFI密码：${{env.WRT_WORD}}
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
