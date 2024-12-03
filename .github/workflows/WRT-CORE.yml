@@ -58,7 +58,7 @@ env:
 jobs:
   core:
     name: ${{inputs.WRT_SOURCE}}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Projects
         uses: actions/checkout@main
@@ -66,6 +66,7 @@ jobs:
       - name: Free Disk Space
         uses: endersonmenezes/free-disk-space@main
         with:
+          testing: false
           remove_android: true
           remove_dotnet: true
           remove_haskell: true
@@ -80,7 +81,6 @@ jobs:
             /usr/local/share/vcpkg/ports/llvm* /usr/local/share/vcpkg/ports/mysql* /usr/local/share/vcpkg/ports/snap* \
             /usr/share/azure* /usr/share/dotnet* /usr/share/glade* /usr/share/miniconda* /usr/share/php* /usr/share/swift \
             /var/lib/mysql* /var/log/azure*"
-          testing: false
 
       - name: Initialization Environment
         env:
@@ -139,11 +139,9 @@ jobs:
 
             echo "toolchain skiped done!"
           else
-            gh extension install actions/gh-actions-cache
-
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
+            CACHE_LIST=$(gh cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
-               gh actions-cache delete $CACHE_KEY --confirm
+               gh cache delete $CACHE_KEY
             done
 
             echo "caches cleanup done!"
