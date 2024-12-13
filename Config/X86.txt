@@ -16,5 +16,3 @@ CONFIG_PACKAGE_kmod-mt7916-firmware=y
 CONFIG_PACKAGE_kmod-mt7921-firmware=y
 CONFIG_PACKAGE_kmod-mt7922-firmware=y
 CONFIG_PACKAGE_kmod-mt792x-firmware=y
-#插件调整
-CONFIG_PACKAGE_luci-app-dockerman=y
