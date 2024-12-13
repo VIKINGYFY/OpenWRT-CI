@@ -13,7 +13,10 @@ on:
       WRT_NAME:
         required: true
         type: string
-      WRT_WIFI:
+      WRT_SSID:
+        required: true
+        type: string
+      WRT_WORD:
         required: true
         type: string
       WRT_IP:
@@ -43,7 +46,8 @@ env:
   WRT_TARGET: ${{inputs.WRT_TARGET}}
   WRT_THEME: ${{inputs.WRT_THEME}}
   WRT_NAME: ${{inputs.WRT_NAME}}
-  WRT_WIFI: ${{inputs.WRT_WIFI}}
+  WRT_SSID: ${{inputs.WRT_SSID}}
+  WRT_WORD: ${{inputs.WRT_WORD}}
   WRT_IP: ${{inputs.WRT_IP}}
   WRT_PW: ${{inputs.WRT_PW}}
   WRT_REPO: ${{inputs.WRT_REPO}}
@@ -62,6 +66,7 @@ jobs:
       - name: Free Disk Space
         uses: endersonmenezes/free-disk-space@main
         with:
+          testing: false
           remove_android: true
           remove_dotnet: true
           remove_haskell: true
@@ -76,7 +81,6 @@ jobs:
             /usr/local/share/vcpkg/ports/llvm* /usr/local/share/vcpkg/ports/mysql* /usr/local/share/vcpkg/ports/snap* \
             /usr/share/azure* /usr/share/dotnet* /usr/share/glade* /usr/share/miniconda* /usr/share/php* /usr/share/swift \
             /var/lib/mysql* /var/log/azure*"
-          testing: false
 
       - name: Initialization Environment
         env:
@@ -88,7 +92,7 @@ jobs:
           sudo -E apt -yqq autoremove --purge
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
-          sudo -E apt -yqq install dos2unix
+          sudo -E apt -yqq install dos2unix libfuse-dev
           sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
@@ -135,11 +139,9 @@ jobs:
 
             echo "toolchain skiped done!"
           else
-            gh extension install actions/gh-actions-cache
-
-            CACHE_LIST=$(gh actions-cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
+            CACHE_LIST=$(gh cache list --key "$WRT_TARGET-$WRT_VER" | cut -f 1)
             for CACHE_KEY in $CACHE_LIST; do
-               gh actions-cache delete $CACHE_KEY --confirm
+               gh cache delete $CACHE_KEY
             done
 
             echo "caches cleanup done!"
@@ -148,9 +150,9 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
-          $GITHUB_WORKSPACE/Scripts/diy.sh
-          
-          
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
 
       - name: Custom Packages
         run: |
@@ -219,7 +221,7 @@ jobs:
           fi
 
       - name: Release Firmware
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_TARGET}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
@@ -228,9 +230,10 @@ jobs:
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
-            MTK和QCA全系带开源硬件加速，别问了！
+            全系带开源硬件加速，别问了！
 
-            WIFI密码：12345678
+            WIFI名称：${{env.WRT_SSID}}
+            WIFI密码：${{env.WRT_WORD}}
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
