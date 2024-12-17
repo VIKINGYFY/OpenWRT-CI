@@ -1,6 +1,8 @@
 name: Auto-Clean
 
 on:
+  watch:
+    types: started
   #自动清理：每天早上4点
   schedule:
     - cron: 0 20 * * *
