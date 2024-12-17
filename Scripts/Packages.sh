@@ -22,6 +22,7 @@ UPDATE_PACKAGE() {
 
 #UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
 UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
+UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
 UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "js"
 
 UPDATE_PACKAGE "homeproxy" "VIKINGYFY/homeproxy" "main"
@@ -43,6 +44,13 @@ UPDATE_PACKAGE "luci-app-wolplus" "VIKINGYFY/packages" "main" "pkg"
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
 	UPDATE_PACKAGE "qmi-wwan" "immortalwrt/wwan-packages" "master" "pkg"
 fi
+
+# luci-app-argon-config设置壁纸默认为内建
+sed -i "s/option online_wallpaper 'bing'/option online_wallpaper 'none'/" ./luci-app-argon-config/root/etc/config/argon
+sed -i "s/o\.default = 'bing';/o.default = 'none';/" ./luci-app-argon-config/htdocs/luci-static/resources/view/argon-config.js
+
+# 更改 Argon 主题背景
+cp -f $GITHUB_WORKSPACE/images/bg1.jpg ./luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg
 
 #更新软件包版本
 UPDATE_VERSION() {
