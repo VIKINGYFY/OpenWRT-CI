@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PKG_PATCH="$GITHUB_WORKSPACE/wrt/package/"
+PKG_PATCH="$GITHUB_WORKSPACE/wrt/package"
 
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
@@ -49,3 +49,13 @@ if [ -f "$TS_FILE" ]; then
 
 	cd $PKG_PATCH && echo "tailscale has been fixed!"
 fi
+
+#argon登录页面美化
+ARGON_CONFIG_PATH="$PKG_PATCH/luci-app-advancedplus/root/etc/config/argon"
+#设置 argon 主题的登录页面壁纸为内建
+sed -i "s/option online_wallpaper 'bing'/option online_wallpaper 'none'/" $ARGON_CONFIG_PATH
+#设置 argon 主题的登录表单的模糊度
+sed -i "s/option blur '10'/option blur '0'/" $ARGON_CONFIG_PATH
+sed -i "s/option blur_dark '10'/option blur_dark '0'/" $ARGON_CONFIG_PATH
+#更换 argon 主题内建壁纸
+cp -f $GITHUB_WORKSPACE/Images/bg1.jpg "$PKG_PATCH/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg"
