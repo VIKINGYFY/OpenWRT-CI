@@ -51,11 +51,20 @@ if [ -f "$TS_FILE" ]; then
 fi
 
 #argon登录页面美化
-ARGON_CONFIG_PATH="$PKG_PATCH/luci-app-advancedplus/root/etc/config/argon"
-#设置 argon 主题的登录页面壁纸为内建
-sed -i "s/option online_wallpaper 'bing'/option online_wallpaper 'none'/" $ARGON_CONFIG_PATH
-#设置 argon 主题的登录表单的模糊度
-sed -i "s/option blur '10'/option blur '0'/" $ARGON_CONFIG_PATH
-sed -i "s/option blur_dark '10'/option blur_dark '0'/" $ARGON_CONFIG_PATH
-#更换 argon 主题内建壁纸
-cp -f $GITHUB_WORKSPACE/Images/bg1.jpg "$PKG_PATCH/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg"
+ARGON_IMG_FILE="$PKG_PATCH/luci-theme-argon/htdocs/luci-static/argon/img/bg1.jpg"
+if [ -f "$ARGON_IMG_FILE" ]; then
+	# 替换Argon主题内建壁纸
+	cp -f $GITHUB_WORKSPACE/Images/bg1.jpg "$ARGON_IMG_FILE"
+
+	cd $PKG_PATCH && echo "argon wallpaper has been replaced!"
+fi
+ARGON_CONFIG_FILE="$PKG_PATCH/luci-app-advancedplus/root/etc/config/argon"
+if [ -f "$ARGON_CONFIG_FILE" ]; then
+	# 设置Argon主题的登录页面壁纸为内建
+	sed -i "s/option online_wallpaper 'bing'/option online_wallpaper 'none'/" $ARGON_CONFIG_FILE
+	# 设置Argon主题的登录表单模糊度
+	sed -i "s/option blur '10'/option blur '0'/" $ARGON_CONFIG_FILE
+	sed -i "s/option blur_dark '10'/option blur_dark '0'/" $ARGON_CONFIG_FILE
+
+	cd $PKG_PATCH && echo "argon theme has been customized!"
+fi
