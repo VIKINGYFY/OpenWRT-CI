@@ -206,6 +206,8 @@ jobs:
           cp -f ./.config ./upload/Config_"$WRT_TARGET"_"$WRT_VER"_"$WRT_DATE".txt
 
           if [[ $WRT_TEST != 'true' ]]; then
+            KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)
+
             find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$" -exec rm -rf {} +
 
             for TYPE in $WRT_TYPE ; do
@@ -220,6 +222,8 @@ jobs:
             find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
           fi
 
+          echo "WRT_KVER=${KVER:-none}" >> $GITHUB_ENV
+
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
@@ -231,6 +235,8 @@ jobs:
             不要问，刷就完事了！
 
             全系带开源硬件加速，别问了！
+
+            内核版本：${{env.WRT_KVER}}
 
             WIFI名称：${{env.WRT_SSID}}
             WIFI密码：${{env.WRT_WORD}}
