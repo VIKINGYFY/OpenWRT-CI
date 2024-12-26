@@ -47,4 +47,10 @@ if [[ $WRT_TARGET == *"IPQ"* ]]; then
 	#取消nss相关feed
 	echo "CONFIG_FEED_nss_packages=n" >> ./.config
 	echo "CONFIG_FEED_sqm_scripts_nss=n" >> ./.config
+
+	if [[ $WRT_TARGET == *"60XX"* ]]; then
+		#设置NSS版本
+		echo "CONFIG_NSS_FIRMWARE_VERSION_11_4=n" >> ./.config
+		echo "CONFIG_NSS_FIRMWARE_VERSION_12_2=y" >> ./.config
+	fi
 fi
