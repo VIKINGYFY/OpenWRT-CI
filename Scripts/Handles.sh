@@ -7,7 +7,6 @@ if [ -d *"homeproxy"* ]; then
 	HP_RULES="surge"
 	HP_PATCH="homeproxy/root/etc/homeproxy"
 
-	chmod +x ./$HP_PATCH/scripts/*
 	rm -rf ./$HP_PATCH/resources/*
 
 	git clone -q --depth=1 --single-branch --branch "release" "https://github.com/Loyalsoldier/surge-rules.git" ./$HP_RULES/
