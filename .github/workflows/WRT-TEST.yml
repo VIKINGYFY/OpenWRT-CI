@@ -15,7 +15,7 @@ on:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, LiBwrt-op/openwrt-6.x, qosmio/openwrt-ipq]
+        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, LiBwrt/openwrt-6.x, qosmio/openwrt-ipq]
       BRANCH:
         default: 'main'
         required: true
