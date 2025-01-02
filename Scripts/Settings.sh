@@ -51,3 +51,9 @@ if [[ $WRT_TARGET == *"IPQ"* ]]; then
 	echo "CONFIG_NSS_FIRMWARE_VERSION_11_4=n" >> ./.config
 	echo "CONFIG_NSS_FIRMWARE_VERSION_12_2=y" >> ./.config
 fi
+
+#编译器优化
+if [[ $WRT_TARGET != *"X86"* ]]; then
+	echo "CONFIG_TARGET_OPTIONS=y" >> ./.config
+	echo "CONFIG_TARGET_OPTIMIZATION=\"-O2 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53\"" >> ./.config
+fi
