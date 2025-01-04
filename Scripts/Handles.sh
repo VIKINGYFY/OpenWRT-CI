@@ -22,6 +22,13 @@ if [ -d *"homeproxy"* ]; then
 	cd $PKG_PATH && echo "homeproxy date has been updated!"
 fi
 
+#修复argon主题进度条颜色不同步
+if [ -d *"luci-theme-argon"* ]; then
+	sed -i 's/(--bar-bg)/(--primary)/g' $(find ./luci-theme-argon -type f -iname "cascade.*")
+
+	cd $PKG_PATH && echo "theme-argon has been fixed!"
+fi
+
 #移除Shadowsocks组件
 PW_FILE=$(find ./ -maxdepth 3 -type f -wholename "*/luci-app-passwall/Makefile")
 if [ -f "$PW_FILE" ]; then
