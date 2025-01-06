@@ -22,9 +22,12 @@ if [ -d *"homeproxy"* ]; then
 	cd $PKG_PATH && echo "homeproxy date has been updated!"
 fi
 
-#修复argon主题进度条颜色不同步
+#修改argon主题字体和颜色
 if [ -d *"luci-theme-argon"* ]; then
-	sed -i 's/(--bar-bg)/(--primary)/g' $(find ./luci-theme-argon -type f -iname "cascade.*")
+	cd ./luci-theme-argon/
+
+	sed -i '/font-weight:/ {/normal\|!important/! s/\(font-weight:\s*\)[^;]*;/\1normal;/}' $(find ./luci-theme-argon -type f -iname "*.css")
+	sed -i "s/#5e72e4/#31a1a1/; s/#483d8b/#31a1a1/; s/'0.2'/'0.5'/; s/'none'/'bing'/" ./luci-app-argon-config/root/etc/config/argon
 
 	cd $PKG_PATH && echo "theme-argon has been fixed!"
 fi
