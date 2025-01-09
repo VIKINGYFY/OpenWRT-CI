@@ -13,7 +13,7 @@ UPDATE_PACKAGE() {
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
 	if [[ $PKG_SPECIAL == "pkg" ]]; then
-		find ./$REPO_NAME -maxdepth 3 -type d -name "*$PKG_NAME*" -exec cp -rf {} ./ \;
+		find ./$REPO_NAME/ -maxdepth 3 -type d -name "*$PKG_NAME*" -exec cp -rf {} ./ \;
 		rm -rf ./$REPO_NAME/
 	elif [[ $PKG_SPECIAL == "name" ]]; then
 		mv -f $REPO_NAME $PKG_NAME
@@ -31,11 +31,11 @@ UPDATE_PACKAGE "ssr-plus" "fw876/helloworld" "master"
 
 UPDATE_PACKAGE "alist" "sbwml/luci-app-alist" "main"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5"
+UPDATE_PACKAGE "wol" "VIKINGYFY/packages" "main" "pkg"
 
 UPDATE_PACKAGE "luci-app-gecoosac" "lwb1978/openwrt-gecoosac" "main"
 UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 
-UPDATE_PACKAGE "VIKINGYFY" "VIKINGYFY/packages" "main"
 UPDATE_PACKAGE "lazyoop" "lazyoop/networking-artifact" "main"
 
 if [[ $WRT_REPO != *"immortalwrt"* ]]; then
