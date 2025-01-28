@@ -20,3 +20,5 @@ CONFIG_PACKAGE_kmod-ath11k-ahb=n
 CONFIG_PACKAGE_kmod-ath11k-pci=n
 CONFIG_PACKAGE_ath11k-firmware-ipq6018=n
 CONFIG_PACKAGE_ath11k-firmware-qcn9074=n
+CONFIG_PACKAGE_wpad-openssl=n
+CONFIG_PACKAGE_hostapd-common=n
