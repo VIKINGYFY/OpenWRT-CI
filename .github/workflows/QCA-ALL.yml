@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       PACKAGE:
-        description: '手动调整插件包，仅限一个。'
+        description: '手动调整插件包，多个请用\n符号隔开。'
         required: false
         type: string
       TEST:
