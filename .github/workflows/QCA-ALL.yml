@@ -27,20 +27,20 @@ permissions: write-all
 #CI任务
 jobs:
   config:
-    name: ${{matrix.TARGET}}
+    name: ${{matrix.CONFIG}}
     strategy:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        TARGET: [IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
+        CONFIG: [IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
         SOURCE: [VIKINGYFY/immortalwrt]
         BRANCH: [main]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译平台
-      WRT_TARGET: ${{matrix.TARGET}}
+      #编译配置
+      WRT_CONFIG: ${{matrix.CONFIG}}
       #默认主题
       WRT_THEME: argon
       #默认主机名
