@@ -2,10 +2,6 @@
 
 PKG_PATH="$GITHUB_WORKSPACE/wrt/package/"
 
-#优先安装 passwall 源
-./scripts/feeds install -a -f -p passwall_packages
-./scripts/feeds install -a -f -p passwall_luci
-
 #预置HomeProxy数据
 if [ -d *"homeproxy"* ]; then
 	HP_RULE="surge"
