@@ -165,7 +165,9 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
-
+          #优先安装 passwall 源
+          ./scripts/feeds install -a -f -p passwall_packages
+          ./scripts/feeds install -a -f -p passwall_luci
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
