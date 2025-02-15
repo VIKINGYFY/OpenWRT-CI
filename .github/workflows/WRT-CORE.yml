@@ -63,10 +63,10 @@ jobs:
       - name: Checkout Projects
         uses: actions/checkout@main
 
-      - name: Set up Rust 1.85.0
+      - name: Set up Rust 1.86.0
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: "1.85.0"
+          toolchain: "1.86.0"
           override: true
 
       - name: Free Disk Space
