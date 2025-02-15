@@ -63,6 +63,12 @@ jobs:
       - name: Checkout Projects
         uses: actions/checkout@main
 
+      - name: Set up Rust 1.85.0
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: "1.85.0"
+          override: true
+
       - name: Free Disk Space
         uses: FirelightFlagboy/gh-runner-free-disk-space@main
         with:
