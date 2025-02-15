@@ -25,11 +25,11 @@ CONFIG_CCACHE=y
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_PER_DEVICE_ROOTFS=y
 #内核调整
-CONFIG_PACKAGE_kmod-dsa=y
-CONFIG_PACKAGE_kmod-fuse=y
-CONFIG_PACKAGE_kmod-tun=y
-CONFIG_PACKAGE_kmod-wireguard=y
-CONFIG_PACKAGE_kmod-mtd-rw=y
+CONFIG_PACKAGE_kmod-dsa=n
+CONFIG_PACKAGE_kmod-fuse=n
+CONFIG_PACKAGE_kmod-tun=n
+CONFIG_PACKAGE_kmod-wireguard=n
+CONFIG_PACKAGE_kmod-mtd-rw=n
 CONFIG_PACKAGE_kmod-usb2=n
 CONFIG_PACKAGE_kmod-usb3=n
 CONFIG_PACKAGE_kmod-usb-core=n
