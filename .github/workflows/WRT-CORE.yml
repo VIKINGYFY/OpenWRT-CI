@@ -224,20 +224,10 @@ jobs:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，刷就完事了！
+            Kernel: ${{env.WRT_KVER}}
 
-            全系带开源硬件加速，别问了！
+            IP: ${{env.WRT_IP}} @ ${{env.WRT_PW}}
+            WIFI: ${{env.WRT_SSID}} @ ${{env.WRT_WORD}}
 
-            内核版本：${{env.WRT_KVER}}
-
-            WIFI名称：${{env.WRT_SSID}}
-            WIFI密码：${{env.WRT_WORD}}
-
-            源码：${{env.WRT_REPO}}
-            分支：${{env.WRT_BRANCH}}
-            配置：${{env.WRT_CONFIG}}
-            平台：${{env.WRT_TARGET}}
-            地址：${{env.WRT_IP}}
-            密码：${{env.WRT_PW}}
+            Code：${{env.WRT_REPO}} @ ${{env.WRT_BRANCH}}
+            Platform：${{env.WRT_TARGET}} @ ${{env.WRT_CONFIG}}

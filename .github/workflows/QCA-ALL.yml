@@ -52,7 +52,7 @@ jobs:
       #默认地址
       WRT_IP: 192.168.8.1
       #默认密码，仅作提示，修改无用
-      WRT_PW: 无
+      WRT_PW: None
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
