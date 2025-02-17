@@ -1,4 +1,4 @@
-#X86 X64
+#设备平台
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 #设备列表

@@ -1,4 +1,4 @@
-#CMIOT GLINET LINKSYS QIHOO REDMI XIAOMI ZN JDCLOUD
+#设备平台
 CONFIG_TARGET_qualcommax=y
 CONFIG_TARGET_qualcommax_ipq60xx=y
 #设备列表
