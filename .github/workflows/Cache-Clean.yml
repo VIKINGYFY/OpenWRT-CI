@@ -1,0 +1,15 @@
+name: Cache-Clean
+
+on:
+  schedule:
+    - cron: 0 20 * * 0
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  auto_clean:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Cache Clean
+        run: gh cache delete --all
