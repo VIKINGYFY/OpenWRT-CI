@@ -1,5 +1,5 @@
 #科学插件调整
-CONFIG_PACKAGE_luci-app-homeproxy=y
+CONFIG_PACKAGE_luci-app-homeproxy=n
 CONFIG_PACKAGE_luci-app-nikki=n
 #增加插件
 CONFIG_PACKAGE_luci-app-samba4=n
