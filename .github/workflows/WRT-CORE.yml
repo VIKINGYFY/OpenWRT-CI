@@ -214,6 +214,8 @@ jobs:
             done
 
             find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
+
+            make clean -j$(nproc)
           fi
 
           echo "WRT_KVER=${KVER:-none}" >> $GITHUB_ENV
