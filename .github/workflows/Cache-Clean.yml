@@ -7,6 +7,9 @@ on:
 
 permissions: write-all
 
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 jobs:
   auto_clean:
     runs-on: ubuntu-22.04
