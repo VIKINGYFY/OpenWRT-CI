@@ -14,5 +14,8 @@ jobs:
   auto_clean:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
       - name: Cache Clean
         run: gh cache delete --all
