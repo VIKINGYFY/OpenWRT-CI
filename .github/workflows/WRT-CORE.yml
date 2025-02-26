@@ -84,12 +84,12 @@ jobs:
       - name: Initialization Values
         run: |
           export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          export WRT_CI=$(basename $GITHUB_WORKSPACE)
+          export WRT_MARK=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
           export WRT_VER=$(echo $WRT_REPO | cut -d '/' -f 5-)-$WRT_BRANCH
           export WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt | tr '[:lower:]' '[:upper:]')
 
           echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
-          echo "WRT_CI=$WRT_CI" >> $GITHUB_ENV
+          echo "WRT_MARK=$WRT_MARK" >> $GITHUB_ENV
           echo "WRT_VER=$WRT_VER" >> $GITHUB_ENV
           echo "WRT_TARGET=$WRT_TARGET" >> $GITHUB_ENV
 
