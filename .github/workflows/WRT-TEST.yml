@@ -10,12 +10,26 @@ on:
         default: 'MEDIATEK'
         required: true
         type: choice
-        options: [MEDIATEK, ROCKCHIP, X86, IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO, TEST]
+        options:
+          - MEDIATEK
+          - ROCKCHIP
+          - X86
+          - IPQ50XX-WIFI-YES
+          - IPQ50XX-WIFI-NO
+          - IPQ60XX-WIFI-YES
+          - IPQ60XX-WIFI-NO
+          - IPQ807X-WIFI-YES
+          - IPQ807X-WIFI-NO
+          - TEST
       SOURCE:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, LiBwrt/openwrt-6.x, qosmio/openwrt-ipq]
+        options:
+          - VIKINGYFY/immortalwrt
+          - immortalwrt/immortalwrt
+          - LiBwrt/openwrt-6.x
+          - qosmio/openwrt-ipq
       BRANCH:
         default: 'main'
         required: true
