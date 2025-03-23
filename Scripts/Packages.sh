@@ -6,32 +6,25 @@ UPDATE_PACKAGE() {
 	local PKG_REPO=$2
 	local PKG_BRANCH=$3
 	local PKG_SPECIAL=$4
-	local CUSTOM_NAMES=($5)  # 第5个参数为自定义名称列表
-	local REPO_NAME=$(echo $PKG_REPO | cut -d '/' -f 2)
+	local PKG_LIST=("$PKG_NAME" $5)  # 第5个参数为自定义名称列表
+	local REPO_NAME=${PKG_REPO#*/}
 
 	echo " "
 
-	# 将 PKG_NAME 加入到需要查找的名称列表中
-	if [ ${#CUSTOM_NAMES[@]} -gt 0 ]; then
-		CUSTOM_NAMES=("$PKG_NAME" "${CUSTOM_NAMES[@]}")  # 将 PKG_NAME 添加到自定义名称列表的开头
-	else
-		CUSTOM_NAMES=("$PKG_NAME")  # 如果没有自定义名称，则只使用 PKG_NAME
-	fi
-
 	# 删除本地可能存在的不同名称的软件包
-	for NAME in "${CUSTOM_NAMES[@]}"; do
+	for NAME in "${PKG_LIST[@]}"; do
 		# 查找匹配的目录
-		echo "Searching directory: $NAME"
+		echo "Search directory: $NAME"
 		local FOUND_DIRS=$(find ../feeds/luci/ ../feeds/packages/ -maxdepth 3 -type d -iname "*$NAME*" 2>/dev/null)
 
 		# 删除找到的目录
 		if [ -n "$FOUND_DIRS" ]; then
-			echo "$FOUND_DIRS" | while read -r DIR; do
+			while read -r DIR; do
 				rm -rf "$DIR"
-				echo "Deleted directory: $DIR"
-			done
+				echo "Delete directory: $DIR"
+			done <<< "$FOUND_DIRS"
 		else
-			echo "No directories found matching name: $NAME"
+			echo "Not fonud directory: $NAME"
 		fi
 	done
 
@@ -61,13 +54,13 @@ UPDATE_PACKAGE "passwall" "xiaorouji/openwrt-passwall" "main" "pkg"
 UPDATE_PACKAGE "ssr-plus" "fw876/helloworld" "master"
 
 UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-UPDATE_PACKAGE "luci-app-wol" "VIKINGYFY/packages" "main" "pkg"
 
 UPDATE_PACKAGE "alist" "sbwml/luci-app-alist" "main"
 UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 UPDATE_PACKAGE "gecoosac" "lwb1978/openwrt-gecoosac" "main"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
 UPDATE_PACKAGE "qmodem" "FUjr/modem_feeds" "main"
+UPDATE_PACKAGE "viking" "VIKINGYFY/packages" "main" "" "luci-app-timewol luci-app-wolplus"
 UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 UPDATE_PACKAGE "luci-app-wechatpush" "tty228/luci-app-wechatpush" "master"
