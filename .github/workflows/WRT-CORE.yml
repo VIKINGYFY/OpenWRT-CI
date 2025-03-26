@@ -83,15 +83,12 @@ jobs:
 
       - name: Initialization Values
         run: |
-          export WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
-          export WRT_MARK=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
-          export WRT_VER=$(echo $WRT_REPO | cut -d '/' -f 5-)-$WRT_BRANCH
-          export WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt | tr '[:lower:]' '[:upper:]')
-
-          echo "WRT_DATE=$WRT_DATE" >> $GITHUB_ENV
-          echo "WRT_MARK=$WRT_MARK" >> $GITHUB_ENV
-          echo "WRT_VER=$WRT_VER" >> $GITHUB_ENV
-          echo "WRT_TARGET=$WRT_TARGET" >> $GITHUB_ENV
+          echo "WRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")" >> $GITHUB_ENV
+          echo "WRT_MARK=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)" >> $GITHUB_ENV
+          echo "WRT_VER=$(echo $WRT_REPO | cut -d '/' -f 5-)-$WRT_BRANCH" >> $GITHUB_ENV
+          echo "WRT_TARGET=$(grep -m 1 -oP '^CONFIG_TARGET_\K[\w]+(?=\=y)' ./Config/$WRT_CONFIG.txt | tr '[:lower:]' '[:upper:]')" >> $GITHUB_ENV
+          echo "WRT_KVER=none" >> $GITHUB_ENV
+          echo "WRT_LIST=none" >> $GITHUB_ENV
 
       - name: Clone Code
         run: |
@@ -202,9 +199,10 @@ jobs:
           cp -f ./.config ./upload/Config_"$WRT_CONFIG"_"$WRT_VER"_"$WRT_DATE".txt
 
           if [[ $WRT_TEST != 'true' ]]; then
-            KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)
+            echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
+            echo "WRT_LIST=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^luci-app[^ ]*' {} \; | tr '\n' ' ')" >> $GITHUB_ENV
 
-            find ./bin/targets/ -iregex ".*\(buildinfo\|json\|manifest\|sha256sums\|packages\)$" -exec rm -rf {} +
+            find ./bin/targets/ -iregex ".*\(buildinfo\|json\|sha256sums\|packages\)$" -exec rm -rf {} +
 
             for FILE in $(find ./bin/targets/ -type f -iname "*$WRT_TARGET*") ; do
               EXT=$(basename $FILE | cut -d '.' -f 2-)
@@ -218,30 +216,35 @@ jobs:
             make clean -j$(nproc)
           fi
 
-          echo "WRT_KVER=${KVER:-none}" >> $GITHUB_ENV
+      - name: Release Information
+        run: |
+          cd ./wrt/ && touch ./release.txt
+
+          echo -e "这是个平台固件包，内含多个设备！" >> ./release.txt
+          echo -e "请注意选择你需要的设备固件！" >> ./release.txt
+          echo -e "不要问，刷就完事了！" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "全系带开源硬件加速，别问了！" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "源码：$WRT_REPO" >> ./release.txt
+          echo -e "分支：$WRT_BRANCH" >> ./release.txt
+          echo -e "提交：$WRT_HASH" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "配置：$WRT_CONFIG" >> ./release.txt
+          echo -e "平台：$WRT_TARGET" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "登录地址：$WRT_IP" >> ./release.txt
+          echo -e "登录密码：$WRT_PW" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "WIFI名称：$WRT_SSID" >> ./release.txt
+          echo -e "WIFI密码：$WRT_WORD" >> ./release.txt
+          echo -e "" >> ./release.txt
+          echo -e "内核版本：$WRT_KVER" >> ./release.txt
+          echo -e "插件列表：\n${WRT_LIST// /$'\n'}" >> ./release.txt
 
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
+          body_path: ./wrt/release.txt
           files: ./wrt/upload/*.*
-          body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，刷就完事了！
-
-            全系带开源硬件加速，别问了！
-
-            内核版本：${{env.WRT_KVER}}
-
-            WIFI名称：${{env.WRT_SSID}}
-            WIFI密码：${{env.WRT_WORD}}
-
-            源码：${{env.WRT_REPO}}
-            分支：${{env.WRT_BRANCH}}
-            提交：${{env.WRT_HASH}}
-
-            配置：${{env.WRT_CONFIG}}
-            平台：${{env.WRT_TARGET}}
-            地址：${{env.WRT_IP}}
-            密码：${{env.WRT_PW}}
