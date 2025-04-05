@@ -216,35 +216,30 @@ jobs:
             make clean -j$(nproc)
           fi
 
-      - name: Release Information
-        run: |
-          cd ./wrt/ && touch ./release.txt
-
-          echo -e "这是个平台固件包，内含多个设备！" >> ./release.txt
-          echo -e "请注意选择你需要的设备固件！" >> ./release.txt
-          echo -e "不要问，刷就完事了！" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "全系带开源硬件加速，别问了！" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "源码：$WRT_REPO" >> ./release.txt
-          echo -e "分支：$WRT_BRANCH" >> ./release.txt
-          echo -e "提交：$WRT_HASH" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "配置：$WRT_CONFIG" >> ./release.txt
-          echo -e "平台：$WRT_TARGET" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "登录地址：$WRT_IP" >> ./release.txt
-          echo -e "登录密码：$WRT_PW" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "WIFI名称：$WRT_SSID" >> ./release.txt
-          echo -e "WIFI密码：$WRT_WORD" >> ./release.txt
-          echo -e "" >> ./release.txt
-          echo -e "内核版本：$WRT_KVER" >> ./release.txt
-          echo -e "插件列表：\n${WRT_LIST// /$'\n'}" >> ./release.txt
-
       - name: Release Firmware
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.WRT_CONFIG}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
-          body_path: ./wrt/release.txt
           files: ./wrt/upload/*.*
+          body: |
+            这是个平台固件包，内含多个设备！
+            请注意选择你需要的设备固件！
+            不要问，刷就完事了！
+
+            全系带开源硬件加速，别问了！
+
+            源码：${{env.WRT_REPO}}
+            分支：${{env.WRT_BRANCH}}
+            提交：${{env.WRT_HASH}}
+
+            配置：${{env.WRT_CONFIG}}
+            平台：${{env.WRT_TARGET}}
+
+            登录地址：${{env.WRT_IP}}
+            登录密码：${{env.WRT_PW}}
+
+            WIFI名称：${{env.WRT_SSID}}
+            WIFI密码：${{env.WRT_WORD}}
+
+            内核版本：${{env.WRT_KVER}}
+            插件列表：${{env.WRT_LIST}}
