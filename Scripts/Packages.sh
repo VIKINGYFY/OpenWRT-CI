@@ -31,12 +31,23 @@ UPDATE_PACKAGE() {
 	# 克隆 GitHub 仓库
 	git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
 
-	# 处理克隆的仓库
+	# 处理克隆的仓库（35～41行已注释掉“#”；43～52行为替代）
+	#if [[ $PKG_SPECIAL == "pkg" ]]; then
+		#find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune -exec cp -rf {} ./ \;
+		#rm -rf ./$REPO_NAME/
+	#elif [[ $PKG_SPECIAL == "name" ]]; then
+		#mv -f $REPO_NAME $PKG_NAME
+	#fi
+#}
+
+	# 处理克隆的仓库--修改后的（2025.04.12）
 	if [[ $PKG_SPECIAL == "pkg" ]]; then
-		find ./$REPO_NAME/*/ -maxdepth 3 -type d -iname "*$PKG_NAME*" -prune -exec cp -rf {} ./ \;
-		rm -rf ./$REPO_NAME/
+  	  # 修改后的 find 命令：覆盖深层目录（如 relevance/filebrowser）
+  		find ./$REPO_NAME/ -maxdepth 5 -type d -iname "*$PKG_NAME*" -prune -exec cp -rf {} ./ \;
+  	 	rm -rf ./$REPO_NAME/
 	elif [[ $PKG_SPECIAL == "name" ]]; then
-		mv -f $REPO_NAME $PKG_NAME
+  	  # 原逻辑：直接重命名仓库目录（适用于插件与仓库同名的情况）
+  		mv -f $REPO_NAME $PKG_NAME
 	fi
 }
 
@@ -112,3 +123,63 @@ UPDATE_VERSION() {
 #UPDATE_VERSION "软件包名" "测试版，true，可选，默认为否"
 UPDATE_VERSION "sing-box"
 UPDATE_VERSION "tailscale"
+
+#------------------以下自定义源--------------------#
+
+#全能推送PushBot
+UPDATE_PACKAGE "luci-app-pushbot" "zzsj0928/luci-app-pushbot" "master"
+
+#关机poweroff
+UPDATE_PACKAGE "luci-app-poweroff" "DongyangHu/luci-app-poweroff" "main"
+
+#主题界面edge
+UPDATE_PACKAGE "luci-theme-edge" "ricemices/luci-theme-edge" "master"
+
+#分区扩容
+UPDATE_PACKAGE "luci-app-partexp" "sirpdboy/luci-app-partexp" "main"
+
+#阿里云盘aliyundrive-webdav
+UPDATE_PACKAGE "luci-app-aliyundrive-webdav" "messense/aliyundrive-webdav" "main"
+#UPDATE_PACKAGE "aliyundrive-webdav" "master-yun-yun/aliyundrive-webdav" "main" "pkg"
+#UPDATE_PACKAGE "luci-app-aliyundrive-webdav" "master-yun-yun/aliyundrive-webdav" "main"
+
+#服务器
+#UPDATE_PACKAGE "luci-app-openvpn-server" "hyperlook/luci-app-openvpn-server" "main"
+#UPDATE_PACKAGE "luci-app-openvpn-server" "ixiaan/luci-app-openvpn-server" "main"
+
+#luci-app-navidrome音乐服务器
+UPDATE_PACKAGE "luci-app-navidrome" "tty228/luci-app-navidrome" "main"
+
+#luci-theme-design主题界面
+UPDATE_PACKAGE "luci-theme-design" "emxiong/luci-theme-design" "master"
+#luci-app-design-config主题配置
+UPDATE_PACKAGE "luci-app-design-config" "kenzok78/luci-app-design-config" "main"
+
+#luci-app-quickstart
+#UPDATE_PACKAGE "luci-app-quickstart" "animegasan/luci-app-quickstart" "main"
+
+#端口转发luci-app-socat
+UPDATE_PACKAGE "luci-app-socat" "WROIATE/luci-app-socat" "main"
+
+#------------------以上自定义源--------------------#
+
+
+#-------------------2025.04.12-测试-----------------#
+UPDATE_PACKAGE "luci-app-clouddrive2" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+
+UPDATE_PACKAGE "istoreenhance" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "luci-app-istoreenhance" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+
+UPDATE_PACKAGE "linkmount" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "linkease" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "luci-app-linkease" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+
+UPDATE_PACKAGE "quickstart" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "luci-app-quickstart" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+
+UPDATE_PACKAGE "luci-app-store" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+
+UPDATE_PACKAGE "webdav2" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "unishare" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "luci-app-unishare" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+#-------------------2025.04.12-测试-----------------#
