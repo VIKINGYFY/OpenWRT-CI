@@ -206,8 +206,8 @@ CONFIG_PACKAGE_luci-app-design-config=y
 #clouddrive2云盘挂载
 #CONFIG_PACKAGE_luci-app-clouddrive2=y
 #istore增强
-CONFIG_PACKAGE_istoreenhance=y
-CONFIG_PACKAGE_luci-app-istoreenhance=y
+#CONFIG_PACKAGE_istoreenhance=y
+#CONFIG_PACKAGE_luci-app-istoreenhance=y
 #易有云文件管理器
 CONFIG_PACKAGE_linkmount=y
 CONFIG_PACKAGE_linkease=y
