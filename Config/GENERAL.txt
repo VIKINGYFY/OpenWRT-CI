@@ -204,7 +204,7 @@ CONFIG_PACKAGE_luci-app-design-config=y
 #-------------------2025.04.12-测试-----------------#
 
 #clouddrive2云盘挂载
-CONFIG_PACKAGE_luci-app-clouddrive2=y
+#CONFIG_PACKAGE_luci-app-clouddrive2=y
 #istore增强
 CONFIG_PACKAGE_istoreenhance=y
 CONFIG_PACKAGE_luci-app-istoreenhance=y
