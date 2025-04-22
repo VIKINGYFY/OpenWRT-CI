@@ -170,9 +170,9 @@ UPDATE_PACKAGE "luci-app-socat" "WROIATE/luci-app-socat" "main"
 #UPDATE_PACKAGE "istoreenhance" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
 #UPDATE_PACKAGE "luci-app-istoreenhance" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
 
-UPDATE_PACKAGE "linkmount" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
-UPDATE_PACKAGE "linkease" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
-UPDATE_PACKAGE "luci-app-linkease" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "linkmount" "master-yun-yun/package-istore" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "linkease" "master-yun-yun/package-istore" "Immortalwrt" "pkg"
+UPDATE_PACKAGE "luci-app-linkease" "master-yun-yun/package-istore" "Immortalwrt" "pkg"
 
 UPDATE_PACKAGE "quickstart" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
 UPDATE_PACKAGE "luci-app-quickstart" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
