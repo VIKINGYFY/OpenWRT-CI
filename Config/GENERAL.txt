@@ -220,6 +220,7 @@ CONFIG_PACKAGE_luci-app-quickstart=y
 #istore商店
 CONFIG_PACKAGE_luci-app-store=y
 #通用共享
+CONFIG_PACKAGE_samba4-server=y
 CONFIG_PACKAGE_webdav2=y
 CONFIG_PACKAGE_unishare=y
 CONFIG_PACKAGE_luci-app-unishare=y
