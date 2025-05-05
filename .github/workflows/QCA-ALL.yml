@@ -44,9 +44,9 @@ jobs:
       #默认主题
       WRT_THEME: argon
       #默认主机名
-      WRT_NAME: OPENWRT
+      WRT_NAME: OpenWRT
       #默认WIFI名称
-      WRT_SSID: OPENWRT
+      WRT_SSID: OpenWRT
       #默认WIFI密码
       WRT_WORD: 12345678
       #默认地址
