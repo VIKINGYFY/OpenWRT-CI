@@ -1,0 +1,135 @@
+name: Cache-Update
+
+on:
+  schedule:
+    - cron: 0 18 * * 0
+  workflow_dispatch:
+
+permissions: write-all
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Cache Clean
+        run: gh cache delete --all
+
+  update:
+    runs-on: ubuntu-latest
+    needs: cleanup
+    name: ${{matrix.REPO_INFO.CONFIG}}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        SOURCE: [VIKINGYFY/immortalwrt]
+        REPO_INFO:
+          - {CONFIG: IPQ60XX-WIFI-NO, BRANCH: main}
+          - {CONFIG: IPQ60XX-WIFI-YES, BRANCH: main}
+          - {CONFIG: IPQ807X-WIFI-NO, BRANCH: main}
+          - {CONFIG: IPQ807X-WIFI-YES, BRANCH: main}
+          - {CONFIG: MEDIATEK, BRANCH: owrt}
+          - {CONFIG: ROCKCHIP, BRANCH: owrt}
+          - {CONFIG: X86, BRANCH: owrt}
+
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Initialization Environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo -E apt -yqq purge firefox
+          sudo -E apt -yqq update
+          sudo -E apt -yqq full-upgrade
+          sudo -E apt -yqq autoremove --purge
+          sudo -E apt -yqq autoclean
+          sudo -E apt -yqq clean
+          sudo -E apt -yqq install dos2unix libfuse-dev
+          sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+          sudo -E systemctl daemon-reload
+          sudo -E timedatectl set-timezone "Asia/Shanghai"
+
+          sudo mkdir -p /mnt/build_wrt
+          sudo chown $USER:$USER /mnt/build_wrt
+          sudo ln -s /mnt/build_wrt $GITHUB_WORKSPACE/wrt
+
+      - name: Initialization Values
+        run: |
+          echo "WRT_CONFIG=${{matrix.REPO_INFO.CONFIG}}" >> $GITHUB_ENV
+          echo "WRT_BRANCH=${{matrix.REPO_INFO.BRANCH}}" >> $GITHUB_ENV
+          echo "WRT_REPO=https://github.com/${{matrix.SOURCE}}.git" >> $GITHUB_ENV
+          echo "WRT_VER=$(echo ${{matrix.SOURCE}} | cut -d '/' -f 2)-${{matrix.REPO_INFO.BRANCH}}.git" >> $GITHUB_ENV
+
+      - name: Clone Code
+        run: |
+          git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
+
+          cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
+
+          # GitHub Action 移除国内下载源
+          PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"
+          if [ -f "$PROJECT_MIRRORS_FILE" ]; then
+            sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
+          fi
+
+      - name: Check Scripts
+        run: |
+          find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+
+      - name: Update Feeds
+        run: |
+          cd ./wrt/
+
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+      - name: Custom Settings
+        run: |
+          cd ./wrt/
+
+          cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
+
+          make defconfig -j$(nproc) && make clean -j$(nproc)
+
+      - name: Download Packages
+        run: |
+          cd ./wrt/
+
+          make download -j$(nproc)
+
+      - name: Compile Toolchain
+        run: |
+          cd ./wrt/
+
+          make toolchain/compile -j$(nproc)
+          make toolchain/install -j$(nproc)
+
+      - name: Machine Information
+        run: |
+          cd ./wrt/
+
+          echo "======================="
+          lscpu | grep -E "name|Core|Thread"
+          echo "======================="
+          df -h
+          echo "======================="
+          du -h --max-depth=1
+          echo "======================="
+
+      - name: Update Caches
+        uses: actions/cache@main
+        with:
+          key: ${{env.WRT_CONFIG}}-${{env.WRT_VER}}-${{env.WRT_HASH}}
+          restore-keys: ${{env.WRT_CONFIG}}-${{env.WRT_VER}}
+          path: |
+            ./wrt/.ccache
+            ./wrt/staging_dir/host*
+            ./wrt/staging_dir/tool*
