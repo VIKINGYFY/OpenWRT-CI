@@ -30,13 +30,7 @@ jobs:
       matrix:
         SOURCE: [VIKINGYFY/immortalwrt]
         REPO_INFO:
-          - {CONFIG: IPQ60XX-WIFI-NO, BRANCH: main}
-          - {CONFIG: IPQ60XX-WIFI-YES, BRANCH: main}
-          - {CONFIG: IPQ807X-WIFI-NO, BRANCH: main}
-          - {CONFIG: IPQ807X-WIFI-YES, BRANCH: main}
           - {CONFIG: MEDIATEK, BRANCH: owrt}
-          - {CONFIG: ROCKCHIP, BRANCH: owrt}
-          - {CONFIG: X86, BRANCH: owrt}
 
     steps:
       - name: Checkout Projects
