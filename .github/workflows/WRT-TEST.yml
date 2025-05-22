@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       CONFIG:
-        default: 'MEDIATEK'
+        default: 'IPQ50XX-WIFI-YES'
         required: true
         type: choice
         options:
