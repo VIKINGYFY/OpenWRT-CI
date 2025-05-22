@@ -2,7 +2,7 @@
 CONFIG_PACKAGE_luci-app-homeproxy=n
 #增加插件
 CONFIG_PACKAGE_luci-app-upnp=n
-CONFIG_PACKAGE_luci-app-samba4=n
+CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-wolplus=n
 CONFIG_PACKAGE_luci-app-gecoosac=y
 CONFIG_PACKAGE_luci-app-linkease=y
