@@ -1,65 +1,65 @@
 #CI项目
-name: OWRT-ALL
+姓名: OWRT-ALL
 
 #CI计划
-on:
-  #自动编译：当Auto-Clean运行完成后
-  workflow_run:
-    workflows: ["Auto-Clean"]
-    types:
-      - completed
-  #手动编译
-  workflow_dispatch:
-    inputs:
-      PACKAGE:
-        description: '手动调整插件包，多个请用\n符号隔开。'
-        required: false
-        type: string
-      TEST:
-        description: '仅输出配置文件，不编译固件。'
-        default: 'false'
-        required: false
-        type: boolean
+在……之上:
+#自动编译：当自动清洗运行完成后#自动编译：当自动清洗运行完成后
+工作流运行(_R):
+工作流程: ["自动清洗"]
+类型:
+      - -已完成
+#手动编译#手动编译
+workflow_dispatch:
+输入:
+包:
+描述: '手动调整插件包，多个请用\n符号隔开。 '
+必需的: 假的
+类型: 类型：字符串
+测试:
+描述: '仅输出配置文件，不编译固件。 '
+默认: 'false'
+必需的: 假的
+类型: 类型：布尔型
 
 #CI权限
-permissions: write-all
+权限: 权限：全部写入
 
 #CI任务
-jobs:
-  config:
-    name: ${{matrix.CONFIG}}
-    strategy:
-      fail-fast: false
-      #max-parallel: 3
-      matrix:
-        CONFIG: [MEDIATEK, ROCKCHIP, X86]
-        SOURCE: [VIKINGYFY/immortalwrt]
-        BRANCH: [owrt]
+工作:
+配置:
+姓名: 名称：${{matrix.CONFIG}}{{matrix.CONFIG}}
+策略:
+快速失效: 假的
+#max-parallel:3#max-parallel:3
+矩阵:
+配置: [配置：[联发科、Rockchip、X86],Rockchip,x86]
+来源: [来源：[VIKINGYFY/fertywrt]]
+分支: [owrt[owrt]]
 
-    #调用公用编译核心WRT-CORE.yml
-    uses: ./.github/workflows/WRT-CORE.yml
-    with:
-      #编译配置
-      WRT_CONFIG: ${{matrix.CONFIG}}
-      #默认主题
-      WRT_THEME: argon
-      #默认主机名
-      WRT_NAME: OWRT
-      #默认WIFI名称
-      WRT_SSID: OWRT
-      #默认WIFI密码
-      WRT_WORD: 12345678
-      #默认地址
-      WRT_IP: 192.168.10.1
-      #默认密码，仅作提示，修改无用
-      WRT_PW: 无
-      #源码链接
-      WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
-      #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH}}
-      #源码名称
-      WRT_SOURCE: ${{matrix.SOURCE}}
-      #插件调整
-      WRT_PACKAGE: ${{inputs.PACKAGE}}
-      #仅输出配置文件
-      WRT_TEST: ${{inputs.TEST}}
+#调用公用编译核心WRT-CORE.yml#调用公用编译核心WRT-CORE.yml
+uses: 使用：./.GitHub/workflows/WRT-CORE.yml
+和……一起:
+#编译配置#编译配置
+WRT_CONFIG: WRT_CONFIG：${{matrix.CONFIG}}{{matrix.CONFIG}}
+#默认主题#默认主题
+WRT_THEME: WRT_THEME：氩气
+#默认主机名#默认主机名
+WRT_NAME: WRT_NAME:owt
+#默认WIFI名称#默认WIFI名称
+WRT_SSID: WRT_SSID:owt
+#默认WIFI密码#默认WIFI密码
+WRT_WORD: 17773407088
+#默认地址#默认地址
+WRT_IP: 192.168.10.1
+#默认密码，仅作提示，修改无用#默认密码，仅作提示，修改无用
+WRT_PW: WRT_PW：无
+#源码链接#源码链接
+WRT_REPO: WRT_REPO:HTTPS://github.com/${{矩阵.来源}}.git://github.com/${{矩阵.来源}}.git
+#源码分支#源码分支
+WRT_BRANCH：${{矩阵.分支}}
+#源码名称
+WRT_SOURCE：${{矩阵.来源}}
+#插件调整
+WRT_PACKAGE：${{输入.包}}
+#仅输出配置文件
+WRT_TEST：${{输入.测试}}
