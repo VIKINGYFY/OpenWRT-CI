@@ -16,7 +16,7 @@ permissions: write-all
 
 jobs:
   auto_clean:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Delete old Releases and Workflows
         uses: ophub/delete-releases-workflows@main
