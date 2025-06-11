@@ -222,7 +222,14 @@ jobs:
             make clean -j$(nproc)
           fi
 
-  
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: ipq6000${{ env.WRT_DATE }}
+          path: ./wrt/upload/
+        
+          
       - name: Release Firmware
         uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631
         with:
