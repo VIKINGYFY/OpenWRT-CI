@@ -224,7 +224,6 @@ jobs:
 
       - name: Upload firmware directory
         uses: actions/upload-artifact@main
-        if: steps.organize.outputs.status == 'success' && !cancelled()
         with:
           name: ${{env.WRT_CONFIG}}-${{ env.WRT_DATE }}
           path: ./wrt/upload/
