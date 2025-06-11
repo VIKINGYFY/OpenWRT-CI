@@ -1,5 +1,5 @@
 #CI项目
-name: NSS-immortalwrt-My
+name: my-NSS-immortalwrt
 
 #CI计划
 on:
