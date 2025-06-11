@@ -1,5 +1,5 @@
 #云编译公用核心
-name: WRT-CORE-my
+name: my-WRT-CORE
 
 on:
   workflow_call:
