@@ -85,15 +85,3 @@ if [ -f "$DM_FILE" ]; then
 
 	cd $PKG_PATH && echo "diskman has been fixed!"
 fi
-
-#修复rpcsvc-proto编译失败
-RP_PATH="../feeds/packages/libs/rpcsvc-proto"
-if [ -d "$RP_PATH" ]; then
-	echo " "
-
-	cd $RP_PATH && mkdir -p patches && cd ./patches
-
-	curl -sL -o "0001-po-update-for-gettext-0.22.patch" https://raw.githubusercontent.com/neheb/packages/refs/heads/mangix/libs/rpcsvc-proto/patches/0001-po-update-for-gettext-0.22.patch
-
-	cd $PKG_PATH && echo "rpcsvc-proto has been fixed!"
-fi
