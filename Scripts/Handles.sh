@@ -82,6 +82,7 @@ if [ -f "$DM_FILE" ]; then
 	echo " "
 
 	sed -i 's/fs-ntfs/fs-ntfs3/g' $DM_FILE
+	sed -i '/ntfs-3g-utils /d' $DM_FILE
 
 	cd $PKG_PATH && echo "diskman has been fixed!"
 fi
