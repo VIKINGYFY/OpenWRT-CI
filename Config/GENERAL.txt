@@ -1,3 +1,8 @@
+#ACME
+CONFIG_PACKAGE_luci-app-acme=y
+CONFIG_PACKAGE_acme-acmesh-dnsapi=y
+#uhttpd luci package
+CONFIG_PACKAGE_luci-app-uhttpd=y
 #smartdns
 CONFIG_PACKAGE_luci-app-smartdns=y
 #haproxy
