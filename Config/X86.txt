@@ -27,3 +27,6 @@ CONFIG_PACKAGE_kmod-hwmon-w83627hf=y
 CONFIG_PACKAGE_kmod-w83627hf-wdt=y
 #插件调整
 CONFIG_PACKAGE_luci-app-dockerman=y
+#使用OPKG
+CONFIG_USE_APK=n
+CONFIG_PACKAGE_opkg=y
