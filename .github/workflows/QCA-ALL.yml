@@ -1,6 +1,9 @@
 #CI项目
 name: QCA-ALL
 
+env:
+  DEBIAN_FRONTEND: noninteractive
+
 #CI计划
 on:
   #自动编译：当Auto-Clean运行完成后
