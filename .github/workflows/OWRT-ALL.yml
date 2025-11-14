@@ -32,7 +32,8 @@ jobs:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        CONFIG: [MEDIATEK, ROCKCHIP, X86]
+        #CONFIG: [MEDIATEK, ROCKCHIP, X86]
+        CONFIG: [X86]
         SOURCE: [VIKINGYFY/immortalwrt]
         BRANCH: [owrt]
 
