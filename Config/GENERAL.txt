@@ -10,6 +10,8 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-wolplus=y
 CONFIG_PACKAGE_luci-app-dockerman=y
+CONFIG_PACKAGE_open-app-filter=y
+CONFIG_PACKAGE_netspeedtest=y
 
 #删除插件
 CONFIG_PACKAGE_luci-app-wol=n
