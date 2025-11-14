@@ -101,8 +101,8 @@ jobs:
             git fetch --depth=1 origin $WRT_BRANCH
             git reset --hard FETCH_HEAD
           else
-          echo "目录不存在，克隆仓库"
-          git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
+            echo "目录不存在，克隆仓库"
+            git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
           fi
   
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
