@@ -30,11 +30,11 @@ UPDATE_PACKAGE() {
 
 	# 克隆 GitHub 仓库
 	if [ -d "$(basename $PKG_REPO)" ]; then
-      echo "仓库已存在，执行更新..."
+      echo "Repository already exists, executing update..."
       git -C "$(basename $PKG_REPO)" fetch --all
       git -C "$(basename $PKG_REPO)" reset --hard "origin/$PKG_BRANCH"
   else
-      echo "仓库不存在，正在克隆..."
+      echo "Repository does not exist, cloning..."
       git clone --depth=1 --single-branch --branch $PKG_BRANCH "https://github.com/$PKG_REPO.git"
   fi
 

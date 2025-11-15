@@ -96,12 +96,12 @@ jobs:
       - name: Clone Code
         run: |
           if [ -d "./wrt/.git" ]; then
-            echo "目录已存在，更新仓库"
+            echo "Directory already exists, update repository"
             cd ./wrt
             git fetch --depth=1 origin $WRT_BRANCH
             git reset --hard FETCH_HEAD
           else
-            echo "目录不存在，克隆仓库"
+            echo "Directory does not exist, clone repository"
             git clone --depth=1 --single-branch --branch $WRT_BRANCH $WRT_REPO ./wrt/
           fi
   
