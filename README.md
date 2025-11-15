@@ -7,7 +7,15 @@ https://github.com/immortalwrt/immortalwrt.git
 高通版：
 https://github.com/VIKINGYFY/immortalwrt.git
 
-# 固件简要说明：
+# U-BOOT
+
+高通版：
+https://github.com/chenxin527/uboot-ipq60xx-emmc-build
+
+联发科版：
+https://drive.wrt.moe/uboot/mediatek
+
+# 固件简要说明
 
 固件每天早上4点自动编译。
 
@@ -15,7 +23,7 @@ https://github.com/VIKINGYFY/immortalwrt.git
 
 MEDIATEK系列、QUALCOMMAX系列、ROCKCHIP系列、X86系列。
 
-# 目录简要说明：
+# 目录简要说明
 
 workflows——自定义CI配置
 
