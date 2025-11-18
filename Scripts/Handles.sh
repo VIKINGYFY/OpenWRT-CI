@@ -85,13 +85,3 @@ if [ -f "$DM_FILE" ]; then
 
 	cd $PKG_PATH && echo "diskman has been fixed!"
 fi
-
-#移除luci-app-attendedsysupgrade概览页面
-ASU_FILE=$(find ../feeds/luci/applications/luci-app-attendedsysupgrade/ -type f -name "11_upgrades.js")
-if [ -f "$ASU_FILE" ]; then
-	echo " "
-
-	rm -rf $ASU_FILE
-
-	cd $PKG_PATH && echo "attendedsysupgrade has been fixed!"
-fi
