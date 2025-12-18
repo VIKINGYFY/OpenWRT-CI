@@ -6,16 +6,30 @@ on:
   #手动编译
   workflow_dispatch:
     inputs:
-      TARGET:
+      CONFIG:
         default: 'MEDIATEK'
         required: true
         type: choice
-        options: [MEDIATEK, ROCKCHIP, X86, IPQ60XX-WIFI-YES, IPQ60XX-WIFI-NO, IPQ807X-WIFI-YES, IPQ807X-WIFI-NO]
+        options:
+          - MEDIATEK
+          - ROCKCHIP
+          - X86
+          - IPQ50XX-WIFI-YES
+          - IPQ50XX-WIFI-NO
+          - IPQ60XX-WIFI-YES
+          - IPQ60XX-WIFI-NO
+          - IPQ807X-WIFI-YES
+          - IPQ807X-WIFI-NO
+          - TEST
       SOURCE:
         default: 'VIKINGYFY/immortalwrt'
         required: true
         type: choice
-        options: [VIKINGYFY/immortalwrt, immortalwrt/immortalwrt, King-Of-Knights/openwrt-6.x, LiBwrt-op/openwrt-6.x]
+        options:
+          - VIKINGYFY/immortalwrt
+          - immortalwrt/immortalwrt
+          - LiBwrt/openwrt-6.x
+          - qosmio/openwrt-ipq
       BRANCH:
         default: 'main'
         required: true
@@ -35,18 +49,20 @@ permissions: write-all
 #CI任务
 jobs:
   config:
-    name: ${{inputs.TARGET}}
+    name: ${{inputs.CONFIG}}
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译平台
-      WRT_TARGET: ${{inputs.TARGET}}
+      #编译配置
+      WRT_CONFIG: ${{inputs.CONFIG}}
       #默认主题
-      WRT_THEME: argon
+      WRT_THEME: aurora
       #默认主机名
       WRT_NAME: OWRT
-      #默认WIFI名
-      WRT_WIFI: OWRT
+      #默认WIFI名称
+      WRT_SSID: OWRT
+      #默认WIFI密码
+      WRT_WORD: 12345678
       #默认地址
       WRT_IP: 192.168.10.1
       #默认密码，仅作提示，修改无用

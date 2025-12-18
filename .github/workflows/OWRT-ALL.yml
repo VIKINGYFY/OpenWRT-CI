@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       PACKAGE:
-        description: '手动调整插件包，仅限一个。'
+        description: '手动调整插件包，多个请用\n符号隔开。'
         required: false
         type: string
       TEST:
@@ -27,25 +27,28 @@ permissions: write-all
 #CI任务
 jobs:
   config:
-    name: ${{matrix.TARGET}}
+    name: ${{matrix.CONFIG}}
     strategy:
       fail-fast: false
       #max-parallel: 3
       matrix:
-        TARGET: [MEDIATEK, ROCKCHIP, X86]
+        CONFIG: [MEDIATEK, ROCKCHIP, X86]
         SOURCE: [VIKINGYFY/immortalwrt]
+        BRANCH: [owrt]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译平台
-      WRT_TARGET: ${{matrix.TARGET}}
+      #编译配置
+      WRT_CONFIG: ${{matrix.CONFIG}}
       #默认主题
-      WRT_THEME: argon
+      WRT_THEME: aurora
       #默认主机名
       WRT_NAME: OWRT
-      #默认WIFI名
-      WRT_WIFI: OWRT
+      #默认WIFI名称
+      WRT_SSID: OWRT
+      #默认WIFI密码
+      WRT_WORD: 12345678
       #默认地址
       WRT_IP: 192.168.10.1
       #默认密码，仅作提示，修改无用
@@ -53,7 +56,7 @@ jobs:
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
-      WRT_BRANCH: ${{matrix.BRANCH || 'owrt'}}
+      WRT_BRANCH: ${{matrix.BRANCH}}
       #源码名称
       WRT_SOURCE: ${{matrix.SOURCE}}
       #插件调整

@@ -1,0 +1,21 @@
+name: Cache-Clean
+
+on:
+  schedule:
+    - cron: 0 20 * * 0
+  workflow_dispatch:
+
+permissions: write-all
+
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Projects
+        uses: actions/checkout@main
+
+      - name: Cache Clean
+        run: gh cache delete --all
