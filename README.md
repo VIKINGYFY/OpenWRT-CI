@@ -1,10 +1,11 @@
 # OpenWRT-CI
-云编译OpenWRT固件
 
 官方版：
+
 https://github.com/immortalwrt/immortalwrt.git
 
 高通版：
+
 https://github.com/VIKINGYFY/immortalwrt.git
 
 # U-BOOT
@@ -12,6 +13,8 @@ https://github.com/VIKINGYFY/immortalwrt.git
 高通版：
 
 https://github.com/chenxin527/uboot-ipq60xx-emmc-build
+
+https://github.com/chenxin527/uboot-ipq60xx-nand-build
 
 https://github.com/chenxin527/uboot-ipq60xx-nor-build
 
