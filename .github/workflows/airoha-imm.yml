@@ -1,5 +1,5 @@
 #CI项目
-name: OWRT-ALL
+name: airoha-imm
 
 #CI计划
 on:
