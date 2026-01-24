@@ -40,6 +40,11 @@ on:
       WRT_TEST:
         required: false
         type: string
+      WRT_SAVE_PKGS:
+        description: '是否打包所有 IPK 文件作为软件源'
+        required: false
+        type: boolean
+        default: false
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -208,8 +213,20 @@ jobs:
             echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
             echo "WRT_LIST=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^luci-(app|theme)[^ ]*' {} \; | tr '\n' ' ')" >> $GITHUB_ENV
 
-            find ./bin/targets/ -iregex ".*\(buildinfo\|json\|sha256sums\|packages\)$" -exec rm -rf {} +
-
+            if [[ "${{ inputs.WRT_SAVE_PKGS }}" == "true" ]]; then
+                echo "检测到 WRT_SAVE_PKGS=true，正在打包所有软件包..."
+                # 创建专门的目录
+                mkdir -p ./upload/packages
+                # 打包 bin/packages (架构无关包) 和 bin/targets (内核相关包)
+                # 使用 tar 保留目录结构，方便解压后直接作为软件源目录
+                tar -czvf ./upload/All_Packages.tar.gz bin/packages bin/targets
+                
+                # 注意：打包后我们就不删除 bin 目录了，以免影响后续可能的 ImageBuilder 操作
+            else
+                # 原有逻辑：如果不需要做源，就删除 buildinfo/json/packages 等无用文件以减小体积
+                find ./bin/targets/ -iregex ".*\(buildinfo\|json\|sha256sums\|packages\)$" -exec rm -rf {} +
+            fi
+            
             for FILE in $(find ./bin/targets/ -type f -iname "*$WRT_TARGET*") ; do
               EXT=$(basename $FILE | cut -d '.' -f 2-)
               NAME=$(basename $FILE | cut -d '.' -f 1 | grep -io "\($WRT_TARGET\).*")
