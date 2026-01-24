@@ -13,12 +13,12 @@ jobs:
   auto_clean:
     runs-on: ubuntu-latest
     steps:
-      - name: Delete old Releases and Workflows
+      - name: Delete old Releases
         uses: ophub/delete-releases-workflows@main
         with:
           gh_token: ${{secrets.GITHUB_TOKEN}}
           delete_releases: true
           releases_keep_latest: 0
           delete_tags: true
-          delete_workflows: true
+          delete_workflows: false
           workflows_keep_day: 0
