@@ -440,16 +440,16 @@ CONFIG_TARGET_INIT_CMD="/sbin/init"
 CONFIG_TARGET_INIT_SUPPRESS_STDERR=y
 # CONFIG_VERSIONOPT is not set
 CONFIG_PER_FEED_REPO=y
-# CONFIG_FEED_packages is not set
-# CONFIG_FEED_luci is not set
-# CONFIG_FEED_routing is not set
-# CONFIG_FEED_telephony is not set
+CONFIG_FEED_packages is not set
+CONFIG_FEED_luci is not set
+CONFIG_FEED_routing is not set
+CONFIG_FEED_telephony is not set
 # CONFIG_FEED_video is not set
 CONFIG_FEED_qmodem=y
 CONFIG_FEED_kenzo=y
 CONFIG_FEED_small=y
 CONFIG_FEED_rtp=y
-CONFIG_FEED_easytier=y
+# CONFIG_FEED_easytier is not set222
 
 #
 # Base system
@@ -3682,8 +3682,8 @@ CONFIG_PHP8_INTL=y
 #
 # Ruby
 #
-CONFIG_PACKAGE_ruby=y
-CONFIG_RUBY_ENABLE_YJIT=y
+# CONFIG_PACKAGE_ruby is not set
+# CONFIG_RUBY_ENABLE_YJIT is not set
 
 #
 # Standard Library
@@ -3692,21 +3692,21 @@ CONFIG_RUBY_ENABLE_YJIT=y
 # CONFIG_PACKAGE_ruby-abbrev is not set
 # CONFIG_PACKAGE_ruby-base64 is not set
 # CONFIG_PACKAGE_ruby-benchmark is not set
-CONFIG_PACKAGE_ruby-bigdecimal=y
+# CONFIG_PACKAGE_ruby-bigdecimal is not set
 # CONFIG_PACKAGE_ruby-bundler is not set
 # CONFIG_PACKAGE_ruby-cgi is not set
 # CONFIG_PACKAGE_ruby-continuation is not set
 # CONFIG_PACKAGE_ruby-coverage is not set
 # CONFIG_PACKAGE_ruby-csv is not set
-CONFIG_PACKAGE_ruby-date=y
+# CONFIG_PACKAGE_ruby-date is not set
 # CONFIG_PACKAGE_ruby-debug is not set
 # CONFIG_PACKAGE_ruby-delegate is not set
 # CONFIG_PACKAGE_ruby-dev is not set
 # CONFIG_PACKAGE_ruby-did-you-mean is not set
-CONFIG_PACKAGE_ruby-digest=y
+# CONFIG_PACKAGE_ruby-digest is not set
 # CONFIG_RUBY_DIGEST_USE_OPENSSL is not set
 # CONFIG_PACKAGE_ruby-drb is not set
-CONFIG_PACKAGE_ruby-enc=y
+# CONFIG_PACKAGE_ruby-enc is not set
 # CONFIG_PACKAGE_ruby-enc-extra is not set
 # CONFIG_PACKAGE_ruby-english is not set
 # CONFIG_PACKAGE_ruby-erb is not set
@@ -3753,8 +3753,8 @@ CONFIG_PACKAGE_ruby-enc=y
 # CONFIG_PACKAGE_ruby-prettyprint is not set
 # CONFIG_PACKAGE_ruby-prime is not set
 # CONFIG_PACKAGE_ruby-prism is not set
-CONFIG_PACKAGE_ruby-pstore=y
-CONFIG_PACKAGE_ruby-psych=y
+# CONFIG_PACKAGE_ruby-pstore is not set
+# CONFIG_PACKAGE_ruby-psych is not set
 # CONFIG_PACKAGE_ruby-pty is not set
 # CONFIG_PACKAGE_ruby-racc is not set
 # CONFIG_PACKAGE_ruby-rake is not set
@@ -3779,7 +3779,7 @@ CONFIG_PACKAGE_ruby-psych=y
 # CONFIG_PACKAGE_ruby-shellwords is not set
 # CONFIG_PACKAGE_ruby-singleton is not set
 # CONFIG_PACKAGE_ruby-socket is not set
-CONFIG_PACKAGE_ruby-stringio=y
+# CONFIG_PACKAGE_ruby-stringio is not set
 # CONFIG_PACKAGE_ruby-strscan is not set
 # CONFIG_PACKAGE_ruby-syntax_suggest is not set
 # CONFIG_PACKAGE_ruby-syslog is not set
@@ -5239,7 +5239,7 @@ CONFIG_PACKAGE_luci-app-firewall=y
 # CONFIG_PACKAGE_luci-app-gost is not set
 # CONFIG_PACKAGE_luci-app-guest-wifi is not set
 # CONFIG_PACKAGE_luci-app-hd-idle is not set
-CONFIG_PACKAGE_luci-app-homeproxy=y
+# CONFIG_PACKAGE_luci-app-homeproxy is not set
 # CONFIG_PACKAGE_luci-app-https-dns-proxy is not set
 # CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set
 # CONFIG_PACKAGE_luci-app-irqbalance is not set
@@ -5251,7 +5251,7 @@ CONFIG_PACKAGE_luci-app-homeproxy=y
 # CONFIG_PACKAGE_luci-app-libreswan is not set
 # CONFIG_PACKAGE_luci-app-lldpd is not set
 # CONFIG_PACKAGE_luci-app-lorawan-basicstation is not set
-CONFIG_PACKAGE_luci-app-lucky=y
+# CONFIG_PACKAGE_luci-app-lucky is not set
 # CONFIG_PACKAGE_luci-app-microsocks is not set
 # CONFIG_PACKAGE_luci-app-minidlna is not set
 # CONFIG_PACKAGE_luci-app-mjpg-streamer is not set
@@ -5279,7 +5279,7 @@ CONFIG_PACKAGE_luci-app-lucky=y
 # CONFIG_PACKAGE_luci-app-olsr-services is not set
 # CONFIG_PACKAGE_luci-app-olsr-viz is not set
 # CONFIG_PACKAGE_luci-app-omcproxy is not set
-CONFIG_PACKAGE_luci-app-openclash=y
+# CONFIG_PACKAGE_luci-app-openclash is not set
 # CONFIG_PACKAGE_luci-app-openlist is not set
 # CONFIG_PACKAGE_luci-app-openlist2 is not set
 # CONFIG_PACKAGE_luci-app-openthread is not set
@@ -5581,7 +5581,7 @@ CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-diskman-pl is not set
 CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-diskman-zh-tw is not set
-CONFIG_PACKAGE_luci-i18n-easytier-zh-cn=y
+# CONFIG_PACKAGE_luci-i18n-easytier-zh-cn  is not set
 # CONFIG_PACKAGE_luci-i18n-firewall-ar is not set
 # CONFIG_PACKAGE_luci-i18n-firewall-bg is not set
 # CONFIG_PACKAGE_luci-i18n-firewall-bn is not set
@@ -5620,8 +5620,8 @@ CONFIG_PACKAGE_luci-i18n-easytier-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-firewall-yua is not set
 CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y
 # CONFIG_PACKAGE_luci-i18n-firewall-zh-tw is not set
-CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-lucky-zh-cn=y
+# CONFIG_PACKAGE_luci-i18n-homeproxy-zh-cn is not set
+# CONFIG_PACKAGE_luci-i18n-lucky-zh-cn is not set
 # CONFIG_PACKAGE_luci-i18n-package-manager-ar is not set
 # CONFIG_PACKAGE_luci-i18n-package-manager-bg is not set
 # CONFIG_PACKAGE_luci-i18n-package-manager-bn is not set
@@ -6562,7 +6562,7 @@ CONFIG_PACKAGE_cgi-io=y
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-nat is not set
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir is not set
 # CONFIG_PACKAGE_shadowsocksr-libev-ssr-server is not set
-CONFIG_PACKAGE_sing-box=y
+# CONFIG_PACKAGE_sing-box is not set
 # CONFIG_PACKAGE_sing-box-tiny is not set
 # CONFIG_PACKAGE_sockd is not set
 # CONFIG_PACKAGE_socksify is not set
@@ -6790,7 +6790,7 @@ CONFIG_PACKAGE_ipset=y
 CONFIG_PACKAGE_libipset=y
 # CONFIG_PACKAGE_libndp is not set
 # CONFIG_PACKAGE_linknx is not set
-CONFIG_PACKAGE_lucky=y
+# CONFIG_PACKAGE_lucky=y is not set
 # CONFIG_PACKAGE_lynx is not set
 # CONFIG_PACKAGE_mac-telnet-client is not set
 # CONFIG_PACKAGE_mac-telnet-discover is not set
