@@ -33,7 +33,7 @@ jobs:
       #max-parallel: 3
       matrix:
         CONFIG: [Airoha_test]
-        SOURCE: [immortalwrt/immortalwrt]
+        SOURCE: [bingoguo93/immortalwrt]
         BRANCH: [openwrt-25.12]
 
     #调用公用编译核心WRT-CORE.yml
