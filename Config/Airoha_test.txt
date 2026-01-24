@@ -440,10 +440,10 @@ CONFIG_TARGET_INIT_CMD="/sbin/init"
 CONFIG_TARGET_INIT_SUPPRESS_STDERR=y
 # CONFIG_VERSIONOPT is not set
 CONFIG_PER_FEED_REPO=y
-CONFIG_FEED_packages is not set
-CONFIG_FEED_luci is not set
-CONFIG_FEED_routing is not set
-CONFIG_FEED_telephony is not set
+CONFIG_FEED_packages=y
+CONFIG_FEED_luci=y
+CONFIG_FEED_routing=y
+CONFIG_FEED_telephony=y
 # CONFIG_FEED_video is not set
 CONFIG_FEED_qmodem=y
 CONFIG_FEED_kenzo=y
