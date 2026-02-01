@@ -219,11 +219,20 @@ jobs:
                 mkdir -p ./upload/packages
                 # 打包 bin/packages (架构无关包) 和 bin/targets (内核相关包)
                 # 使用 tar 保留目录结构，方便解压后直接作为软件源目录
+                # 1. 打包所有包 (会包含 ipk 和 apk)
                 tar -czvf ./upload/All_Packages.tar.gz bin/packages bin/targets
                 
-                # 注意：打包后我们就不删除 bin 目录了，以免影响后续可能的 ImageBuilder 操作
+                # 2. 【关键修改】清理散乱的软件包
+                echo "清理散乱的软件包文件..."
+                # 删除通用的 packages 目录
+                rm -rf bin/packages
+                # 递归删除 bin/targets 下所有的 .ipk 和 .apk 文件
+                # 注意：这里增加了 -o -name "*.apk" 来匹配新格式
+                find bin/targets/ -type f \( -name "*.ipk" -o -name "*.apk" \) -exec rm -rf {} +
+                
+                echo "软件源打包完成，散乱插件已清理。"
             else
-                # 原有逻辑：如果不需要做源，就删除 buildinfo/json/packages 等无用文件以减小体积
+                # 不需要做源时，清理所有非固件文件
                 find ./bin/targets/ -iregex ".*\(buildinfo\|json\|sha256sums\|packages\)$" -exec rm -rf {} +
             fi
             
