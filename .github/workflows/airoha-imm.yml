@@ -34,7 +34,7 @@ jobs:
       matrix:
         CONFIG: [Airoha_test]
         SOURCE: [w1426421352/immortalwrt]
-        BRANCH: [openwrt-25.12]
+        BRANCH: [immortalwrt-24.10-npu-mod]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
