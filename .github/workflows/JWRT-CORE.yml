@@ -172,7 +172,6 @@ jobs:
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
           if [ "$WRT_KMODS" == 'true' ]; then
-            cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt > .config
             echo "CONFIG_ALL_KMODS=y" >> .config
           fi
           echo "before settings -------------------"
