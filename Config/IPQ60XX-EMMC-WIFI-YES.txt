@@ -53,3 +53,4 @@ CONFIG_PACKAGE_mii-tool=y
 CONFIG_PACKAGE_git=y
 CONFIG_PACKAGE_openldap-server=y
 CONFIG_PACKAGE_openldap-utils=y
+CONFIG_PACKAGE_ppp-mod-pptp=y
