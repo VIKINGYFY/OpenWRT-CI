@@ -168,7 +168,6 @@ jobs:
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
           echo "before settings -------------------"
-          cat .config
           $GITHUB_WORKSPACE/Scripts/Settings.sh
           echo "after settings -------------------"
           cat .config
@@ -206,6 +205,11 @@ jobs:
           cd ./wrt/ && mkdir ./upload/
 
           cp -f ./.config ./upload/Config-"$WRT_CONFIG"-"$WRT_INFO"-"$WRT_BRANCH"-"$WRT_DATE".txt
+          # 要打包的文件要提前拷出来,不然后面代码会清理掉
+          find ./bin/targets/ -name "packages" -type d -exec tar -cjf packages.tar.bz2 -C {} . \;
+          tar -jcf dl.tar.bz2 dl
+          mv packages.tar.bz2 ./upload/ 2>/dev/null
+          mv dl.tar.bz2 ./upload/ 2>/dev/null
 
           if [[ $WRT_TEST != 'true' ]]; then
             echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
@@ -221,7 +225,6 @@ jobs:
             done
 
             find ./bin/targets/ -type f -exec mv -f {} ./upload/ \;
-
             make clean -j$(nproc)
           fi
 
@@ -247,8 +250,8 @@ jobs:
             登录地址：${{env.WRT_IP}}
             登录密码：${{env.WRT_PW}}
 
-            WIFI名称：${{env.WRT_SSID}}
-            WIFI密码：${{env.WRT_WORD}}
+            WIFI名称: ${{env.WRT_SSID}}
+            WIFI密码: ${{env.WRT_WORD}}
 
             内核版本：${{env.WRT_KVER}}
             插件列表：${{env.WRT_LIST}}
