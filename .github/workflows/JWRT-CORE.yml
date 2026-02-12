@@ -40,6 +40,9 @@ on:
       WRT_TEST:
         required: false
         type: string
+      WRT_KMODS:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -55,6 +58,7 @@ env:
   WRT_SOURCE: ${{inputs.WRT_SOURCE}}
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
+  WRT_KMODS: ${{inputs.WRT_KMODS}}
 
 jobs:
   core:
@@ -167,6 +171,10 @@ jobs:
           else
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
+          if [ "$WRT_KMODS" == 'true' ]; then
+            cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt > .config
+            echo "CONFIG_ALL_KMODS=y" >> .config
+          fi
           echo "before settings -------------------"
           $GITHUB_WORKSPACE/Scripts/Settings.sh
           echo "after settings -------------------"
@@ -185,7 +193,6 @@ jobs:
         if: env.WRT_TEST != 'true'
         run: |
           cd ./wrt/
-
           make -j$(nproc) || make -j1 V=s
 
       - name: Machine Information
@@ -205,13 +212,20 @@ jobs:
           cd ./wrt/ && mkdir ./upload/
 
           cp -f ./.config ./upload/Config-"$WRT_CONFIG"-"$WRT_INFO"-"$WRT_BRANCH"-"$WRT_DATE".txt
-          # 要打包的文件要提前拷出来,不然后面代码会清理掉
-          find ./bin/targets/ -name "packages" -type d -exec tar -cjf packages.tar.bz2 -C {} . \;
-          tar -jcf dl.tar.bz2 dl
-          mv packages.tar.bz2 ./upload/ 2>/dev/null
-          mv dl.tar.bz2 ./upload/ 2>/dev/null
-
           if [[ $WRT_TEST != 'true' ]]; then
+            # 要打包的文件要提前拷出来,不然后面代码会清理掉
+            find ./bin/targets/ -name "packages" -type d -exec tar -cjf packages.tar.bz2 -C {} . \;
+            tar -jcf dl.tar.bz2 dl
+            FILE_SIZE=$(stat -c%s "dl.tar.bz2")
+            if [ $FILE_SIZE -gt $((2*1024*1024*1024)) ]; then
+              echo "下载文件过大，进行分割..."
+              split -b 2G dl.tar.bz2 dl.tar.bz2.part-
+              rm -f dl.tar.bz2
+              mv dl.tar.bz2.part-* ./upload/
+            fi
+            mv dl.tar.bz2 ./upload/
+            mv packages.tar.bz2 ./upload/
+
             echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
             echo "WRT_LIST=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^luci-(app|theme)[^ ]*' {} \; | tr '\n' ' ')" >> $GITHUB_ENV
 
