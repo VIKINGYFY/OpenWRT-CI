@@ -57,3 +57,4 @@ CONFIG_PACKAGE_ppp-mod-pptp=y
 CONFIG_PACKAGE_strongswan-full=y
 CONFIG_PACKAGE_strongswan=y
 CONFIG_PACKAGE_strongswan-swanctl=y
+CONFIG_PACKAGE_luci-app-strongswan-swanctl=y
