@@ -1,5 +1,5 @@
 #云编译公用核心
-name: WRT-CORE
+name: JWRT-CORE
 
 on:
   workflow_call:
@@ -170,9 +170,6 @@ jobs:
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt >> .config
           else
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
-          fi
-          if [ "$WRT_KMODS" == 'true' ]; then
-            echo "CONFIG_ALL_KMODS=y" >> .config
           fi
           echo "before settings -------------------"
           $GITHUB_WORKSPACE/Scripts/Settings.sh
