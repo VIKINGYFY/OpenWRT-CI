@@ -43,6 +43,9 @@ on:
       WRT_KMODS:
         required: false
         type: string
+      WRT_EXTRA:
+        required: false
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -59,6 +62,7 @@ env:
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
   WRT_KMODS: ${{inputs.WRT_KMODS}}
+  WRT_EXTRA: ${{inputs.WRT_EXTRA}}
 
 jobs:
   core:
@@ -171,6 +175,9 @@ jobs:
           else
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
+          if [ "$WRT_EXTRA" == 'true' ]; then
+            cat $GITHUB_WORKSPACE/Config/$PACKAGE_EXTRA.txt >> .config
+          fi
           echo "before settings -------------------"
           $GITHUB_WORKSPACE/Scripts/Settings.sh
           echo "after settings -------------------"
@@ -192,7 +199,7 @@ jobs:
           if [ "$WRT_KMODS" != 'true' ]; then
             make -j$(nproc) || make -j1 V=s
           else
-            make package/kernel/linux/compile -j$(nproc)
+            make package/kernel/linux/compile -j$(nproc) || make package/kernel/linux/compile -j1 V=s
           fi
 
       - name: Machine Information

@@ -47,6 +47,12 @@ on:
         type: boolean
       KMODS:
         default: 'false'
+        description: '是否启用内核模块编译，启用后会编译所有内核模块。'
+        required: true
+        type: boolean
+      EXTRA:
+        description: '是否启用额外配置，启用后会将Config目录下与编译配置同名的文件内容追加到.config末尾，适用于需要额外配置的情况。'
+        default: 'false'
         required: true
         type: boolean
 
@@ -85,3 +91,4 @@ jobs:
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST}}
       WRT_KMODS: ${{inputs.KMODS}}
+      WRT_EXTRA: ${{inputs.EXTRA}}
