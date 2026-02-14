@@ -178,6 +178,7 @@ jobs:
           if [ "$WRT_EXTRA" == 'true' ]; then
             cat $GITHUB_WORKSPACE/Config/PACKAGE_EXTRA.txt >> .config
           fi
+          echo "CONFIG_VERSION_REPO='https://mirrors.vsean.net/openwrt/releases/snapshots'" >> .config
           echo "before settings -------------------"
           $GITHUB_WORKSPACE/Scripts/Settings.sh
           echo "after settings -------------------"
