@@ -39,3 +39,4 @@ CONFIG_PACKAGE_strongswan-swanctl=y
 CONFIG_PACKAGE_luci-app-strongswan-swanctl=y
 CONFIG_PACKAGE_xfrm=y
 CONFIG_PACKAGE_luci-app-acme=y
+CONFIG_PACKAGE_luci-proto-xfrm=y
