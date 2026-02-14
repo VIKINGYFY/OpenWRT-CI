@@ -176,7 +176,7 @@ jobs:
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
           fi
           if [ "$WRT_EXTRA" == 'true' ]; then
-            cat $GITHUB_WORKSPACE/Config/$PACKAGE_EXTRA.txt >> .config
+            cat $GITHUB_WORKSPACE/Config/PACKAGE_EXTRA.txt >> .config
           fi
           echo "before settings -------------------"
           $GITHUB_WORKSPACE/Scripts/Settings.sh
