@@ -43,4 +43,4 @@ CONFIG_PACKAGE_luci-proto-xfrm=y
 
 CONFIG_IMAGEOPT=y
 CONFIG_VERSIONOPT=y
-CONFIG_VERSION_REPO="https://mirrors.vsean.net/openwrt/releases/snapshots"
+CONFIG_VERSION_REPO="https://mirrors.vsean.net/openwrt/snapshots"

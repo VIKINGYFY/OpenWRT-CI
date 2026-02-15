@@ -15,3 +15,21 @@ CONFIG_PACKAGE_wpad-openssl=n
 CONFIG_PACKAGE_hostapd-common=n
 CONFIG_PACKAGE_kmod-ath10k-sdio=n
 CONFIG_PACKAGE_kmod-gpio-button-hotplug=n
+
+CONFIG_PACKAGE_kmod-qca-nss-drv-igs=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-l2tpv2=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-lag-mgr=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-map-t=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-pppoe=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-pptp=y
+CONFIG_PACKAGE_kmod-qca-nss-drv-qdisc=y
+
+CONFIG_TARGET_OPTIMIZATION="-O3 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53"
+
+CONFIG_BUSYBOX_CUSTOM=y
+CONFIG_BUSYBOX_CONFIG_LSUSB=y
+CONFIG_TARGET_PER_DEVICE_ROOTFS=y
+CONFIG_ATH11K_MEM_PROFILE_512M=y
+CONFIG_NSS_FIRMWARE_VERSION_12_2=y
+CONFIG_DEVEL=y
+CONFIG_TARGET_OPTIONS=y
