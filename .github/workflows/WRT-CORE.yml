@@ -147,7 +147,8 @@ jobs:
       - name: Update Feeds
         run: |
           cd ./wrt/
-
+          echo 'src-git lucky https://github.com/gdy666/luci-app-lucky' >> feeds.conf.default
+          echo 'src-git adguardhome https://github.com/rufengsuixing/luci-app-adguardhome' >> feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
