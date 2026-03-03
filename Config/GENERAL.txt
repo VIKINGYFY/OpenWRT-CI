@@ -12,7 +12,6 @@ CONFIG_PACKAGE_luci-app-ddns-go=y
 
 #增加插件
 CONFIG_PACKAGE_luci-app-autoreboot=y
-CONFIG_PACKAGE_luci-app-gecoosac=n
 CONFIG_PACKAGE_luci-app-netspeedtest=n
 CONFIG_PACKAGE_luci-app-partexp=n
 CONFIG_PACKAGE_luci-app-samba4=n
