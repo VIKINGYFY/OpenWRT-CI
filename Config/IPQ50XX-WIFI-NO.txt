@@ -8,5 +8,7 @@ CONFIG_PACKAGE_kmod-ath11k=n
 CONFIG_PACKAGE_kmod-ath11k-ahb=n
 CONFIG_PACKAGE_kmod-ath11k-pci=n
 CONFIG_PACKAGE_ath11k-firmware-ipq5018=n
+CONFIG_PACKAGE_ath11k-firmware-ipq5018-ddwrt=n
+CONFIG_PACKAGE_ath11k-firmware-ipq5018-qcn6122=n
 CONFIG_PACKAGE_wpad-openssl=n
 CONFIG_PACKAGE_hostapd-common=n
