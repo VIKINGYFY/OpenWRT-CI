@@ -1,8 +1,13 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026 VIKINGYFY
+
 name: Cache-Clean
 
 on:
+  #自动清理：每周一早上4点
   schedule:
     - cron: 0 20 * * 0
+  #手动清理
   workflow_dispatch:
 
 permissions: write-all
