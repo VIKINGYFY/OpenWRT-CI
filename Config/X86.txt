@@ -28,5 +28,4 @@ CONFIG_PACKAGE_kmod-w83627hf-wdt=y
 #插件调整
 CONFIG_PACKAGE_luci-app-openclash=y
 CONFIG_PACKAGE_luci-app-dockerman=n
-CONFIG_PACKAGE_luci-app-wechatpush=n
-CONFIG_PACKAGE_luci-i18n-wechatpush-zh-cn=n
+
