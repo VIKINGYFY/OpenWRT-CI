@@ -1,13 +1,20 @@
 #科学插件调整
-CONFIG_PACKAGE_luci-app-homeproxy=y
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_luci-app-passwall=y
+
 #增加插件
 CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-gecoosac=y
+CONFIG_PACKAGE_luci-app-netspeedtest=y
 CONFIG_PACKAGE_luci-app-partexp=y
 CONFIG_PACKAGE_luci-app-samba4=y
 CONFIG_PACKAGE_luci-app-tailscale=y
 CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-wolplus=y
+CONFIG_PACKAGE_luci-app-acl=y
+CONFIG_PACKAGE_luci-app-frpc=y
+CONFIG_PACKAGE_luci-app-syncthing=y
+CONFIG_PACKAGE_luci-app-zerotier=y
 #删除插件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
 CONFIG_PACKAGE_luci-app-wol=n
@@ -19,8 +26,8 @@ CONFIG_TARGET_PER_DEVICE_ROOTFS=y
 CONFIG_TARGET_ROOTFS_INITRAMFS=n
 #内核调整
 CONFIG_PACKAGE_kmod-bonding=y
-CONFIG_PACKAGE_kmod-dsa=y
 CONFIG_PACKAGE_kmod-dummy=y
+CONFIG_PACKAGE_kmod-dsa=y
 CONFIG_PACKAGE_kmod-fs-btrfs=y
 CONFIG_PACKAGE_kmod-fuse=y
 CONFIG_PACKAGE_kmod-inet-diag=y
@@ -73,6 +80,7 @@ CONFIG_PACKAGE_kmod-usb-xhci=y
 CONFIG_PACKAGE_kmod-veth=y
 CONFIG_PACKAGE_kmod-wireguard=y
 #组件调整
+CONFIG_PACKAGE_yq=y
 CONFIG_PACKAGE_autocore=y
 CONFIG_PACKAGE_automount=y
 CONFIG_PACKAGE_blkid=y
@@ -85,8 +93,8 @@ CONFIG_PACKAGE_dmesg=y
 CONFIG_PACKAGE_fdisk=y
 CONFIG_PACKAGE_gdisk=y
 CONFIG_PACKAGE_htop=y
-CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_ip-full=y
+CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_libimobiledevice=y
 CONFIG_PACKAGE_lsblk=y
 CONFIG_PACKAGE_luci-base=y
@@ -106,4 +114,3 @@ CONFIG_PACKAGE_sgdisk=y
 CONFIG_PACKAGE_usb-modeswitch=y
 CONFIG_PACKAGE_usbmuxd=y
 CONFIG_PACKAGE_usbutils=y
-CONFIG_PACKAGE_xz-utils=y
