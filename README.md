@@ -1,42 +1,11 @@
-# OpenWRT-CI
+#用的是大佬 https://github.com/VIKINGYFY/OpenWRT-CI 的源码, 增加了几个软件; 
 
-官方版：
+#软件列表:
 
-https://github.com/immortalwrt/immortalwrt.git
+ luci-app-openclash | luci-app-passwall | luci-app-frpc | luci-app-syncthing | luci-app-zerotier  | luci-app-tailscale  | luci-app-samba4 | luci-app-upnp |  luci-app-acl  | uci-app-wolplus |  
 
-高通版：
 
-https://github.com/VIKINGYFY/immortalwrt.git
+# 固件简要说明：
+个人自用固件，jdcloud_re-ss-01，jdcloud_re-cs-02； USB能自动挂载。
 
-# U-BOOT
 
-高通版：
-
-https://github.com/chenxin527/uboot-ipq60xx-emmc-build
-
-https://github.com/chenxin527/uboot-ipq60xx-nand-build
-
-https://github.com/chenxin527/uboot-ipq60xx-nor-build
-
-联发科版：
-
-https://drive.wrt.moe/uboot/mediatek
-
-# 固件简要说明
-
-固件每天早上4点自动编译。
-
-固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
-
-MEDIATEK系列、QUALCOMMAX系列、ROCKCHIP系列、X86系列。
-
-# 目录简要说明
-
-workflows——自定义CI配置
-
-Scripts——自定义脚本
-
-Config——自定义配置
-
-#
-[![Stargazers over time](https://starchart.cc/VIKINGYFY/OpenWRT-CI.svg?variant=adaptive)](https://starchart.cc/VIKINGYFY/OpenWRT-CI)
