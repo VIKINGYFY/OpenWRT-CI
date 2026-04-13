@@ -16,7 +16,6 @@ CONFIG_PACKAGE_luci-app-wolplus=n
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
 CONFIG_PACKAGE_luci-app-sqm=n
 CONFIG_PACKAGE_luci-app-wol=n
-CONFIG_PACKAGE_luci-plugin-2fa=n
 #参数调整
 CONFIG_CCACHE=y
 CONFIG_DEVEL=y
