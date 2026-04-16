@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026 VIKINGYFY
+
 #CI项目
 name: WRT-TEST
 
@@ -14,8 +17,6 @@ on:
           - MEDIATEK
           - ROCKCHIP
           - X86
-          - IPQ50XX-WIFI-YES
-          - IPQ50XX-WIFI-NO
           - IPQ60XX-WIFI-YES
           - IPQ60XX-WIFI-NO
           - IPQ807X-WIFI-YES
