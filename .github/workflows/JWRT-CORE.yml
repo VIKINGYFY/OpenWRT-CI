@@ -230,8 +230,9 @@ jobs:
               split -b 2G dl.tar.bz2 dl.tar.bz2.part-
               rm -f dl.tar.bz2
               mv dl.tar.bz2.part-* ./upload/
+            else
+              mv dl.tar.bz2 ./upload/
             fi
-            mv dl.tar.bz2 ./upload/
             mv packages.tar.bz2 ./upload/
 
             echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
