@@ -227,7 +227,7 @@ jobs:
             FILE_SIZE=$(stat -c%s "dl.tar.bz2")
             if [ $FILE_SIZE -gt $((2*1024*1024*1024)) ]; then
               echo "下载文件过大，进行分割..."
-              split -b 2G dl.tar.bz2 dl.tar.bz2.part-
+              split -b 2047M dl.tar.bz2 dl.tar.bz2.part-
               rm -f dl.tar.bz2
               mv dl.tar.bz2.part-* ./upload/
             else
