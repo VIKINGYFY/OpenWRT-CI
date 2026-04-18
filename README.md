@@ -18,7 +18,11 @@ https://github.com/chenxin527/uboot-ipq60xx-nand-build
 
 https://github.com/chenxin527/uboot-ipq60xx-nor-build
 
-联发科版：
+联发科-全新版：
+
+https://github.com/VIKINGYFY/UBOOT-CI/releases
+
+联发科-官方版：
 
 https://drive.wrt.moe/uboot/mediatek
 
