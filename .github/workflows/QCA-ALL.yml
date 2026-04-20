@@ -49,7 +49,7 @@ jobs:
       #默认主机名
       WRT_NAME: JDCloud
       #默认WIFI名称
-      WRT_SSID: OWRT
+      WRT_SSID: JDCloud
       #默认WIFI密码
       WRT_WORD: we123456
       #默认地址
