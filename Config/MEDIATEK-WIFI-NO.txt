@@ -1,0 +1,15 @@
+#设备平台
+CONFIG_TARGET_mediatek=y
+CONFIG_TARGET_mediatek_filogic=y
+#设备列表
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_supergateway_s20l=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_supergateway_s20m=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_supergateway_s20p=y
+CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zyxel_ex5700-telenor=y
+#WIFI驱动
+CONFIG_PACKAGE_kmod-mac80211=n
+CONFIG_PACKAGE_kmod-mt76-connac=n
+CONFIG_PACKAGE_kmod-mt76-core=n
+CONFIG_PACKAGE_kmod-mt7915e=n
+CONFIG_PACKAGE_hostapd-common=n
+CONFIG_PACKAGE_wpad-openssl=n
