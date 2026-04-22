@@ -6,3 +6,5 @@ CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_jdcloud_re-cp-03=y
 #增加插件
 CONFIG_PACKAGE_luci-app-dockerman=y
 CONFIG_PACKAGE_luci-app-gecoosac=y
+#内核调整
+CONFIG_PACKAGE_kmod-fibocom-qmi-wwan=n
