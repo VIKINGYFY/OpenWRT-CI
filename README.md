@@ -4,7 +4,7 @@
 
 https://github.com/immortalwrt/immortalwrt.git
 
-高通版：
+自用版：
 
 https://github.com/VIKINGYFY/immortalwrt.git
 
