@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: MIT
+# Copyright (C) 2026 VIKINGYFY
+
 #CI项目
 name: WRT-TEST
 
@@ -7,19 +10,18 @@ on:
   workflow_dispatch:
     inputs:
       CONFIG:
-        default: 'MEDIATEK'
+        default: 'MEDIATEK-WIFI-YES'
         required: true
         type: choice
         options:
-          - MEDIATEK
-          - ROCKCHIP
-          - X86
-          - IPQ50XX-WIFI-YES
-          - IPQ50XX-WIFI-NO
           - IPQ60XX-WIFI-YES
           - IPQ60XX-WIFI-NO
           - IPQ807X-WIFI-YES
           - IPQ807X-WIFI-NO
+          - MEDIATEK-WIFI-YES
+          - MEDIATEK-WIFI-NO
+          - ROCKCHIP
+          - X86
           - TEST
       SOURCE:
         default: 'VIKINGYFY/immortalwrt'
