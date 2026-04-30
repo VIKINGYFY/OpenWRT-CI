@@ -22,7 +22,7 @@ on:
           - MEDIATEK-WIFI-YES
           - MEDIATEK-WIFI-NO
           - ROCKCHIP
-          - X86
+          - X86wrt
           - TEST
       SOURCE:
         default: 'VIKINGYFY/immortalwrt'
