@@ -37,7 +37,7 @@ jobs:
       matrix:
         CONFIG: [X86]
         SOURCE: [raver520/immortalwrt]
-        BRANCH: [owrt]
+        BRANCH: [main]
 
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
