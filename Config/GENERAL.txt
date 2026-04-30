@@ -1,3 +1,6 @@
+#主题
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-theme-aurora=n
 #科学插件调整
 CONFIG_PACKAGE_luci-app-homeproxy=y
 #增加插件
