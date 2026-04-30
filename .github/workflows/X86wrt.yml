@@ -36,7 +36,7 @@ jobs:
       #max-parallel: 3
       matrix:
         CONFIG: [X86]
-        SOURCE: [VIKINGYFY/immortalwrt]
+        SOURCE: [raver520/immortalwrt]
         BRANCH: [owrt]
 
     #调用公用编译核心WRT-CORE.yml
