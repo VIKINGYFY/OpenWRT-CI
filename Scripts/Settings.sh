@@ -80,3 +80,14 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 		echo "qualcommax set up nowifi successfully!"
 	fi
 fi
+
+# 修改 DHCP 配置，关闭委派 IPv6 前缀
+DHCP_LAN_CONF="./package/network/services/dnsmasq/files/dhcp.conf"
+if [ -f "$DHCP_LAN_CONF" ]; then
+    # 检查是否已有 ra_delegation 选项，如果有就改为0，如果没有就添加
+    if grep -q "option ra_delegation" "$DHCP_LAN_CONF"; then
+        sed -i 's/option ra_delegation .*/option ra_delegation '\''0'\''/' "$DHCP_LAN_CONF"
+    else
+        sed -i '/config dhcp '\''lan'\''/,/^$/ s/option leasetime.*/&\n\toption ra_delegation '\''0'\''/' "$DHCP_LAN_CONF"
+    fi
+fi
