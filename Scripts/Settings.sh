@@ -52,6 +52,12 @@ if [ -n "$WRT_PACKAGE" ]; then
 	echo -e "$WRT_PACKAGE" >> ./.config
 fi
 
+# 添加自定义插件（新增部分）
+echo "CONFIG_PACKAGE_luci-app-timecontrol=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-i18n-timecontrol-zh-cn=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-app-cpufreq=y" >> ./.config
+echo "CONFIG_PACKAGE_luci-i18n-cpufreq-zh-cn=y" >> ./.config
+
 #无WIFI配置标志
 if [[ "${WRT_CONFIG,,}" == *"wifi"* && "${WRT_CONFIG,,}" == *"no"* ]]; then
 	echo "WRT_WIFI=wifi-no" >> $GITHUB_ENV
