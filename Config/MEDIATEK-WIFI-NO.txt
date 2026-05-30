@@ -11,3 +11,6 @@ CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_supergateway_s20l="-kmod-m
 CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_supergateway_s20m="-kmod-mt76 -kmod-mt76-connac -kmod-mt76-core -kmod-mt7915e -kmod-mt7915-firmware -kmod-mt7916-firmware -kmod-mt7986-firmware -mt7986-wo-firmware"
 CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_supergateway_s20p="-kmod-mt76 -kmod-mt76-connac -kmod-mt76-core -kmod-mt7915e -kmod-mt7915-firmware -kmod-mt7916-firmware -kmod-mt7986-firmware -mt7986-wo-firmware"
 CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_zyxel_ex5700-telenor="-kmod-mt76 -kmod-mt76-connac -kmod-mt76-core -kmod-mt7915e -kmod-mt7915-firmware -kmod-mt7916-firmware -kmod-mt7986-firmware -mt7986-wo-firmware"
+#内核调整
+CONFIG_PACKAGE_kmod-cryptodev=y
+CONFIG_PACKAGE_kmod-tls=y

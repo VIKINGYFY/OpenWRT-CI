@@ -71,3 +71,6 @@ CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zbtlink_zbt-z8106ax-s=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zbtlink_zbt-z8106ax-t=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zbtlink_zbt-z8803be=y
 CONFIG_TARGET_DEVICE_mediatek_filogic_DEVICE_zyxel_ex5700-telenor=y
+#内核调整
+CONFIG_PACKAGE_kmod-cryptodev=y
+CONFIG_PACKAGE_kmod-tls=y
