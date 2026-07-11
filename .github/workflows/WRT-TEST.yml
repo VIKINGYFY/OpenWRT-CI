@@ -16,7 +16,7 @@ on:
         options:
           - IPQ60XX-WIFI-YES
       SOURCE:
-        default: 'immortalwrt/immortalwrt'
+        default: 'LiBwrt/openwrt-6.x'
         required: true
         type: choice
         options:
