@@ -15,16 +15,8 @@ on:
         type: choice
         options:
           - IPQ60XX-WIFI-YES
-          - IPQ60XX-WIFI-NO
-          - IPQ807X-WIFI-YES
-          - IPQ807X-WIFI-NO
-          - MEDIATEK-WIFI-YES
-          - MEDIATEK-WIFI-NO
-          - ROCKCHIP
-          - X86
-          - TEST
       SOURCE:
-        default: 'VIKINGYFY/immortalwrt'
+        default: 'immortalwrt/immortalwrt'
         required: true
         type: choice
         options:
@@ -33,7 +25,7 @@ on:
           - LiBwrt/openwrt-6.x
           - qosmio/openwrt-ipq
       BRANCH:
-        default: 'main'
+        default: 'v25.12.1'
         required: true
         type: string
       PACKAGE:
@@ -60,9 +52,9 @@ jobs:
       #默认主题
       WRT_THEME: aurora
       #默认主机名
-      WRT_NAME: OWRT
+      WRT_NAME: OpenWrt
       #默认WIFI名称
-      WRT_SSID: OWRT
+      WRT_SSID: HM123
       #默认WIFI密码
       WRT_WORD: 12345678
       #默认地址
