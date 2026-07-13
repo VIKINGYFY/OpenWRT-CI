@@ -39,7 +39,7 @@ fi
 if [ -d *"luci-app-aurora-config"* ]; then
 	echo " " && cd ./luci-app-aurora-config/
 
-	sed -i "s/nav_type '.*'/nav_type 'dropdown'/g" $(find ./root/usr/share/aurora/ -type f -name "*.template")
+	sed -i "s/nav_type '.*'/nav_type 'dropdown'/g; s/struct_radius_base '.*'/struct_radius_base '0.125rem'/g" $(find ./root/usr/share/aurora/ -type f -name "*.template")
 
 	cd $PKG_PATH && echo "theme-aurora has been fixed!"
 fi
