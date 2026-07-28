@@ -6,7 +6,7 @@ CONFIG_PACKAGE_luci-app-gecoosac=n
 CONFIG_PACKAGE_luci-app-mini-diskmanager=n
 CONFIG_PACKAGE_luci-app-partexp=n
 CONFIG_PACKAGE_luci-app-samba4=n
-CONFIG_PACKAGE_luci-app-upnp=n
+CONFIG_PACKAGE_luci-app-upnp=y
 CONFIG_PACKAGE_luci-app-wolplus=n
 #删除插件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
