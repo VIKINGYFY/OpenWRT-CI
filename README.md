@@ -22,11 +22,7 @@ https://github.com/VIKINGYFY/immortalwrt.git
 
 高通版-沉心：
 
-https://github.com/chenxin527/uboot-ipq60xx-emmc-build.git
-
-https://github.com/chenxin527/uboot-ipq60xx-nand-build.git
-
-https://github.com/chenxin527/uboot-ipq60xx-nor-build.git
+https://github.com/chenxin527/uboot-qsdk12.5-build.git
 
 高通版-小猪：
 
