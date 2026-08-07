@@ -8,6 +8,14 @@
 点击链接加入群聊【LiBwrt-Ai学习】：https://qm.qq.com/q/HTa7OiWNCU
 该群为AI中转站群。
 
+# 本地编译器
+
+https://github.com/VIKINGYFY/OWRT-Tools.git
+
+# 自用修改版插件
+
+https://github.com/VIKINGYFY/packages.git
+
 # OpenWRT-CI
 
 官方版：
