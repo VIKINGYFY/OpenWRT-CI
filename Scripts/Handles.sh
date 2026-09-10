@@ -4,88 +4,50 @@
 
 PKG_PATH="$GITHUB_WORKSPACE/wrt/package"
 
-#预置HomeProxy数据
-HP_DIR="$(find "$PKG_PATH" -maxdepth 3 -type d -iname '*homeproxy*' -print -quit 2>/dev/null)"
-if [ -n "$HP_DIR" ]; then
-	echo " "
+#预置HomeProxy数据，隔离临时变量和清理信号，避免影响后续修复
+hp_preset_resources() (
+	local HP_DIR="$1"
+	RESOURCES_DIR="$HP_DIR/root/etc/homeproxy/resources"
+	DASHBOARD_DIR="$HP_DIR/root/etc/homeproxy/dashboard"
 
-	HP_RESOURCES="$HP_DIR/root/etc/homeproxy/resources"
-	HP_DASHBOARD="$HP_DIR/root/etc/homeproxy/dashboard"
-	HP_GEOIP_SOURCE="https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs"
-	HP_GEOIP_VERSION_URL="https://github.com/SagerNet/sing-geoip/releases/latest"
-	HP_GEOSITE_SOURCE="https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set-unstable/geosite-cn.srs"
-	HP_GEOSITE_VERSION_URL="https://github.com/SagerNet/sing-geosite/releases/latest"
-	HP_DASHBOARD_SOURCE="https://codeload.github.com/SagerNet/sing-box-dashboard/zip/refs/heads/gh-pages"
-	HP_DASHBOARD_VERSION_URL="https://github.com/SagerNet/sing-box-dashboard/commits/gh-pages.atom"
-	HP_USER_AGENT="HomeProxy resource preset"
+	GEOIP_SOURCE="${GEOIP_SOURCE:-https://cdn.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs}"
+	GEOIP_VERSION_URL="${GEOIP_VERSION_URL:-https://github.com/SagerNet/sing-geoip/releases/latest}"
+	GEOSITE_SOURCE="${GEOSITE_SOURCE:-https://cdn.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set-unstable/geosite-cn.srs}"
+	GEOSITE_VERSION_URL="${GEOSITE_VERSION_URL:-https://github.com/SagerNet/sing-geosite/releases/latest}"
+	DASHBOARD_SOURCE="${DASHBOARD_SOURCE:-https://codeload.github.com/SagerNet/sing-box-dashboard/zip/refs/heads/gh-pages}"
+	DASHBOARD_VERSION_URL="${DASHBOARD_VERSION_URL:-https://github.com/SagerNet/sing-box-dashboard/commits/gh-pages.atom}"
+	USER_AGENT="${USER_AGENT:-HomeProxy resource preset}"
 
-	HP_PREREQUISITES_MISSING=0
-	for HP_COMMAND in curl awk head; do
-		command -v "$HP_COMMAND" > /dev/null 2>&1 || {
-			echo "homeproxy resource preset requires $HP_COMMAND!"
-			HP_PREREQUISITES_MISSING=1
-		}
-	done
-	HP_PRESET_FAILED=0
-	if [ "${HP_PREREQUISITES_MISSING:-0}" -eq 1 ]; then
-		HP_PRESET_FAILED=1
-	else
-		HP_TMP="$(mktemp -d)"
-		if [ -z "$HP_TMP" ]; then
-			echo "failed to prepare homeproxy resource preset directory!"
-			HP_PRESET_FAILED=1
-		fi
-	fi
-	HP_DASHBOARD_STAGE="${HP_DASHBOARD}.new.$$"
-	if [ "$HP_PRESET_FAILED" -eq 0 ]; then
-		trap 'rm -rf "$HP_TMP" "$HP_DASHBOARD_STAGE"' EXIT INT TERM
-	fi
+	TMP_DIR="$(mktemp -d)" || {
+		echo "Failed to prepare temporary resource directory." >&2
+		return 1
+	}
+	DASHBOARD_STAGE="${DASHBOARD_DIR}.new.$$"
+	trap 'rm -rf -- "$TMP_DIR" "$DASHBOARD_STAGE" "$RESOURCES_DIR/.update.$$.tmp"' EXIT
+	trap 'exit 130' INT
+	trap 'exit 143' TERM
 
-	hp_fetch_release_version() {
+	warn() {
+		echo "WARNING: $*" >&2
+	}
+
+	fetch_release_version() {
 		local effective_url version
-
 		effective_url="$(curl -fsSL --compressed --retry 3 --retry-all-errors \
-			--retry-delay 1 \
-			--connect-timeout 10 --max-time 30 -A "$HP_USER_AGENT" \
-			-o /dev/null -w '%{url_effective}' "$1")" || return 1
+			--retry-delay 1 --connect-timeout 10 --max-time 30 \
+			-A "$USER_AGENT" -o /dev/null -w '%{url_effective}' "$1")" || return 1
 		version="${effective_url##*/}"
 		case "$version" in
-		''|*[!0-9]*) return 1 ;;
+			''|*[!0-9]*) return 1 ;;
 		esac
 		printf '%s\n' "$version"
 	}
 
-	hp_download() {
-		curl -fsSL --compressed --retry 3 --retry-all-errors --retry-delay 1 \
-			--connect-timeout 10 \
-			--max-time 60 -A "$HP_USER_AGENT" -o "$2" "$1" && [ -s "$2" ]
-	}
-
-	hp_versioned_url() {
-		case "$1" in
-		http://*|https://*) printf '%s?v=%s' "$1" "$2" ;;
-		*) printf '%s' "$1" ;;
-		esac
-	}
-
-	hp_validate_rule_set() {
-		local rule_set="$1" header
-
-		[ -s "$rule_set" ] || return 1
-		header="$(head -c 3 "$rule_set" 2>/dev/null)" || return 1
-		[ "$header" = "SRS" ] || return 1
-		if command -v sing-box > /dev/null 2>&1; then
-			"$HP_SING_BOX" rule-set decompile "$rule_set" \
-				-o "$HP_TMP/$(basename "$rule_set").json" > /dev/null 2>&1 || return 1
-		fi
-	}
-
-	hp_fetch_dashboard_version() {
+	fetch_dashboard_version() {
 		local feed version
-
 		feed="$(curl -fsSL --compressed --retry 3 --retry-all-errors \
 			--retry-delay 1 --connect-timeout 10 --max-time 30 \
-			-A "$HP_USER_AGENT" "$HP_DASHBOARD_VERSION_URL")" || return 1
+			-A "$USER_AGENT" "$DASHBOARD_VERSION_URL")" || return 1
 		version="$(printf '%s\n' "$feed" | awk -F '[<>]' '
 			/<updated>/ {
 				version = $3
@@ -95,93 +57,113 @@ if [ -n "$HP_DIR" ]; then
 			}
 		')"
 		case "$version" in
-		??????????????) case "$version" in *[!0-9]*) return 1 ;; esac ;;
-		*) return 1 ;;
+			??????????????) case "$version" in *[!0-9]*) return 1 ;; esac ;;
+			*) return 1 ;;
 		esac
 		printf '%s\n' "$version"
 	}
 
-	hp_replace_file() {
-		local source_file="$1" target_file="$2" temporary_file
-
-		temporary_file="${target_file}.new.$$"
-		if ! cp "$source_file" "$temporary_file" || \
-			! chmod 0644 "$temporary_file" || \
-			! mv -f "$temporary_file" "$target_file"; then
-			rm -f "$temporary_file"
-			return 1
-		fi
+	download() {
+		curl -fsSL --compressed --retry 3 --retry-all-errors --retry-delay 1 \
+			--connect-timeout 10 --max-time 60 -A "$USER_AGENT" -o "$2" "$1" &&
+			test -s "$2"
 	}
 
-	hp_update_rule_set() {
-		local name="$1" source="$2" version_url="$3" version
-
-		version="$(hp_fetch_release_version "$version_url")" || return 1
-		hp_download "$(hp_versioned_url "$source" "$version")" "$HP_TMP/$name.srs" || return 1
-		hp_validate_rule_set "$HP_TMP/$name.srs" || return 1
-		printf '%s\n' "$version" > "$HP_TMP/$name.ver" || return 1
-		hp_replace_file "$HP_TMP/$name.srs" "$HP_RESOURCES/$name.srs" || return 1
-		hp_replace_file "$HP_TMP/$name.ver" "$HP_RESOURCES/$name.ver" || return 1
-		echo "homeproxy resources: $name $version"
+	validate_rule_set() {
+		# Download checks cover transfer errors; only check the SRS envelope here.
+		[[ "$(head -c 3 "$1" 2>/dev/null)" == SRS && $(wc -c < "$1") -gt 4 ]]
 	}
 
-	hp_update_dashboard() {
-		local version source_dir old_dir
+	versioned_url() {
+		case "$1" in
+		http://*|https://*) printf '%s?v=%s' "$1" "$2" ;;
+		*) printf '%s' "$1" ;;
+		esac
+	}
 
-		command -v unzip > /dev/null 2>&1 || return 1
-		command -v find > /dev/null 2>&1 || return 1
-		version="$(hp_fetch_dashboard_version)" || return 1
-		hp_download "$HP_DASHBOARD_SOURCE?v=$version" "$HP_TMP/dashboard.zip" || return 1
-		unzip -q "$HP_TMP/dashboard.zip" -d "$HP_TMP/dashboard" || return 1
-		source_dir="$(find "$HP_TMP/dashboard" -mindepth 1 -maxdepth 1 -type d -print -quit)"
-		[ -n "$source_dir" ] && [ -f "$source_dir/index.html" ] || return 1
+	install_rule_set() {
+		local source_file="$1" version="$2" resource="$3"
+		local stage_dir="$RESOURCES_DIR/.update.$$.tmp"
 
-		rm -rf "$HP_DASHBOARD_STAGE"
-		mkdir -p "$HP_DASHBOARD_STAGE" &&
-			cp -a "$source_dir/." "$HP_DASHBOARD_STAGE/" &&
-			printf '%s\n' "$version" > "$HP_DASHBOARD_STAGE/dashboard.ver" || return 1
-		rm -f "$HP_DASHBOARD_STAGE/.etag"
-		chmod -R a+rX "$HP_DASHBOARD_STAGE" || return 1
+		mkdir -p "$stage_dir" &&
+			cp "$source_file" "$stage_dir/$resource.srs" &&
+			printf '%s\n' "$version" > "$stage_dir/$resource.ver" &&
+			chmod 0644 "$stage_dir/$resource.srs" "$stage_dir/$resource.ver" &&
+			mv -f "$stage_dir/$resource.srs" "$RESOURCES_DIR/$resource.srs" &&
+			mv -f "$stage_dir/$resource.ver" "$RESOURCES_DIR/$resource.ver"
+	}
 
-		old_dir="${HP_DASHBOARD}.old.$$"
-		rm -rf "$old_dir"
-		{ [ ! -d "$HP_DASHBOARD" ] || mv "$HP_DASHBOARD" "$old_dir"; } || return 1
-		if mv "$HP_DASHBOARD_STAGE" "$HP_DASHBOARD"; then
-			rm -rf "$old_dir"
-			echo "homeproxy dashboard: $version"
+	update_rule_set() {
+		local resource="$1" source_url="$2" version_url="$3"
+		local version old_version
+
+		version="$(fetch_release_version "$version_url")" || return 1
+		old_version="$(cat "$RESOURCES_DIR/$resource.ver" 2>/dev/null)"
+		if [ "$old_version" = "$version" ] && validate_rule_set "$RESOURCES_DIR/$resource.srs"; then
+			echo "HomeProxy resources: $resource $version (current)"
 			return 0
 		fi
-		rm -rf "$HP_DASHBOARD"
-		[ ! -d "$old_dir" ] || mv "$old_dir" "$HP_DASHBOARD"
-		return 1
+		download "$(versioned_url "$source_url" "$version")" "$TMP_DIR/$resource.srs" &&
+			validate_rule_set "$TMP_DIR/$resource.srs" &&
+			install_rule_set "$TMP_DIR/$resource.srs" "$version" "$resource" || return 1
+		echo "HomeProxy resources: $resource $version"
 	}
 
-	if [ "$HP_PRESET_FAILED" -eq 0 ] && ! mkdir -p "$HP_RESOURCES" "$HP_DASHBOARD"; then
-		echo "failed to prepare homeproxy resource directories!"
-		HP_PRESET_FAILED=1
+	update_dashboard() {
+		local version old_version index source_dir=""
+		local backup_dir="${DASHBOARD_DIR}.old.$$"
+
+		version="$(fetch_dashboard_version)" || return 1
+		old_version="$(cat "$DASHBOARD_DIR/dashboard.ver" 2>/dev/null)"
+		if [ "$old_version" = "$version" ] && [ -s "$DASHBOARD_DIR/index.html" ]; then
+			echo "HomeProxy dashboard: $version (current)"
+			return 0
+		fi
+		download "$(versioned_url "$DASHBOARD_SOURCE" "$version")" "$TMP_DIR/dashboard.zip" &&
+			unzip -q "$TMP_DIR/dashboard.zip" -d "$TMP_DIR/dashboard" || return 1
+		for index in "$TMP_DIR/dashboard/index.html" "$TMP_DIR"/dashboard/*/index.html; do
+			if [ -s "$index" ]; then
+				source_dir="${index%/index.html}"
+				break
+			fi
+		done
+		[ -n "$source_dir" ] || return 1
+		mkdir -p "$DASHBOARD_STAGE" &&
+			cp -a "$source_dir/." "$DASHBOARD_STAGE/" &&
+			rm -f "$DASHBOARD_STAGE/.etag" &&
+			printf '%s\n' "$version" > "$DASHBOARD_STAGE/dashboard.ver" &&
+			chmod -R a+rX "$DASHBOARD_STAGE" || return 1
+		mv "$DASHBOARD_DIR" "$backup_dir" || return 1
+		if ! mv "$DASHBOARD_STAGE" "$DASHBOARD_DIR"; then
+			mv "$backup_dir" "$DASHBOARD_DIR" || warn "Unable to restore the dashboard; backup retained at $backup_dir."
+			return 1
+		fi
+		rm -rf "$backup_dir"
+		echo "HomeProxy dashboard: $version"
+	}
+
+	mkdir -p "$RESOURCES_DIR" "$DASHBOARD_DIR" || return 1
+	update_failed=0
+	if ! update_rule_set geoip_cn "$GEOIP_SOURCE" "$GEOIP_VERSION_URL"; then
+		warn "Failed to update HomeProxy geoip resource; continuing."
+		update_failed=1
+	fi
+	if ! update_rule_set geosite_cn "$GEOSITE_SOURCE" "$GEOSITE_VERSION_URL"; then
+		warn "Failed to update HomeProxy geosite; continuing."
+		update_failed=1
+	fi
+	if ! update_dashboard; then
+		warn "Failed to update HomeProxy dashboard; continuing."
+		update_failed=1
 	fi
 
-	if [ "$HP_PRESET_FAILED" -eq 0 ]; then
-		if ! hp_update_rule_set geoip_cn "$HP_GEOIP_SOURCE" "$HP_GEOIP_VERSION_URL"; then
-			echo "failed to update homeproxy geoip resource; continuing!"
-			HP_PRESET_FAILED=1
-		fi
+	return "$update_failed"
+)
 
-		if ! hp_update_rule_set geosite_cn "$HP_GEOSITE_SOURCE" "$HP_GEOSITE_VERSION_URL"; then
-			echo "failed to update homeproxy geosite; continuing!"
-			HP_PRESET_FAILED=1
-		fi
-
-		if ! hp_update_dashboard; then
-			echo "failed to update homeproxy dashboard; continuing!"
-			HP_PRESET_FAILED=1
-		fi
-
-		rm -rf "$HP_TMP" "$HP_DASHBOARD_STAGE"
-		trap - EXIT INT TERM
-	fi
-
-	if [ "$HP_PRESET_FAILED" -eq 0 ]; then
+HP_DIR="$(find "$PKG_PATH" -maxdepth 3 -type d -iname '*homeproxy*' -print -quit 2>/dev/null)"
+if [ -n "$HP_DIR" ]; then
+	echo " "
+	if hp_preset_resources "$HP_DIR"; then
 		echo "homeproxy data has been updated!"
 	else
 		echo "homeproxy resource preset completed with errors; continuing!"
