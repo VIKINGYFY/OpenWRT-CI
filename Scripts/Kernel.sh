@@ -50,3 +50,36 @@ EOF
 
 echo "kernel: 原生内核符号已写入 $KCONF"
 grep -E '^CONFIG_(BPF|NET_INGRESS|NET_EGRESS|NET_CLS_ACT|NET_SCH_INGRESS|NET_CLS_BPF)' "$KCONF" || true
+
+
+# ===== Docker 原生内核符号（仅 -docker 配置注入）=====
+if [[ "${WRT_CONFIG,,}" == *"-docker"* ]]; then
+  while IFS= read -r LINE; do
+    NAME="${LINE%%=*}"
+    if grep -qE "^${NAME}=|^# ${NAME} is not set" "$KCONF"; then
+      sed -i "s|^${NAME}=.*|${LINE}|; s|^# ${NAME} is not set|${LINE}|" "$KCONF"
+    else
+      echo "$LINE" >> "$KCONF"
+    fi
+  done <<'EOF'
+CONFIG_NAMESPACES=y
+CONFIG_UTS_NS=y
+CONFIG_IPC_NS=y
+CONFIG_PID_NS=y
+CONFIG_NET_NS=y
+CONFIG_USER_NS=y
+CONFIG_CGROUP_FREEZER=y
+CONFIG_CPUSETS=y
+CONFIG_CGROUP_DEVICE=y
+CONFIG_CGROUP_SCHED=y
+CONFIG_POSIX_MQUEUE=y
+CONFIG_SECCOMP=y
+CONFIG_SECCOMP_FILTER=y
+CONFIG_BRIDGE=y
+CONFIG_BRIDGE_NETFILTER=y
+CONFIG_OVERLAY_FS=y
+CONFIG_IPVLAN=y
+CONFIG_MACVLAN=y
+EOF
+  echo "kernel: Docker 原生内核符号已写入 $KCONF"
+fi
