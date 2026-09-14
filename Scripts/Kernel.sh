@@ -53,15 +53,14 @@ grep -E '^CONFIG_(BPF|NET_INGRESS|NET_EGRESS|NET_CLS_ACT|NET_SCH_INGRESS|NET_CLS
 
 
 # ===== Docker 原生内核符号（仅 -docker 配置注入）=====
-if [[ "${WRT_CONFIG,,}" == *"-docker"* ]]; then
-  while IFS= read -r LINE; do
-    NAME="${LINE%%=*}"
-    if grep -qE "^${NAME}=|^# ${NAME} is not set" "$KCONF"; then
-      sed -i "s|^${NAME}=.*|${LINE}|; s|^# ${NAME} is not set|${LINE}|" "$KCONF"
-    else
-      echo "$LINE" >> "$KCONF"
-    fi
-  done <<'EOF'
+while IFS= read -r LINE; do
+	NAME="${LINE%%=*}"
+	if grep -qE "^${NAME}=|^# ${NAME} is not set" "$KCONF"; then
+		sed -i "s|^${NAME}=.*|${LINE}|; s|^# ${NAME} is not set|${LINE}|" "$KCONF"
+	else
+		echo "$LINE" >> "$KCONF"
+	fi
+done <<'EOF'
 CONFIG_NAMESPACES=y
 CONFIG_UTS_NS=y
 CONFIG_IPC_NS=y
@@ -81,5 +80,4 @@ CONFIG_OVERLAY_FS=y
 CONFIG_IPVLAN=y
 CONFIG_MACVLAN=y
 EOF
-  echo "kernel: Docker 原生内核符号已写入 $KCONF"
-fi
+echo "kernel: 容器原生内核符号已统一写入 $KCONF"

@@ -71,6 +71,9 @@ env:
   GOCACHE: /mnt/wrt/go/build
   GOMODCACHE: /mnt/wrt/go/mod
   GOFLAGS: -buildvcs=false
+  CCACHE_SLOPPINESS: "time_macros,include_file_mtime,include_file_ctime,file_macro"
+  CCACHE_NOHASHDIR: "1"
+  WRT_PKG_CACHE: /mnt/wrt/pkgcache
 
 jobs:
   core:
