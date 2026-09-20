@@ -82,7 +82,7 @@ UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 UPDATE_PACKAGE "luci-app-rtp2httpd" "stackia/rtp2httpd" "main" "name" "rtp2httpd"
 UPDATE_PACKAGE "luci-app-adguardhome" "stevenjoezhang/luci-app-adguardhome" "dev" "" "adguardhome"
-
+UPDATE_PACKAGE "luci-app-smartdns" "pymumu/smartdns" "master"
 
 # ============================================================
 # 更新软件包版本（函数定义 + 调用示例）
