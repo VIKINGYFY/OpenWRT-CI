@@ -82,8 +82,13 @@ UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
 
 UPDATE_PACKAGE "luci-app-rtp2httpd" "stackia/rtp2httpd" "main" "name" "rtp2httpd"
 UPDATE_PACKAGE "luci-app-adguardhome" "stevenjoezhang/luci-app-adguardhome" "dev" "" "adguardhome"
-UPDATE_PACKAGE "luci-app-smartdns" "pymumu/luci-app-smartdns" "master"
+rm -rf ./smartdns ./luci-app-smartdns ./openwrt-smartdns 2>/dev/null
 
+# 服务端（单包仓库，仓库名 ≠ 包名，用 "name" 重命名）
+UPDATE_PACKAGE "smartdns" "pymumu/openwrt-smartdns" "master" "name"
+
+# LuCI 界面（单包仓库，仓库名 = 包名，无需特殊处理）
+UPDATE_PACKAGE "luci-app-smartdns" "pymumu/luci-app-smartdns" "master"
 # ============================================================
 # 更新软件包版本（函数定义 + 调用示例）
 # ============================================================
