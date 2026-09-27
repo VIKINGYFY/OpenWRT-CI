@@ -32,10 +32,8 @@ on:
         options:
           - VIKINGYFY/immortalwrt
           - immortalwrt/immortalwrt
-          - LiBwrt/openwrt-6.x
-          - qosmio/openwrt-ipq
       BRANCH:
-        default: 'main'
+        default: 'owrt'
         required: true
         type: string
       PACKAGE:
