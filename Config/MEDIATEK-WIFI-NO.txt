@@ -14,3 +14,5 @@ CONFIG_TARGET_DEVICE_PACKAGES_mediatek_filogic_DEVICE_zyxel_ex5700-telenor="-kmo
 #内核调整
 CONFIG_PACKAGE_kmod-cryptodev=y
 CONFIG_PACKAGE_kmod-tls=y
+#插件调整
+CONFIG_PACKAGE_luci-app-axonhub=y
