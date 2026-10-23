@@ -2,6 +2,7 @@
 CONFIG_TARGET_qualcommbe=y
 CONFIG_TARGET_qualcommbe_ipq53xx=y
 #设备列表
+CONFIG_TARGET_DEVICE_qualcommbe_ipq53xx_DEVICE_jdcloud_re-cs-06=y
 CONFIG_TARGET_DEVICE_qualcommbe_ipq53xx_DEVICE_jdcloud_re-cs-08=y
 CONFIG_TARGET_DEVICE_qualcommbe_ipq53xx_DEVICE_xiaomi_be3600-pro-wired-p5=y
 CONFIG_TARGET_DEVICE_qualcommbe_ipq53xx_DEVICE_xiaomi_be3600-pro-wired-p8=y
