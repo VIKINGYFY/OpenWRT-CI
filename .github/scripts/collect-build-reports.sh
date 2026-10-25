@@ -43,3 +43,15 @@ if [ -x "$RUST_BIN/rustc" ]; then
 		"$RUST_BIN/cargo" --version
 	} > "$REPORT_DIR/rust-after-build.txt"
 fi
+
+for GO_BIN in ./staging_dir/hostpkg/bin/go1.*; do
+	[ -x "$GO_BIN" ] || continue
+	readlink -f "$GO_BIN"
+	"$GO_BIN" version
+done > "$REPORT_DIR/go-after-build.txt"
+
+if [ -x ./staging_dir/hostpkg/bin/python3 ]; then
+	./staging_dir/hostpkg/bin/python3 -c \
+		'import sys, sysconfig; print(sys.executable); print(sys.version); print(sysconfig.get_config_var("CONFIG_ARGS"))' \
+		> "$REPORT_DIR/python-after-build.txt"
+fi
