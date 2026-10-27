@@ -14,7 +14,8 @@ on:
         required: true
         type: choice
         options:
-          - AIROHA
+          - AIROHA-AN7581
+          - AIROHA-AN7583
           - IPQ53XX
           - IPQ60XX-WIFI-NO
           - IPQ60XX-WIFI-YES
