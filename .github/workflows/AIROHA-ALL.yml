@@ -14,6 +14,14 @@ on:
   #手动编译
   workflow_dispatch:
     inputs:
+      SSID:
+        description: 'Wi-Fi 名称前缀；留空使用仓库变量或 OWRT。'
+        required: false
+        type: string
+      WORD:
+        description: 'Wi-Fi 密码（8 至 63 字符）；会公开在 Release 说明。'
+        required: false
+        type: string
       PACKAGE:
         description: '手动调整插件包，多个请用\n符号隔开。'
         required: false
@@ -48,10 +56,10 @@ jobs:
       WRT_THEME: vantage
       #默认主机名
       WRT_NAME: OWRT
-      #默认WIFI名称
-      WRT_SSID: OWRT
+      #默认WIFI名称前缀
+      WRT_SSID: ${{inputs.SSID || vars.WRT_SSID || 'OWRT'}}
       #默认WIFI密码
-      WRT_WORD: 12345678
+      WRT_WORD: ${{inputs.WORD || vars.WRT_WORD || '12345678'}}
       #默认地址
       WRT_IP: 192.168.10.1
       #默认密码，仅作提示，修改无用

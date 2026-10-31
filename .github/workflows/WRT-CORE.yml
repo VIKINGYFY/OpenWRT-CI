@@ -17,9 +17,11 @@ on:
         required: true
         type: string
       WRT_SSID:
+        description: 'Router Tool 的 Wi-Fi 名称前缀；官方源码使用完整名称。'
         required: true
         type: string
       WRT_WORD:
+        description: 'Wi-Fi 密码，8 至 63 个可打印 ASCII 字符。'
         required: true
         type: string
       WRT_IP:
@@ -142,6 +144,7 @@ jobs:
       - name: Check Scripts
         run: |
           find ./ -maxdepth 3 -type f -iregex ".*\(txt\|sh\)$" -exec dos2unix {} \; -exec chmod +x {} \;
+          python3 -m unittest discover -s tests -v
 
       - name: Restore Build Cache
         id: cache-restore
@@ -303,7 +306,7 @@ jobs:
             登录地址：${{env.WRT_IP}}
             登录密码：${{env.WRT_PW}}
 
-            WIFI名称：${{env.WRT_SSID}}
+            WIFI名称：${{env.WRT_WIFI_NAME_INFO}}
             WIFI密码：${{env.WRT_WORD}}
 
             内核版本：${{env.WRT_KVER}}

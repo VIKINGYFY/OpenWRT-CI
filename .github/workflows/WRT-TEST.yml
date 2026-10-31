@@ -9,6 +9,14 @@ on:
   #手动编译
   workflow_dispatch:
     inputs:
+      SSID:
+        description: 'Wi-Fi 名称前缀；官方源码使用完整名称。'
+        required: false
+        type: string
+      WORD:
+        description: 'Wi-Fi 密码（8 至 63 字符）；会公开在 Release 说明。'
+        required: false
+        type: string
       CONFIG:
         default: 'MEDIATEK-WIFI-YES'
         required: true
@@ -63,10 +71,10 @@ jobs:
       WRT_THEME: vantage
       #默认主机名
       WRT_NAME: OWRT
-      #默认WIFI名称
-      WRT_SSID: OWRT
+      #默认WIFI名称前缀
+      WRT_SSID: ${{inputs.SSID || vars.WRT_SSID || 'OWRT'}}
       #默认WIFI密码
-      WRT_WORD: 12345678
+      WRT_WORD: ${{inputs.WORD || vars.WRT_WORD || '12345678'}}
       #默认地址
       WRT_IP: 192.168.10.1
       #默认密码，仅作提示，修改无用
