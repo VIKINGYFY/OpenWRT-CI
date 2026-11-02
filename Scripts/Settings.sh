@@ -11,17 +11,20 @@ find ./feeds/luci/modules/luci-mod-system/ -type f -name "flash.js" -exec sed -i
 #添加编译日期标识
 find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js" -exec sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_MARK-$WRT_DATE')/g" {} +
 
+#修改默认WIFI账号密码
 WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
-if [ -f "$WIFI_UC" ]; then
-	#修改WIFI名称
-	sed -i "s/ssid='.*'/ssid='$WRT_SSID'/g" $WIFI_UC
+ROUTER_TOOL="./package/emortal/luci-app-router-tool/root/etc/config/router-tool"
+for file in "$ROUTER_TOOL" "$WIFI_UC"; do
+	[ -f "$file" ] || continue
+	# 同时兼容 UCI 的空格格式和 mac80211.uc 的等号格式。
+	sed -E -i "s/(\bssid[[:space:]]*=?[[:space:]]*)'[^']*'/\1'$WRT_SSID'/g" "$file"
 	# 空密码使用开放网络；同时清空 key，避免保留上游默认密码。
 	if [ -z "${WRT_WORD:-}" ]; then
-		sed -i "s/encryption='.*'/encryption='none'/g; s/key='.*'/key=''/g" "$WIFI_UC"
+		sed -E -i "s/(\bencryption[[:space:]]*=?[[:space:]]*)'[^']*'/\1'none'/g; s/(\bkey[[:space:]]*=?[[:space:]]*)'[^']*'/\1''/g" "$file"
 	else
-		sed -i "s/encryption='.*'/encryption='psk2+ccmp'/g; s/key='.*'/key='$WRT_WORD'/g" "$WIFI_UC"
+		sed -E -i "s/(\bencryption[[:space:]]*=?[[:space:]]*)'[^']*'/\1'psk2+ccmp'/g; s/(\bkey[[:space:]]*=?[[:space:]]*)'[^']*'/\1'$WRT_WORD'/g" "$file"
 	fi
-fi
+done
 
 CFG_FILE="./package/base-files/files/bin/config_generate"
 #修改默认IP地址
