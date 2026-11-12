@@ -4,7 +4,7 @@
 
 # 高质量<付费>中转站
 
-[LiBwrt-Ai](https://api.zipimg.cn/register?aff=FFPS3UMJ8HJD)
+[Krill-Code](https://www.krill-code.com/register?invite=959NHQCZGT)
 
 # 本地编译器
 
