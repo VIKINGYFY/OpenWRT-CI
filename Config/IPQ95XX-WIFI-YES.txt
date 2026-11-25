@@ -1,5 +1,0 @@
-#设备平台
-CONFIG_TARGET_qualcommbe=y
-CONFIG_TARGET_qualcommbe_ipq95xx=y
-#设备列表
-CONFIG_TARGET_DEVICE_qualcommbe_ipq95xx_DEVICE_askey_sbe1v1k=y

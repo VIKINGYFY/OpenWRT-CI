@@ -1,0 +1,5 @@
+#设备平台
+CONFIG_TARGET_airoha=y
+CONFIG_TARGET_airoha_an7581=y
+#设备列表
+CONFIG_TARGET_ALL_PROFILES=y
