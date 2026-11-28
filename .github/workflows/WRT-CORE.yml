@@ -136,7 +136,9 @@ jobs:
           # GitHub Action 移除国内下载源
           PROJECT_MIRRORS_FILE="./scripts/projectsmirrors.json"
           if [ -f "$PROJECT_MIRRORS_FILE" ]; then
-            sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
+            jq -e --tab 'del(.[][] | select(test(".cn/|tencent|aliyun")))' \
+              "$PROJECT_MIRRORS_FILE" > "$PROJECT_MIRRORS_FILE.tmp"
+            mv -- "$PROJECT_MIRRORS_FILE.tmp" "$PROJECT_MIRRORS_FILE"
           fi
 
       - name: Check Scripts
